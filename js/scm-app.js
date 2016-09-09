@@ -144,7 +144,6 @@ buttonAnalytics.bind("click", getProcesses);
 $(document).ready(function() {
 
 
-     getProcesses();
    });
 
 });
