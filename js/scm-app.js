@@ -13,44 +13,63 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   var buttonAnalytics = $("#button-analytics");
   var container = document.getElementById('supplyChainNetwork');
 
-  var createGraph = function () {
+  // viz container
+  var nodes, edges, network;
 
-  // create an array with nodes
-  var nodes = new vis.DataSet([
-    {id: 1, label: 'Iron Mine ZZ', title: '...'},
-    {id: 2, label: 'GigaLab X1', color: {background:'pink', border:'purple'}},
-    {id: 3, label: 'GigaLab F4'},
-    {id: 4, label: 'Global Manufacturing'},
-    {id: 5, label: 'Press Logistics MML'},
-    {id: 6, label: 'Volkswagen'},
-    {id: 7, label: 'Infineon'},
-    {id: 8, label: 'Daimler'}
-  ]);
+  nodes = new vis.DataSet();
+  edges = new vis.DataSet();
 
-  // create an array with edges
 
-   // {from: 2, to: 5, arrows:'to, middle, from'},
-   // {from: 5, to: 6, arrows:{to:{scaleFactor:2}}},
-   // {from: 6, to: 7, arrows:{middle:{scaleFactor:0.5},from:true}}
+  var getProcesses = function() 
+  {
+      var query = "query=%20CONSTRUCT%20%7B%3Fs%20%3Fp%20%3Fo%7D%20WHERE%20%20%20%20%7B%20%3Fs%20a%20%3Chttp%3A%2F%2Fpurl.org%2Feis%2Fvocab%2Fscor%23Process%3E%20.%20%20%20%20%3Fs%20%3Fp%20%3Fo%7D";
 
-  var edges = new vis.DataSet([
-    {from: 1, to: 8, arrows:'to', label: '70%',},
-    {from: 1, to: 3, arrows:'to'},
-    {from: 1, to: 2, arrows:'to'},
-    {from: 2, to: 4, arrows:'to'},
-    {from: 2, to: 5, arrows:'to'},
-    {from: 5, to: 6, arrows:'to'},
-    {from: 6, to: 7, arrows:'to'}
-  ]);
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
-  // create a network
+      xhr.open("POST", "https://lucid.eccenca.com/dataplatform/proxy/default/sparql?access_token=4248770c-e540-48b7-9191-365e8bd4e62b");
+      xhr.setRequestHeader("accept", "application/ld+json");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("referer", "https://lucid.eccenca.com/");
+      xhr.setRequestHeader("connection", "keep-alive");
+      xhr.send(query);
 
-  //var container = document.getElementById('supplyChainNetwork');
-  //var container = $("#supplyChainNetwork");
-  //$("#supplyChainNetwork").css("width", "60000px");
-  //$("supplyChainNetwork").css("height", "40000px");
-  //$("supplyChainNetwork").css("border", "1px solid lightgray");
-  
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+
+          var data = JSON.parse(this.responseText);
+
+          var processes = data["@graph"]
+
+
+          $.each(processes, function(i, v) 
+          {
+            console.log(processes[i].hasClient)
+
+            var longName = processes[i].hasClient
+
+            var short = longName.substring(longName.length-11, longName.length);
+
+            addNode(processes[i].hasClient, short);
+
+            addEdge(i, processes[i].hasClient, processes[i].hasSupplier, processes[i]["hasCommitDate"]);
+
+          });
+
+
+        }
+      });
+
+//  var edges = new vis.DataSet([
+//    {from: 1, to: 8, arrows:'to', },
+ 
+
+
+  }
+
+    var createGraph = function () {
+
   var data = {
     nodes: nodes,
     edges: edges
@@ -74,8 +93,8 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       strokeColor: '#ffffff',
       align:'horizontal'
     }}
-
-                };
+  
+  };
   var network = new vis.Network(container, data, options);
 
    network.on("click", function (params) {
@@ -85,77 +104,47 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 };
 
 
+        function addNode(id, label) {
+            try {
+                nodes.add({
+                    id: id,
+                    label: label
+                });
+            }
+            catch (err) {
+                alert(err);
+            }
 
-  var runAnalytics = function() 
-  {
-    var uri = "xxx"';
-
-    $.get( uri, function( data ) {
-      alert( "Data Loaded: " + data);
-          logger.debug("response", data);
-    });
-   
+           createGraph();
+        }
 
 
-  };
+        function addEdge(id, from, to, label) {
+            try {
+                edges.add({
+                    id: id,
+                    from: from, 
+                    to: to,
+                    label: label
+                });
+            }
+            catch (err) {
+                alert(err);
+            }
+        }
+     
 
 
-    /*
-   resultTable.children().remove();
+// button clicks
+buttonAnalytics.bind("click", getProcesses);
 
-   vocabulary = editor.getValue();
-   queryString = sparqlEditor.getValue();
 
-      // create graph store
-      rdfstore.create(function(err, store) 
-      {
-        store.load("text/turtle", vocabulary, function(err, results) 
-        {   
-          if(err)
-          {
-            logger.debug("store load error", err);
-            logger.error("Could not Run SPARQL Query:", err.message);
-          }else
-          {
-            // run query
-            store.execute(queryString, function(err, results)
-            {
-              // build first row
-              var listOfSelects = Object.keys(results[0]);
 
-              var firstRow = "<tr>";
-              for(var key in listOfSelects)
-              {
-                firstRow += "<th>" + listOfSelects[key] + "</th>";
-              }
-              firstRow += "</tr>";
-              resultTable.append(firstRow); 
-
-              // print results
-              for (var i = 0; i < results.length; i++) 
-              {
-                var resultSet = results[i];
-                console.log("resultSet: " + resultSet);
-                var newRow = "<tr>";
-                for(var key in resultSet)
-                { 
-                  newRow += "<td>" + resultSet[key].value + "</td>";
-                }
-                newRow += "</tr>";
-                resultTable.append(newRow)
-              };
-            });
-          };
-        });
-});
-*/
-
-buttonAnalytics.bind("click", runAnalytics);
-
+// onload
 $(document).ready(function() {
 
-  createGraph();
-     // start possible init methods
+
+     getProcesses();
    });
 
 });

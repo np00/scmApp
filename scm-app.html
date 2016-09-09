@@ -13,7 +13,7 @@
 
     <style type="text/css">
        #supplyChainNetwork {
-      width: 1000px;
+      width: 800px;f
       height: 400px;
       border: 1px solid lightgray;
     }
@@ -22,17 +22,34 @@
 
 <body>
     <section id="message-queue"></section>
-    
+       
     <div class="container">
         <header>
             <div class="page-header">
                 <h1>SCM App</h1>
             </div>
         </header>
+              </br>  From:                      
+              <select>
+                       <option value="date1">1 Sep 2015</option>
+                      <option value="date2">Dec 1</option>
+             </select> To
+             <select>
+                       <option value="date3">31 Dec 2015</option>
+                      <option value="date4">Feb 31</option>
+             </select> 
+             </br> </br>
         <div class="menu" style="display: none;">
         </div>
              <div id="supplyChainNetwork"></div>   
-             </br>           
+             </br>  Method:                      
+              <select>
+                      <option value="volvo">Orders Delivered in Full (RL 2.1)</option>
+                      <option value="saab">Order Fullfillment Cycle Time (RS 1.1)</option>
+                      <option value="mercedes">Upside Supply Chain Flexibility (AG 1.1)</option>
+                      <option value="audi">Total Cost to Serve (CO 1.1)</option>
+                      <option value="audi">Return on Supply Chain Fixed Assets (CO 1.2)</option>
+                    </select> 
                  <button type="button" id="button-analytics" class="btn btn-primary">Run SC Analytics</button>
                 </div>
    
