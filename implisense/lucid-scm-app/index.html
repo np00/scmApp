@@ -1,143 +1,320 @@
 <!DOCTYPE html>
-<html lang="en" data-ember-extension="1">
-  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="LUCID SCM-App">
-    <meta name="author" content="Implisense GmbH">
-    <link rel="icon" href="img/favicon.png">
-    <title>LUCID - SCM-App</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/vis.css" rel="stylesheet" type="text/css" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="css/easy-autocomplete.min.css"> 
-    <link rel="stylesheet" href="css/easy-autocomplete.themes.min.css">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
-    <script src="js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
-    <!-- <script src="js/fileUpload.js"></script> -->
-    <script src="js/fileDownload.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/vis.js"></script>
-    <script src="js/jquery.easy-autocomplete.min.js"></script>
-    <!--[if lt IE 9]><script src="jsjs/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="js/ie-emulation-modes-warning.js"></script>
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">LUCID SCM</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Start</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+<html class="ls-top-navbar" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>SCM-App</title>
+
+  <!-- Vendor CSS BUNDLE
+    Includes styling for all of the 3rd party libraries used with this module, such as Bootstrap, Font Awesome and others.
+    TIP: Using bundles will improve performance by reducing the number of network requests the client needs to make when loading the page. -->
+  <link href="css/vendor/all.css" rel="stylesheet">
+  <link href="css/vis.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="css/easy-autocomplete.min.css"> 
+  <link rel="stylesheet" href="css/easy-autocomplete.themes.min.css">
+
+  <!-- Vendor CSS Standalone Libraries
+        NOTE: Some of these may have been customized (for example, Bootstrap).
+        See: src/less/themes/{theme_name}/vendor/ directory -->
+  <!-- <link href="css/vendor/bootstrap.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/font-awesome.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/picto.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/material-design-iconic-font.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/datepicker3.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/jquery.minicolors.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/bootstrap-slider.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/railscasts.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/jquery-jvectormap.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/owl.carousel.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/slick.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/morris.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/ui.fancytree.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/daterangepicker-bs3.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/jquery.bootstrap-touchspin.css" rel="stylesheet"> -->
+  <!-- <link href="css/vendor/select2.css" rel="stylesheet"> -->
+
+  <!-- APP CSS BUNDLE [css/app/app.css]
+INCLUDES:
+    - The APP CSS CORE styling required by the "admin" module, also available with main.css - see below;
+    - The APP CSS STANDALONE modules required by the "admin" module;
+NOTE:
+    - This bundle may NOT include ALL of the available APP CSS STANDALONE modules;
+      It was optimised to load only what is actually used by the "admin" module;
+      Other APP CSS STANDALONE modules may be available in addition to what's included with this bundle.
+      See src/less/themes/admin/app.less
+TIP:
+    - Using bundles will improve performance by greatly reducing the number of network requests the client needs to make when loading the page. -->
+  <link href="css/app/app.css" rel="stylesheet">
+
+  <!-- App CSS CORE
+This variant is to be used when loading the separate styling modules -->
+  <!-- <link href="css/app/main.css" rel="stylesheet"> -->
+
+  <!-- App CSS Standalone Modules
+    As a convenience, we provide the entire UI framework broke down in separate modules
+    Some of the standalone modules may have not been used with the current theme/module
+    but ALL modules are 100% compatible -->
+
+  <!-- <link href="css/app/essentials.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/layout.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/sidebar.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/sidebar-skins.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/navbar.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/media.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/player.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/timeline.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/cover.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/chat.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/charts.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/maps.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-alerts.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-background.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-buttons.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-calendar.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-progress-bars.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/colors-text.css" rel="stylesheet" /> -->
+  <!-- <link href="css/app/ui.css" rel="stylesheet" /> -->
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!-- If you don't need support for Internet Explorer <= 8 you can safely remove these -->
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#sidebar-menu" data-toggle="sidebar-menu" data-effect="st-effect-3" class="toggle pull-left visible-xs"><i class="fa fa-bars"></i></a>
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class=" custom-brand" href="#"></div>
       </div>
-    </nav>
-    <div class="container">
-      <!-- <div class="page-header"></div> -->
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-          <h4>Meine Firma</h4>
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-            <input id="myCompany" type="text" value="" placeholder="Firmenname">
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-            <button class="btn-sm btn-primary"  id="myCompany-add">Hinzufügen</button>
+      <div class="navbar-collapse collapse" id="collapse">
+        <div class="navText">
+          LUCID SCM-App
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="container-fluid">
+     
+
+      <div class="row" data-toggle="isotope">
+
+        <div class="item col-lg-4 col-md-4 col-xs-12 mgTop">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Meine Firma</h4>
+            </div>
+            <div class="panel-footer">
+              <div class="floatl">
+                <input id="myCompany" type="text" value="" placeholder="Firmenname">
+              </div>
+              <div>
+                <button class="btn btn-primary"  id="myCompany-add">Hinzufügen</button>
+              </div>
+            </div>
+         
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-          <!-- <h4>Kunden</h4>
-          <input id="customer" type="text" value="" placeholder="Kunden">
-          <button class="btn-sm btn-primary" class="btn btn-primary"  id="customer-add">Hinzufügen</button>
-          -->
-          <h4>Beziehungen</h4>
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-            <input id="sender" type="text" value="" placeholder="Zulieferer">
-          </div>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 nopd">
-            <input id="getter" type="text" value="" placeholder="Empfänger">
-          </div>
-          <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 nopd fr">
-            <button class="btn-sm btn-primary"  id="relationship-add">Hinzufügen</button>
+
+        <div class="item col-lg-8 col-md-8 col-xs-12 mgTop">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Beziehungen</h4>
+            </div>
+            <div class="panel-footer">
+              <div class="floatl">
+                <input id="sender" type="text" value="" placeholder="Zulieferer">
+              </div>
+              <div class="floatl">
+                <input id="getter" type="text" value="" placeholder="Empfänger">
+              </div>
+              <button class="btn btn-primary"  id="relationship-add">Hinzufügen</button>
+            </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 nopd bd">
-          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-xl-10 nopd pdtop">
-            <div id="mynetwork"></div>
+
+        <div class="item col-lg-10 col-md-10 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">SCM-Graph</h4>
+            </div>
+            <div class="panel-footer">
+               <div id="mynetwork"></div>
+            </div>
           </div>
-          <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 nopd pdtop infoscm">
-            <h5 id="actInfo">Aktionen</h5>
-            <div id="scmInfoNode"></div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-              <button class="btn-xs btn-primary scmaddrel" id="senderscm-add">Zulieferer</button>
+        </div>
+        <div class="item col-lg-2 col-md-2 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Aktionen</h4>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 nopd">
-              <button class="btn-xs btn-primary scmaddrel" id="getterscm-add">Empfänger</button>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 odd">
-              <h6>Datei hochladen</h6>
-              <div class="fileUpload btn-xs btn-primary">
+            <div class="panel-footer">
+               <div class="fileUpload btn btn-primary">
                 <span>Datei hochladen</span>
                 <input type="file" id="fileinput" class="upload" />
               </div>
-              <!--
-              <h6>Datei hochladen</h6>
-              <input type="file" id="fileinput" />
-              -->
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 odd">
-              <h6>Datei herunterladen</h6>
-              <input id="inputFileNameToSaveAs" placeholder="Dateiname"/>
-              <button class="btn-xs btn-primary"  onclick="saveTextAsFile()">Sperichern</button>
-            </div>
-
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 nopd">
-          
-                     
-          <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 even">
-            <textarea id="data">digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }</textarea>
-          </div>
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 even">
-            <button class="btn-xs btn-primary" id="draw" title="Generiere SCM-Graph (Tastenkombination: Strg + Enter)">SCM-Graph generieren</button>
-          </div>
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <a class="btn-xs btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Firmendetails
-            </a>
-            <div class="collapse" id="collapseExample">
-              <div>
-                <div id="firmendateils"></div>
-                  <iframe width="100%" height="3511px" frameborder="0" scrolling="no" src="https://pro.implisense.com/#/lists/new/companies/DEVFCLQFW054"></iframe>
-                  <div id="eventSpan">Details</div>
-                  <div id="companyNamePre">Firma</div>
-                  <div id="demo">ID</div>
-                </div>
+              <div class="pdTop">
+                <input id="inputFileNameToSaveAs" placeholder="Dateiname"/>
+                <button class="btn btn-primary fileDownload" onclick="saveTextAsFile()">Datei speichern</button>
+              </div>
+              <div class="pdTop infocompany">
+                <div>Firma <b><div id="scmInfoNode"></div></b> markieren als:</div>
+                 <button class="btn-xs btn-primary scmaddrel" id="senderscm-add">Zulieferer</button>
+                 <button class="btn-xs btn-primary scmaddrel" id="getterscm-add">Empfänger</button>
               </div>
             </div>
           </div>
         </div>
+        <div class="item col-lg-12 col-md-12 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Firmendetails</h4>
+            </div>
+            <div class="panel-footer">
+              <iframe width="100%" height="3511px" frameborder="0" scrolling="no" src="https://pro.implisense.com/#/lists/new/companies/DEVFCLQFW054"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-12 col-md-12 col-xs-12 debug">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Debug</h4>
+            </div>
+            <div class="panel-footer">
+               <textarea id="data">digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }</textarea>
+               <div id="eventSpan">Details</div>
+                  <div id="companyNamePre">Firma</div>
+                  <div id="demo">ID</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item col-lg-12 col-md-12 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              Die vor­lie­gen­de SCM Anwendung ent­hält ver­trau­li­che In­for­mationen. Jeg­li­che ver­trags­frem­de Ver­viel­fäl­ti­gung und Wei­ter­ga­be die­ses Me­di­ums an Dritte be­darf ei­ner ex­pli­zi­ten Zu­stim­mung der Implisense GmbH. Wir freu­en uns über Ihr Feed­back un­ter info@implisense.com.
+            </div>
+          
+           
+          </div>
+        </div>
+
+      </div>
     </div>
-     <script>
+  </div>
+
+  <!-- Inline Script for colors and config objects; used by various external scripts; -->
+  <script>
+    var colors = {
+      "danger-color": "#e74c3c",
+      "success-color": "#81b53e",
+      "warning-color": "#f0ad4e",
+      "inverse-color": "#2c3e50",
+      "info-color": "#2d7cb5",
+      "default-color": "#6e7882",
+      "default-light-color": "#cfd9db",
+      "purple-color": "#9D8AC7",
+      "mustard-color": "#d4d171",
+      "lightred-color": "#e15258",
+      "body-bg": "#f6f6f6"
+    };
+    var config = {
+      theme: "admin",
+      skins: {
+        "default": {
+          "primary-color": "#3498db"
+        }
+      }
+    };
+  </script>
+
+  <!-- Vendor Scripts Bundle
+    Includes all of the 3rd party JavaScript libraries above.
+    The bundle was generated using modern frontend development tools that are provided with the package
+    To learn more about the development process, please refer to the documentation.
+    Do not use it simultaneously with the separate bundles above. -->
+  <script src="js/vendor/all.js"></script>
+
+  <!-- Vendor Scripts Standalone Libraries -->
+  <!-- <script src="js/vendor/core/all.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.js"></script> -->
+  <!-- <script src="js/vendor/core/bootstrap.js"></script> -->
+  <!-- <script src="js/vendor/core/breakpoints.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.nicescroll.js"></script> -->
+  <!-- <script src="js/vendor/core/isotope.pkgd.js"></script> -->
+  <!-- <script src="js/vendor/core/packery-mode.pkgd.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.grid-a-licious.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.cookie.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery-ui.custom.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.hotkeys.js"></script> -->
+  <!-- <script src="js/vendor/core/handlebars.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.hotkeys.js"></script> -->
+  <!-- <script src="js/vendor/core/load_image.js"></script> -->
+  <!-- <script src="js/vendor/core/jquery.debouncedresize.js"></script> -->
+  <!-- <script src="js/vendor/tables/all.js"></script> -->
+  <!-- <script src="js/vendor/forms/all.js"></script> -->
+  <!-- <script src="js/vendor/media/all.js"></script> -->
+  <!-- <script src="js/vendor/player/all.js"></script> -->
+  <!-- <script src="js/vendor/charts/all.js"></script> -->
+  <!-- <script src="js/vendor/charts/flot/all.js"></script> -->
+  <!-- <script src="js/vendor/charts/easy-pie/jquery.easypiechart.js"></script> -->
+  <!-- <script src="js/vendor/charts/morris/all.js"></script> -->
+  <!-- <script src="js/vendor/charts/sparkline/all.js"></script> -->
+  <!-- <script src="js/vendor/maps/vector/all.js"></script> -->
+  <!-- <script src="js/vendor/tree/jquery.fancytree-all.js"></script> -->
+  <!-- <script src="js/vendor/nestable/jquery.nestable.js"></script> -->
+  <!-- <script src="js/vendor/angular/all.js"></script> -->
+
+  <!-- App Scripts Bundle
+    Includes Custom Application JavaScript used for the current theme/module;
+    Do not use it simultaneously with the standalone modules below. -->
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+  <script src="js/app/app.js"></script>
+  <script src="js/fileDownload.js"></script>
+    <script src="js/vis.js"></script>
+    <script src="js/jquery.easy-autocomplete.js"></script>
+    <script src="js/custom.js"></script>
+
+  <!-- App Scripts Standalone Modules
+    As a convenience, we provide the entire UI framework broke down in separate modules
+    Some of the standalone modules may have not been used with the current theme/module
+    but ALL the modules are 100% compatible -->
+
+  <!-- <script src="js/app/essentials.js"></script> -->
+  <!-- <script src="js/app/layout.js"></script> -->
+  <!-- <script src="js/app/sidebar.js"></script> -->
+  <!-- <script src="js/app/media.js"></script> -->
+  <!-- <script src="js/app/player.js"></script> -->
+  <!-- <script src="js/app/timeline.js"></script> -->
+  <!-- <script src="js/app/chat.js"></script> -->
+  <!-- <script src="js/app/maps.js"></script> -->
+  <!-- <script src="js/app/charts/all.js"></script> -->
+  <!-- <script src="js/app/charts/flot.js"></script> -->
+  <!-- <script src="js/app/charts/easy-pie.js"></script> -->
+  <!-- <script src="js/app/charts/morris.js"></script> -->
+  <!-- <script src="js/app/charts/sparkline.js"></script> -->
+   <script>
     var options = {
       data: [{"id":"DE05X98UY622","name":"\"Millar Garages GmbH\"","score":"0.01"},
       {"id":"DE08L9IH7I87","name":"\"Hötschl Metall- & Fahrzeugbau GmbH & Co. KG\"","score":"0.00"},
@@ -342,8 +519,7 @@
     		fields: {
     			description: "id"
     		}
-    	},
-    theme: "none"
+    	}
     };
     $("#myCompany").easyAutocomplete(options);
     $("#customer").easyAutocomplete(options);
@@ -351,12 +527,6 @@
     $("#getter").easyAutocomplete(options);
   </script>
 
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">
-          Die vor&shy;lie&shy;gen&shy;de SCM Anwendung ent&shy;hält ver&shy;trau&shy;li&shy;che In&shy;for&shy;mationen. Jeg&shy;li&shy;che ver&shy;trags&shy;frem&shy;de Ver&shy;viel&shy;fäl&shy;ti&shy;gung und Wei&shy;ter&shy;ga&shy;be die&shy;ses Me&shy;di&shy;ums an Dritte be&shy;darf ei&shy;ner ex&shy;pli&shy;zi&shy;ten Zu&shy;stim&shy;mung der Implisense GmbH. Wir freu&shy;en uns über Ihr Feed&shy;back un&shy;ter <a id="feedback_mail_footer" href="mailto:info@implisense.com?subject=Feedback%20SCM-App">info@implisense.com</a>.
-        </p>
-      </div>
-    </footer>
 </body>
+
 </html>

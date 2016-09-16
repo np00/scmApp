@@ -5,11 +5,29 @@
 .nopd{
   padding: 0px;
 }
-.pdtop{
-  margin-top: 10px;
+.pdTop{
+  padding-top: 15px;
+}
+.mgTop{
+  margin-top: 15px;
 }
 .infoscm {
   padding: 3px;
+}
+#relationship-add{
+  margin-left: 5px;
+}
+.debug{
+  visibility: hidden;
+}
+.custom-brand{
+  background-image: url("../img/lucidlogo.png");
+  width: 100px;
+  height: 50px;
+  background-repeat: no-repeat;
+}
+#senderscm-add{
+  margin-bottom: 5px;
 }
 .bd {
   border: 1px solid #e7e7e7;
@@ -23,7 +41,10 @@
 .fileUpload {
     position: relative;
     overflow: hidden;
-    
+    font-size: 12px;
+}
+.fileDownload{
+  font-size: 12px;
 }
 .fileUpload input.upload {
     position: absolute;
@@ -45,10 +66,13 @@
   padding: 5px;
   word-break: break-word;
 }
+.padtop{
+  margin-top: 10px;
+}
 .fr {
   text-align: right;
 }
-.scmaddrel{
+.scmaddrel,.infocompany{
   display: none;
 }
 .custom-wrapper {
@@ -64,12 +88,7 @@
   transition: height 0.5s;
   padding: 15px;
 }
-.custom-brand{
-background-image: url("../img/lucid-logo.png");
-width: 50px;
-height: 25px;
-background-repeat: no-repeat;
-}
+
 
 .custom-wrapper.open {
   height: 14em;
@@ -186,14 +205,21 @@ background-repeat: no-repeat;
   }
   .even {
     padding: 10px;
-    border-bottom: 1px solid #e7e7e7;
+    /* border-bottom: 1px solid #e7e7e7; */
   }
   .odd {
     padding: 10px;
-    border-bottom: 1px solid #e7e7e7;
+    /* border-bottom: 1px solid #e7e7e7; */
+  }
+  .navbar-default{
+    background-color: #000000;
+    padding: 5px;
   }
   #myCompany, #customer, #sender, #getter {
-    width: 100%;
+  
+  }
+  #getter,#myCompany-add{
+   
   }
   .intrinsic-container {
   position: relative;
@@ -225,4 +251,12 @@ iframe {
   padding: 0;
   margin: 0;
   border:none;
+}
+.navText{
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 50px;
+}
+.floatl{
+  float: left;
 }

@@ -29,8 +29,21 @@ function updateTextarea() {
     updateTextarea();
     var sender = $.trim($("#sender").val());
     var getter = $.trim($("#getter").val());
-    $("#data").val($("#data").val() + sender + "->" + getter + ";}");
-    draw();
+    if( !getter ){
+      alert ('Bitte Empfänger Firma eingeben');
+    }
+    else if( !sender ){
+      alert ('Bitte Zulieferer Firma eingeben');
+    }
+    else if( sender && getter ){
+      $("#data").val($("#data").val() + sender + "->" + getter + ";}");
+      draw();
+       $("html, body").animate({
+            scrollTop: 0
+        }, 600);
+      
+    
+    }
   });
   // create a network
   var container = document.getElementById('mynetwork');
@@ -321,6 +334,7 @@ function updateTextarea() {
         $('#companyNamePre').html(dataJson.nodes);
         $('#scmInfoNode').html(dataJson.nodes);
         $('.scmaddrel').show();
+        $('.infocompany').show();
         var json = {
     "profiles": [
         {"id":"DE05X98UY622","name":"\"Millar Garages GmbH\"","score":"0.01"},
