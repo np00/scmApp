@@ -8,10 +8,14 @@ function updateTextarea() {
     $("#data").val(ta.value);
   }
   $("#senderscm-add").click(function(){
-    $('input#sender').val("\"" + $('#scmInfoNode').html() + "\"");
+    var myCompanyInput = $('#scmInfoNode').html();
+    myCompanyInput = myCompanyInput.replace(/\&amp;/g,'&');
+    $('input#sender').val("\"" + myCompanyInput + "\"");
   });
   $("#getterscm-add").click(function(){
-    $('input#getter').val("\"" + $('#scmInfoNode').html() + "\"");
+    var myGetterInput = $('#scmInfoNode').html();
+    myGetterInput = myGetterInput.replace(/\&amp;/g,'&');
+    $('input#getter').val("\"" + myGetterInput + "\"");
   });
   $("#myCompany-add").click(function(){
     updateTextarea();
