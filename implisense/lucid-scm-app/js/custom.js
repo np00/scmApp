@@ -33,6 +33,7 @@ function updateTextarea() {
     updateTextarea();
     var sender = $.trim($("#sender").val());
     var getter = $.trim($("#getter").val());
+    var markVal = $("#mark option:selected").text();
     if( !getter ){
       alert ('Bitte Empfänger Firma eingeben');
     }
@@ -42,11 +43,9 @@ function updateTextarea() {
     else if( sender && getter ){
       $("#data").val($("#data").val() + sender + "->" + getter + ";}");
       draw();
-       $("html, body").animate({
-            scrollTop: 0
-        }, 600);
-      
-    
+      $("html, body").animate({
+        scrollTop: 0
+      }, 600);    
     }
   });
   // create a network
@@ -334,6 +333,7 @@ function updateTextarea() {
         document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
         var companyPre = JSON.stringify(params, null,0);
         dataJson = JSON.parse(companyPre);
+        console.log(dataJson.edges);
         //alert (dataJson.nodes);
         $('#companyNamePre').html(dataJson.nodes);
         $('#scmInfoNode').html(dataJson.nodes);
@@ -533,7 +533,7 @@ function updateTextarea() {
     ]
 }
         var dataJsoncompany = "\"" + dataJson.nodes + "\"";
-         var domain = "https://pro.implisense.com/#/lists/new/companies/";
+        var domain = "https://pro.implisense.com/#/lists/new/companies/";
         for (var i = 0; i < json.profiles.length; i++) {
             var obj = json.profiles[i];
             //console.log (obj.name);

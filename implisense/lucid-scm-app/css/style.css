@@ -18,7 +18,7 @@
   margin-left: 5px;
 }
 .debug{
-  visibility: hidden;
+  visibility: hidden; 
 }
 .custom-brand{
   background-image: url("../img/lucidlogo.png");
@@ -216,7 +216,7 @@
     padding: 5px;
   }
   #myCompany, #customer, #sender, #getter {
-  
+    width: 100% !important;
   }
   #getter,#myCompany-add{
    
@@ -259,4 +259,7 @@ iframe {
 }
 .floatl{
   float: left;
+}
+#mark-add{
+  margin-left: 5px;
 }
