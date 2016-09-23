@@ -8,10 +8,14 @@ function updateTextarea() {
     $("#data").val(ta.value);
   }
   $("#senderscm-add").click(function(){
-    $('input#sender').val("\"" + $('#scmInfoNode').html() + "\"");
+    var myCompanyInput = $('#scmInfoNode').html();
+    myCompanyInput = myCompanyInput.replace(/\&amp;/g,'&');
+    $('input#sender').val("\"" + myCompanyInput + "\"");
   });
   $("#getterscm-add").click(function(){
-    $('input#getter').val("\"" + $('#scmInfoNode').html() + "\"");
+    var myGetterInput = $('#scmInfoNode').html();
+    myGetterInput = myGetterInput.replace(/\&amp;/g,'&');
+    $('input#getter').val("\"" + myGetterInput + "\"");
   });
   $("#myCompany-add").click(function(){
     updateTextarea();
@@ -29,8 +33,20 @@ function updateTextarea() {
     updateTextarea();
     var sender = $.trim($("#sender").val());
     var getter = $.trim($("#getter").val());
-    $("#data").val($("#data").val() + sender + "->" + getter + ";}");
-    draw();
+    var markVal = $("#mark option:selected").text();
+    if( !getter ){
+      alert ('Bitte Empfänger Firma eingeben');
+    }
+    else if( !sender ){
+      alert ('Bitte Zulieferer Firma eingeben');
+    }
+    else if( sender && getter ){
+      $("#data").val($("#data").val() + sender + "->" + getter + ";}");
+      draw();
+      $("html, body").animate({
+        scrollTop: 0
+      }, 600);    
+    }
   });
   // create a network
   var container = document.getElementById('mynetwork');
@@ -317,10 +333,12 @@ function updateTextarea() {
         document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
         var companyPre = JSON.stringify(params, null,0);
         dataJson = JSON.parse(companyPre);
+        console.log(dataJson.edges);
         //alert (dataJson.nodes);
         $('#companyNamePre').html(dataJson.nodes);
         $('#scmInfoNode').html(dataJson.nodes);
         $('.scmaddrel').show();
+        $('.infocompany').show();
         var json = {
     "profiles": [
         {"id":"DE05X98UY622","name":"\"Millar Garages GmbH\"","score":"0.01"},
@@ -515,7 +533,7 @@ function updateTextarea() {
     ]
 }
         var dataJsoncompany = "\"" + dataJson.nodes + "\"";
-         var domain = "https://pro.implisense.com/#/lists/new/companies/";
+        var domain = "https://pro.implisense.com/#/lists/new/companies/";
         for (var i = 0; i < json.profiles.length; i++) {
             var obj = json.profiles[i];
             //console.log (obj.name);
