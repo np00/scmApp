@@ -1,0 +1,15 @@
+PREFIX scor: <http://purl.org/eis/vocab/scor#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX company: <http://lucid.implisense.com/companies/> 
+
+SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+       + (<http://www.w3.org/2001/XMLSchema#double>(?value2))) 
+       / 2 AS ?metricResult) 
+FROM <supplyChain>
+WHERE { 
+          ?process scor:hasMetricRL_33 ?value1. 
+          ?process scor:hasMetricRL_50 ?value2.
+
+          ?process scor:hasSupplier company:DE0LSF2GQI13 .
+          ?process scor:hasClient company:DE9WNYUSMP94 .
+}LIMIT 10

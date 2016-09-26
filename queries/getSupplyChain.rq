@@ -1,0 +1,18 @@
+PREFIX scor: <http://purl.org/eis/vocab/scor#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/> 
+
+
+SELECT ?process ?client ?supplier ?clientVatID ?supplierVatID
+FROM <supplyChain>
+WHERE { 
+          ?process a scor:Process . 
+
+          ?process scor:hasClient ?clientCompany . 
+          ?clientCompany schema:legalName ?client .
+          ?clientCompany schema:vatID  ?clientVatID . 
+
+          ?process scor:hasSupplier ?supplierCompany .
+          ?supplierCompany schema:legalName ?supplier .
+          ?supplierCompany schema:vatID  ?supplierVatID . 
+}LIMIT 10
