@@ -5,12 +5,18 @@
 
 
 
-var url_server = "https://lucid.eccenca.com/dataplatform/"
 
-var user = "xxx";
-var pw = "xxx";
+//var url_server = "https://lucid.eccenca.com/dataplatform/"
+//var user = "xx";
+//var pw = "xx";
+
+
+var url_server = "https://lucid.implisense.com/dataplatform/"
+var user = "xx";
+var pw = "xx";
+
+
 var access_token;
-
 
 
 
@@ -100,6 +106,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   var runSparqlQuery = function (query) 
   {
       var sparql_query = "query=" + encodeURIComponent(query);
+      var sparql_query = "query=" + encodeURIComponent("SELECT ?s WHERE {?s ?p ?o} LIMIT 10");
  
       var request = url_server + "proxy/default/sparql?access_token=" + access_token;
 
@@ -115,6 +122,8 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
             var results = data["results"];
             console.log(this.responseText);
             var metricResult = results.bindings[0].metricResult.value
+
+
 
             addEdge(11, "Albrecht Auto-Zubehör GmbH", "Karosseriewerk Heinrich Meyer GmbH", metricResult)
         }
@@ -294,6 +303,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   $(document).ready(function() {
 
         getAccessToken(url_server, user, pw);
+
       //  executeMetric();
         //getProcesses();
         //runMetric();
