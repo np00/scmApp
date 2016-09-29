@@ -1,0 +1,270 @@
+.main {
+  padding: 2em;
+  color: black;
+}
+.nopd{
+  padding: 0px;
+}
+.pdTop{
+  padding-top: 15px;
+}
+.mgTop{
+  margin-top: 85px;
+}
+.infoscm {
+  padding: 3px;
+}
+#supplyChainNetwork {
+  width: 100%f
+  height: 400px;
+  border: 1px solid lightgray;
+}
+#relationship-add{
+  margin-left: 5px;
+}
+.debug{
+  visibility: hidden; 
+}
+.custom-brand{
+  background-image: url("../img/lucidlogo.png");
+  width: 100px;
+  height: 50px;
+  background-repeat: no-repeat;
+}
+#senderscm-add{
+  margin-bottom: 5px;
+}
+.bd {
+  border: 1px solid #e7e7e7;
+}
+#actInfo {
+  text-align: center;
+}
+#inputFileNameToSaveAs {
+  width: 100%;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    font-size: 12px;
+}
+.fileDownload{
+  font-size: 12px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#fileinput {
+      color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+#scmInfoNode{
+  padding: 5px;
+  word-break: break-word;
+}
+.padtop{
+  margin-top: 10px;
+}
+.fr {
+  text-align: right;
+}
+.scmaddrel,.infocompany{
+  display: none;
+}
+.custom-wrapper {
+  background-color: #000000;
+  color: #ffffff;
+  margin-bottom: 1em;
+  -webkit-font-smoothing: antialiased;
+  height: 2.1em;
+  overflow: hidden;
+  -webkit-transition: height 0.5s;
+  -moz-transition: height 0.5s;
+  -ms-transition: height 0.5s;
+  transition: height 0.5s;
+  padding: 15px;
+}
+
+
+.custom-wrapper.open {
+  height: 14em;
+}
+
+.custom-menu-3 {
+  text-align: right;
+}
+
+.custom-toggle {
+  width: 34px;
+  height: 34px;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+.custom-toggle .bar {
+  background-color: #777;
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 100px;
+  position: absolute;
+  top: 18px;
+  right: 7px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.custom-toggle .bar:first-child {
+  -webkit-transform: translateY(-6px);
+  -moz-transform: translateY(-6px);
+  -ms-transform: translateY(-6px);
+  transform: translateY(-6px);
+}
+
+.custom-toggle.x .bar {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.custom-toggle.x .bar:first-child {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 47.999em) {
+
+  .custom-menu-3 {
+      text-align: left;
+  }
+
+  .custom-toggle {
+      display: block;
+  }
+
+}
+
+  #mynetwork {
+    position:relative;
+    width: 100%;
+    height: 300px;
+    border: 1px solid lightgray;
+    margin-bottom: 10px;
+  }
+  table.legend_table {
+    font-size: 11px;
+    border-width:1px;
+    border-color:#d3d3d3;
+    border-style:solid;
+  }
+  table.legend_table,td {
+    border-width:1px;
+    border-color:#d3d3d3;
+    border-style:solid;
+    padding: 2px;
+  }
+  div.table_content {
+    width:80px;
+    text-align:center;
+  }
+  div.table_description {
+    width:100px;
+  }
+
+  #operation {
+    
+  }
+  #network-popUp {
+    display:none;
+    position:absolute;
+    top:350px;
+    left:170px;
+    z-index:299;
+    width:60%;
+    background-color: #ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color: #000;
+    padding:10px;
+    text-align: center;
+  }
+  #data{
+    width: 100%;
+  }
+  .even {
+    padding: 10px;
+    /* border-bottom: 1px solid #e7e7e7; */
+  }
+  .odd {
+    padding: 10px;
+    /* border-bottom: 1px solid #e7e7e7; */
+  }
+  .navbar-default{
+    background-color: #000000;
+    padding: 5px;
+  }
+  #myCompany, #customer, #sender, #getter {
+    width: 100% !important;
+  }
+  #getter,#myCompany-add{
+   
+  }
+  .intrinsic-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+ 
+/* 16x9 Aspect Ratio */
+.intrinsic-container-16x9 {
+  padding-bottom: 56.25%;
+}
+ 
+/* 4x3 Aspect Ratio */
+.intrinsic-container-4x3 {
+  padding-bottom: 75%;
+}
+ 
+.intrinsic-container iframe {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+h2 {
+  font-size: 12px !important;
+}
+iframe {
+  padding: 0;
+  margin: 0;
+  border:none;
+}
+.navText{
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 50px;
+}
+.floatl{
+  float: left;
+}
+#mark-add{
+  margin-left: 5px;
+}

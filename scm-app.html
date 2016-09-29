@@ -10,23 +10,424 @@
     <link href="css/vis.min.css" rel="stylesheet">
     <script src="js/config.js" defer></script>
     <script data-main="scm-app" src="js/lib/require.js" defer></script>
-
-    <style type="text/css">
-       #supplyChainNetwork {
-      width: 800px;f
-      height: 400px;
-      border: 1px solid lightgray;
-    }
-    </style>
+    <link href="css/vendor/all.css" rel="stylesheet">
+    <link href="css/vis.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/easy-autocomplete.min.css"> 
+    <link rel="stylesheet" href="css/easy-autocomplete.themes.min.css">
+    <link href="css/app/app.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body>
-    <section id="message-queue"></section>
+  <!-- SCM App needs to combine -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#sidebar-menu" data-toggle="sidebar-menu" data-effect="st-effect-3" class="toggle pull-left visible-xs"><i class="fa fa-bars"></i></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class=" custom-brand" href="#"></div>
+      </div>
+      <div class="navbar-collapse collapse" id="collapse">
+        <div class="navText">
+          LUCID SCM-App
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <div class="container-fluid">
+      <div class="row" data-toggle="isotope">
+        <div class="item col-lg-4 col-md-4 col-xs-12 mgTop">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Meine Firma</h4>
+            </div>
+            <div class="panel-footer">
+              <div class="floatl">
+                <input id="myCompany" type="text" value="" placeholder="Firmenname">
+              </div>
+              <div>
+                <button class="btn btn-primary"  id="myCompany-add">Hinzufügen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-6 col-md-6 col-xs-12 mgTop">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Beziehungen</h4>
+            </div>
+            <div class="panel-footer">
+              <div class="floatl">
+                <input id="sender" type="text" value="" placeholder="Zulieferer">
+              </div>
+              <div class="floatl">
+                <input id="getter" type="text" value="" placeholder="Empfänger">
+              </div>
+              <button class="btn btn-primary"  id="relationship-add">Hinzufügen</button>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-2 col-md-2 col-xs-12 mgTop">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Metriken</h4>
+            </div>
+            <div class="panel-footer">
+              <div class="floatl">
+             <select id="mark" class="selectpicker show-tick" data-width="fit">
+                <option data-hidden="true">Auswahl</option><!-- hier ist korrekt -->
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+              </select>
+
+              </div>
+              <button class="btn btn-primary"  id="mark-add">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item col-lg-10 col-md-10 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">SCM-Graph</h4>
+            </div>
+            <div class="panel-footer">
+               <div id="mynetwork"></div>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-2 col-md-2 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Aktionen</h4>
+            </div>
+            <div class="panel-footer">
+               <div class="fileUpload btn btn-primary">
+                <span>Datei hochladen</span>
+                <input type="file" id="fileinput" class="upload" />
+              </div>
+              <div class="pdTop">
+                <input id="inputFileNameToSaveAs" placeholder="Dateiname"/>
+                <button class="btn btn-primary fileDownload" onclick="saveTextAsFile()">Datei speichern</button>
+              </div>
+              <div class="pdTop infocompany">
+                <div>Firma <b><div id="scmInfoNode"></div></b> markieren als:</div>
+                 <button class="btn-xs btn-primary scmaddrel" id="senderscm-add">Zulieferer</button>
+                 <button class="btn-xs btn-primary scmaddrel" id="getterscm-add">Empfänger</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-12 col-md-12 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Firmendetails</h4>
+            </div>
+            <div class="panel-footer">
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Details einblenden
+              </a>
+              <div class="collapse" id="collapseExample">
+                <iframe width="100%" height="3511px" frameborder="0" scrolling="no" src="https://pro.implisense.com/#/lists/new/companies/DEVFCLQFW054"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item col-lg-12 col-md-12 col-xs-12 debug">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4 class="panel-title">Debug</h4>
+            </div>
+            <div class="panel-footer">
+               <textarea id="data">digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }</textarea>
+               <div id="eventSpan">Details</div>
+                  <div id="companyNamePre">Firma</div>
+                  <div id="demo">ID</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item col-lg-12 col-md-12 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              Die vor­lie­gen­de SCM Anwendung ent­hält ver­trau­li­che In­for­mationen. Jeg­li­che ver­trags­frem­de Ver­viel­fäl­ti­gung und Wei­ter­ga­be die­ses Me­di­ums an Dritte be­darf ei­ner ex­pli­zi­ten Zu­stim­mung der Implisense GmbH. Wir freu­en uns über Ihr Feed­back un­ter info@implisense.com.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    var colors = {
+      "danger-color": "#e74c3c",
+      "success-color": "#81b53e",
+      "warning-color": "#f0ad4e",
+      "inverse-color": "#2c3e50",
+      "info-color": "#2d7cb5",
+      "default-color": "#6e7882",
+      "default-light-color": "#cfd9db",
+      "purple-color": "#9D8AC7",
+      "mustard-color": "#d4d171",
+      "lightred-color": "#e15258",
+      "body-bg": "#f6f6f6"
+    };
+    var config = {
+      theme: "admin",
+      skins: {
+        "default": {
+          "primary-color": "#3498db"
+        }
+      }
+    };
+  </script>
+  <script src="js/vendor/all.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+  <script src="js/app/app.js"></script>
+  <script src="js/fileDownload.js"></script>
+  <script src="js/vis.js"></script>
+  <script src="js/jquery.easy-autocomplete.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    var options = {
+      data: [{"id":"DE05X98UY622","label":"\"Millar Garages GmbH\"","score":"0.01"},
+      {"id":"DE08L9IH7I87","label":"\"Hötschl Metall- & Fahrzeugbau GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DE0ECV5NKG14","label":"\"Limbacher Bremsbelag GmbH\"","score":"0.04"},
+      {"id":"DE0LSF2GQI13","label":"\"Albrecht Auto-Zubehör GmbH\"","score":"0.02"},
+      {"id":"DE0MF5YU6L85","label":"\"Highco GmbH\"","score":"0.01"},
+      {"id":"DE15ZJQNLB66","label":"\"Eichelsbacher Kfz-Service GmbH\"","score":"0.00"},
+      {"id":"DE16ESUIEY70","label":"\"Bertrandt Automotive GmbH & Co. KG\"","score":"0.01"},
+      {"id":"DE181EDU2L53","label":"\"Schlegl Fahrzeugkomponenten e.K.\"","score":"0.00"},
+      {"id":"DE1BLF1LR700","label":"\"elkatec-Elektronik-Mechanik-Kabeltechnik GmbH\"","score":"0.00"},
+      {"id":"DE1GQS1XKT37","label":"\"I-RACKS GmbH\"","score":"0.00"},
+      {"id":"DE1K5VDT6Q09","label":"\"Delphi Deutschland GmbH\"","score":"0.01"},
+      {"id":"DE1SIO847W53","label":"\"HJS Emission Technology GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DE211UBN0O67","label":"\"Löwer GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DE29LXP1AK03","label":"\"S-Classic GmbH\"","score":"0.03"},
+      {"id":"DE2HP4VJ5W13","label":"\"Müller Fahrzeug-Technik GmbH\"","score":"0.00"},
+      {"id":"DE2IRK138E92","label":"\"Grässle GmbH\"","score":"0.00"},
+      {"id":"DE2WOFI8AF40","label":"\"Willi Lück GmbH\"","score":"0.00"},
+      {"id":"DE2Z11K7Q841","label":"\"ICT Innovativ Car Tech GmbH\"","score":"0.00"},
+      {"id":"DE34V3S7X841","label":"\"HELBAKO GmbH\"","score":"0.00"},
+      {"id":"DE3AXFM5V484","label":"\"DAT Dräxlmaier Automotivtechnik GmbH\"","score":"0.00"},
+      {"id":"DE3DSVQOY568","label":"\"Reifen Kiefer Technik GmbH\"","score":"0.18"},
+      {"id":"DE3O97GDZQ29","label":"\"M + K Maschinenbau- und Konstruktionsgesellschaft mbH\"","score":"0.05"},
+      {"id":"DE3Y9K3LFM13","label":"\"AutoZentrum Glowna GmbH\"","score":"0.01"},
+      {"id":"DE464DGNOP56","label":"\"MH Misslbeck Hummel Solution Group GmbH\"","score":"0.00"},
+      {"id":"DE46IGV6QN82","label":"\"Motorenfabrik Hatz GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DE49QGAKC989","label":"\"Thomas Nutzfahrzeuge GmbH\"","score":"0.00"},
+      {"id":"DE49RSJHC182","label":"\"Brüggen Fahrzeugwerk & Service GmbH\"","score":"0.00"},
+      {"id":"DE4QXDCDXD94","label":"\"PW Group GmbH\"","score":"0.01"},
+      {"id":"DE528SULWK92","label":"\"Die Werkstatt S & S GmbH\"","score":"0.00"},
+      {"id":"DE5XJVIE2851","label":"\"EPOKE Maschinenbau GmbH & Co. KG\"","score":"0.06"},
+      {"id":"DE67XC22V923","label":"\"N&E Fahrzeugtechnik GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DE6G3WSCYI27","label":"\"CARSIG GmbH\"","score":"0.00"},
+      {"id":"DE6L3PQYJ720","label":"\"INFUN GmbH\"","score":"0.02"},
+      {"id":"DE6LX91LHW39","label":"\"Motoren-Instandsetzung Oldenburg GmbH\"","score":"0.00"},
+      {"id":"DE6M9RC9R335","label":"\"Autoflug GmbH\"","score":"0.00"},
+      {"id":"DE6NZ56WUN81","label":"\"mor-vision UG (haftungsbeschränkt)\"","score":"0.00"},
+      {"id":"DE73Y1IIDD25","label":"\"LMS Logistik-Magazin Saarlouis GmbH\"","score":"0.03"},
+      {"id":"DE753BPKN503","label":"\"Wohlleben GmbH\"","score":"0.00"},
+      {"id":"DE76RZFZA819","label":"\"K+G tec GmbH Fahrzeugaufbauten & Nutzfahrzeuge\"","score":"0.00"},
+      {"id":"DE77ENWY2C86","label":"\"PROTOMASTER GmbH\"","score":"0.03"},
+      {"id":"DE7A7VZP9K85","label":"\"Vitrix GmbH\"","score":"0.07"},
+      {"id":"DE7AJUZ8P858","label":"\"Schnellecke Logistics Sachsen GmbH\"","score":"0.00"},
+      {"id":"DE7G5ICJRN26","label":"\"SCR SILS Center GmbH\"","score":"0.00"},
+      {"id":"DE85E45E5V64","label":"\"Balthasar Göbel & Sohn GmbH\"","score":"0.00"},
+      {"id":"DE8OMAU3JW70","label":"\"TRIPLE-ING. GmbH\"","score":"0.00"},
+      {"id":"DE8VB1ATNU15","label":"\"Karosseriezentrum Verteilerkreis GmbH\"","score":"0.00"},
+      {"id":"DE8VM1D27U46","label":"\"PEX Automotive GmbH\"","score":"0.00"},
+      {"id":"DE8YBDR3P968","label":"\"Theo Förch GmbH & Co. KG\"","score":"0.03"},
+      {"id":"DE9G3DW7L562","label":"\"Björn-Andre Lingk e.K. Autolackiererei und Karosseriebau\"","score":"0.00"},
+      {"id":"DE9OHGRKJ251","label":"\"PURAS Kunststoff- und Gummiproduktion GmbH\"","score":"0.00"},
+      {"id":"DE9WNYUSMP94","label":"\"Karosseriewerk Heinrich Meyer GmbH\"","score":"0.00"},
+      {"id":"DEA1ES9N0148","label":"\"MC Syncro Supply GmbH\"","score":"0.00"},
+      {"id":"DEA4S6HZV340","label":"\"KYB Europe Headquarters GmbH\"","score":"0.00"},
+      {"id":"DEA8V5UBZN62","label":"\"TAKATA AG\"","score":"0.01"},
+      {"id":"DEAGUOEERV38","label":"\"Thalheim GmbH Autoreparaturwerkstatt für Karosserie und Lack\"","score":"0.04"},
+      {"id":"DEAJU02JQ964","label":"\"d-i davit international GmbH\"","score":"0.02"},
+      {"id":"DEAR90T4T871","label":"\"HyLionTec GmbH\"","score":"0.00"},
+      {"id":"DEAZQPX05Q19","label":"\"Autoglas FIT GmbH\"","score":"0.00"},
+      {"id":"DEB23LBP6S63","label":"\"Plastic Omnium Auto Components GmbH\"","score":"0.00"},
+      {"id":"DEBBZ6V91H79","label":"\"Hyva Germany GmbH\"","score":"0.01"},
+      {"id":"DEBKLKPQ3152","label":"\"Neonroos GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DEBP34OB1M09","label":"\"SPHEROS Europa GmbH\"","score":"0.02"},
+      {"id":"DEBVZXUBBH43","label":"\"Spezialfahrzeugbau Tunger exklusiv GmbH\"","score":"0.00"},
+      {"id":"DEBY3PD68M29","label":"\"Brose Fahrzeugteile GmbH & Co. KG\"","score":" Gifhorn"},
+      {"id":"DEBY5TS8QR38","label":"\"AURIDA Europe Limited\"","score":"0.00"},
+      {"id":"DEC9MBMFYN55","label":"\"Stabilus GmbH\"","score":"0.01"},
+      {"id":"DECC6GZX0T31","label":"\"Steinlein & Baschin Karosseriefachbetrieb GmbH\"","score":"0.01"},
+      {"id":"DECDW7FH8P63","label":"\"Max Ehrenthaler GmbH\"","score":"0.00"},
+      {"id":"DECGFHFK8D06","label":"\"A. Schneider UG (haftungsbeschränkt)\"","score":"0.04"},
+      {"id":"DECLPTHJQF36","label":"\"3 E GmbH-Einsatz erneuerbarer Energien\"","score":"0.04"},
+      {"id":"DECN72Z2BT16","label":"\"Heigo Autotechnik GmbH\"","score":"0.00"},
+      {"id":"DECZLYNAAY05","label":"\"Euro Net Service ENS GmbH\"","score":"0.00"},
+      {"id":"DED3ARZ54F30","label":"\"Mechatronik Engineering GmbH\"","score":"0.00"},
+      {"id":"DEDB0YZOYW55","label":"\"TS Dienstleistungsgesellschaft mbH\"","score":"0.03"},
+      {"id":"DEDC2ND2J537","label":"\"Rapstruck GmbH\"","score":"0.00"},
+      {"id":"DEDHO7SFH926","label":"\"Steffan GmbH\"","score":"0.00"},
+      {"id":"DEDNVFG5WZ18","label":"\"Arnold Hengesbach Inh. Maria Helena Hengesbach e.K.\"","score":"0.03"},
+      {"id":"DEDVP7JZ0S24","label":"\"Füss Mobile GmbH\"","score":"0.00"},
+      {"id":"DEEH76VCQE41","label":"\"Trailer Point GmbH\"","score":"0.09"},
+      {"id":"DEEJDW8ONQ20","label":"\"Schelling Nutzfahrzeuge GmbH\"","score":"0.00"},
+      {"id":"DEENDUBQVX70","label":"\"Capristo Exhaust Systems GmbH\"","score":"0.00"},
+      {"id":"DEEUUQ27N512","label":"\"BFFT Gesellschaft für Fahrzeugtechnik mbH\"","score":"0.00"},
+      {"id":"DEF1AU6L3752","label":"\"Karosseriewerk Wiedler GmbH\"","score":"0.00"},
+      {"id":"DEFH655EHJ22","label":"\"AUDI AG\"","score":"0.01"},
+      {"id":"DEFS2N0I2W16","label":"\"Wulf Gaertner Autoparts AG\"","score":"0.00"},
+      {"id":"DEFVUN6AHC49","label":"\"Konrad Baur GmbH\"","score":"0.01"},
+      {"id":"DEGEZS7OTY74","label":"\"GeAc Produktionsdienstleistungs GmbH\"","score":"0.00"},
+      {"id":"DEGIGAZCRH78","label":"\"HBPO GmbH\"","score":"0.00"},
+      {"id":"DEHAJ0BMSH92","label":"\"AB Auto Büsgen GmbH & Co. KG\"","score":"0.09"},
+      {"id":"DEHH4JA4WY54","label":"\"Köper Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEHW0BVE8B36","label":"\"Automotive Interior World Production GmbH\"","score":"0.01"},
+      {"id":"DEHZY7SFD477","label":"\"Johnson Controls Objekt Zwickau GmbH & Co. KG\"","score":"0.02"},
+      {"id":"DEI0GFEDIK75","label":"\"Helmut Seitz GmbH Kfz-Produkte\"","score":"0.00"},
+      {"id":"DEI4X83W6865","label":"\"H & K Kfz Technik Limited\"","score":"0.10"},
+      {"id":"DEI6L36TY512","label":"\"VOGTLAND Autosport GmbH\"","score":"0.00"},
+      {"id":"DEIEP43PW422","label":"\"RUKU Anhänger GmbH\"","score":"0.01"},
+      {"id":"DEIP62MVWI05","label":"\"ThyssenKrupp Presta Chemnitz GmbH\"","score":"0.00"},
+      {"id":"DEIQYWGXGP72","label":"\"Wolfgang Brechtel GmbH\"","score":"0.01"},
+      {"id":"DEIS0MEPOO81","label":"\"Turck Beierfeld GmbH\"","score":"0.01"},
+      {"id":"DEIV38I3OF88","label":"\"Hellweg Auto Service oHG\"","score":"0.00"},
+      {"id":"DEIX299CP753","label":"\"Enescar Engineering GmbH\"","score":"0.00"},
+      {"id":"DEJ7CB9J1486","label":"\"MICCAVIONICS GmbH\"","score":"0.00"},
+      {"id":"DEJTTYJWPJ09","label":"\"Karosseriewerke Dresden GmbH\"","score":"0.00"},
+      {"id":"DEK43F18RG85","label":"\"Lennson Automobil GmbH\"","score":"0.00"},
+      {"id":"DEK4L2P07E61","label":"\"Top Gear GmbH\"","score":"0.22"},
+      {"id":"DEKDWXAPOS85","label":"\"Mercedes-Benz Minibus GmbH\"","score":"0.00"},
+      {"id":"DEKE0G6PAL50","label":"\"Hella Innenleuchten-Systeme GmbH\"","score":"0.00"},
+      {"id":"DEKGUZPG6252","label":"\"Busline und Services GmbH\"","score":"0.02"},
+      {"id":"DEKJYW50AY47","label":"\"W. Kniefert Karosseriebau-Lackiererei e.K.\"","score":"0.00"},
+      {"id":"DEKNHTBMJ668","label":"\"SYNTEKS Umformtechnik GmbH\"","score":"0.04"},
+      {"id":"DEKNIBWTYG00","label":"\"Paul Nutzfahrzeuge GmbH\"","score":"0.00"},
+      {"id":"DEKOJEEVVG32","label":"\"Kunststofftechnik Mittelhäuser GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DEKSM2030S39","label":"\"Ploen Karosserie- und Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEKW6QSO2X38","label":"\"Schrottenbacher oHG\"","score":"0.06"},
+      {"id":"DELA0WH7KD90","label":"\"BASF Catalysts Germany GmbH\"","score":"0.00"},
+      {"id":"DELBN8497B54","label":"\"Georg Fischer GmbH & Co. KG Heiztechnik- und Fahrzeugwerk\"","score":"0.00"},
+      {"id":"DELRYVVBN148","label":"\"Webasto-Werk W. Baier GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DEM4LGQHTU61","label":"\"raceparts.cc UG (haftungsbeschränkt)\"","score":"0.00"},
+      {"id":"DEM7STLN1A90","label":"\"Patrick Wudi e.K.\"","score":"0.01"},
+      {"id":"DEMDPDPCJ056","label":"\"Lear Corporation Beteiligungs GmbH\"","score":"0.00"},
+      {"id":"DEMIR0XCHW23","label":"\"SAAR-PFALZ-GARAGE GmbH\"","score":"0.00"},
+      {"id":"DEN203OT1M25","label":"\"Rüdiger Schmidt\"","score":" Fachbetrieb für Lack und Karosserie GmbH"},
+      {"id":"DENGN3WVRK36","label":"\"SR-Racing GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DENLHKMUBU18","label":"\"M. Porada Karosseriebau e.K.\"","score":"0.00"},
+      {"id":"DENMK8TJLK13","label":"\"Autoklinik Bockenem GmbH\"","score":"0.00"},
+      {"id":"DEO6OL0J4S14","label":"\"Dr. Ing. h.c. F. Porsche AG\"","score":"0.00"},
+      {"id":"DEODFY9S6T53","label":"\"Vantec Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEOE1CG05902","label":"\"Eissmann Automotive Deutschland GmbH\"","score":"0.00"},
+      {"id":"DEOJIBL9IO47","label":"\"Gilles Tooling KG\"","score":"0.00"},
+      {"id":"DEOMA9LHKG67","label":"\"Autohaus Boss GmbH\"","score":"0.00"},
+      {"id":"DEOV83TXBS20","label":"\"HBM Karosserietechnik\"","score":" Karosseriebau und Lackierungen GmbH"},
+      {"id":"DEOZ2VXQ4Z90","label":"\"E-mobile Motors GmbH\"","score":"0.00"},
+      {"id":"DEPOTP6LPR83","label":"\"F. Müller Fahrzeugbau GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DEPWV16UK932","label":"\"Harry Helfrich eK\"","score":"0.00"},
+      {"id":"DEPZ3U8S8646","label":"\"Brandschutztechnik Görlitz GmbH\"","score":"0.00"},
+      {"id":"DEQ4I08XQI83","label":"\"Barracuda Exhaust UG (haftungsbeschränkt)\"","score":"0.09"},
+      {"id":"DEQCKISKO271","label":"\"Stoffler Tuning GmbH\"","score":"0.00"},
+      {"id":"DEQHH51C0318","label":"\"BorgWarner Ludwigsburg GmbH\"","score":"0.01"},
+      {"id":"DEQMSBS5S058","label":"\"retec GmbH Germany\"","score":"0.01"},
+      {"id":"DEQX3U1ZOR56","label":"\"Faurecia Innenraum Systeme GmbH\"","score":"0.03"},
+      {"id":"DEQYID1RSC90","label":"\"BAG Bizerba Automotive GmbH\"","score":"0.08"},
+      {"id":"DEQZ3DZT9P78","label":"\"MAGNA Powertrain Germany GmbH\"","score":"0.01"},
+      {"id":"DERD2PFM1W62","label":"\"Brandt-Kühlfahrzeugbau GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DERQJUY73X90","label":"\"Schröder GmbH\"","score":"0.02"},
+      {"id":"DERSRAMBPL09","label":"\"Karosseriebau Norkowski GmbH\"","score":"0.00"},
+      {"id":"DES02NCLGB62","label":"\"IndiKar Individual Karosseriebau GmbH\"","score":"0.01"},
+      {"id":"DES1XWMDVO81","label":"\"Ssangyong Motors Deutschland GmbH\"","score":"0.00"},
+      {"id":"DES4JAB80G78","label":"\"Friedt GmbH\"","score":"0.00"},
+      {"id":"DES7QR58GU14","label":"\"Luft-Karosseriebau-GmbH\"","score":"0.04"},
+      {"id":"DESE26N83B45","label":"\"Volker Witamwas GmbH\"","score":"0.02"},
+      {"id":"DESKWBJKDF94","label":"\"Hundertmark Autoservice GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DESMC7YDEC34","label":"\"Rexhausen GmbH\"","score":"0.00"},
+      {"id":"DET1FTYF8O85","label":"\"FTL steering systems GmbH\"","score":"0.00"},
+      {"id":"DET4GM9Y9T66","label":"\"GETRAG FORD Transmissions GmbH\"","score":"0.04"},
+      {"id":"DET8IRHHOU49","label":"\"Kfz Lobenwein GmbH\"","score":"0.00"},
+      {"id":"DETJ454G3W81","label":"\"IFA-Kardan GmbH\"","score":"0.04"},
+      {"id":"DETJIV437260","label":"\"Müller Ltd. & Co. KG\"","score":"0.00"},
+      {"id":"DETUG2EVQ327","label":"\"CP autosport GmbH\"","score":"0.00"},
+      {"id":"DEU2LYYUVK14","label":"\"Autoliv B.V. & Co. KG\"","score":"0.02"},
+      {"id":"DEU5BF3DB038","label":"\"FAWI Fahrzeugwerk Wilsdruff GmbH\"","score":"0.04"},
+      {"id":"DEU7CTXXGO84","label":"\"F & F Motorsport e.K.\"","score":"0.00"},
+      {"id":"DEU9RQ2SIJ77","label":"\"Werdauer Fahrzeug- und Metallkomponenten GmbH\"","score":"0.02"},
+      {"id":"DEU9T700WN27","label":"\"Karosserie Bethke GmbH & Co. KG\"","score":"0.00"},
+      {"id":"DEUE86BGEN25","label":"\"Willing Nutzfahrzeugtechnik GmbH\"","score":"0.00"},
+      {"id":"DEUEUHCEZX39","label":"\"TRIDUM Automotive GmbH & Co. Electronics KG\"","score":"0.00"},
+      {"id":"DEUS0SUEIJ63","label":"\"GH-Tec Maschinenbau GmbH\"","score":"0.01"},
+      {"id":"DEVFCLQFW054","label":"\"Implisense GmbH\"","score":"0.00"},
+      {"id":"DEVLYOC82A15","label":"\"Brian James Trailers GmbH\"","score":"0.00"},
+      {"id":"DEVN49QXSV30","label":"\"Boshoku Automotive Europe GmbH\"","score":"0.03"},
+      {"id":"DEVOWU5IHW15","label":"\"Anhänger-Oswald Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEW01RV4FW50","label":"\"DKS Dräxlmaier Kunststoffsysteme GmbH\"","score":"0.00"},
+      {"id":"DEW6VKN7O051","label":"\"Karrosseriebau- und Kfz-Technik Wagner GmbH\"","score":"0.00"},
+      {"id":"DEW74DD0G249","label":"\"Burchert GmbH\"","score":"0.00"},
+      {"id":"DEW7A5YKM757","label":"\"CJ Automotive GmbH\"","score":"0.00"},
+      {"id":"DEWK2HSGUZ03","label":"\"Litens Automotive GmbH\"","score":"0.00"},
+      {"id":"DEX4J04EIZ47","label":"\"KHT Fahrzeugteile GmbH\"","score":"0.02"},
+      {"id":"DEX7VKDCUN27","label":"\"Auto Zimmermann GmbH\"","score":"0.00"},
+      {"id":"DEX9KU8XHL33","label":"\"Venturi GmbH\"","score":"0.00"},
+      {"id":"DEXABB9O9828","label":"\"Tecbike GmbH\"","score":"0.02"},
+      {"id":"DEY0RLZI5C19","label":"\"Karl Heinz Becker Karosserie- und Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEYAPV27P301","label":"\"Steitz GmbH\"","score":"0.00"},
+      {"id":"DEYG68ZCRQ88","label":"\"Tech S.A.T. Hamburg GmbH Technische Systeme für Avionic und Test\"","score":"0.00"},
+      {"id":"DEYINR4Q1M41","label":"\"IKF Industrie- und Kommunalfahrzeuge GmbH\"","score":"0.00"},
+      {"id":"DEYVKT0F8Y67","label":"\"Falkenrehder Fahrzeug- und Metall-Gesellschaft mbH\"","score":"0.00"},
+      {"id":"DEZ5MJM6AF83","label":"\"Werner Gutperle GmbH & Co. KG\"","score":"0.04"},
+      {"id":"DEZAHTTSZ096","label":"\"IAE Institut für Automobiltechnik und Elektromobilität GmbH\"","score":"0.00"},
+      {"id":"DEZKCTZYBF24","label":"\"VARIO mobil Fahrzeugbau GmbH\"","score":"0.00"},
+      {"id":"DEZRGYC2H379","label":"\"König Motorsport GmbH\"","score":"0.00"},
+      {"id":"DEZTUJ3AAL89","label":"\"Auto Service Schröder UG (haftungsbeschränkt)\"","score":"0.02"}],
+      getValue: "label",
+      list: {
+        match: {
+          enabled: true
+		    },
+		    sort: {
+  		    enabled: true
+		    }
+	    },
+    	template: {
+    		type: "description",
+    		fields: {
+    			description: "id"
+    		}
+    	}
+    };
+    $("#myCompany").easyAutocomplete(options);
+    $("#customer").easyAutocomplete(options);
+    $("#sender").easyAutocomplete(options);
+    $("#getter").easyAutocomplete(options);
+  </script>
+  <script>
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost/api',
+      headers: {
+        "auth-key":"token"
+      }
+    });
+  </script>
+  
+  <!-- SCM first Version START -->
+   <section id="message-queue"></section>
        
     <div class="container">
         <header>
             <div class="page-header">
-                <h1>SCM App</h1>
             </div>
         </header>
               </br>  From:                      
@@ -62,7 +463,8 @@
         </div><!-- /.row -->
     <hr>
     </div><!-- /.container -->
-
-
+  <!-- SCM first Version END -->
+  
+</body>
 </body>
 </html>
