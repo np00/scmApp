@@ -4,14 +4,17 @@
 // and https://github.com/RubenVerborgh/N3.js (Turtle parser)
 
 
-var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "extern.npetersen";
-var pw = "HahthohmahK3";
+
+var url_server = "https://lucid.eccenca.com/dataplatform/"
+//var user = "xx";
+//var pw = "xx";
 
 
 //var url_server = "https://lucid.implisense.com/dataplatform/"
-//var user = "implisense";
-//var pw = "4nAQCULrpNJqeB9yGiVd";
+var user = "xx";
+var pw = "xx";
+
+
 
 var access_token;
 

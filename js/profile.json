@@ -1,381 +1,6 @@
-/**
- *  custom js functions 09/2016 Implisense GmbH
- */
-$(function() {
-function updateTextarea() {
-    var ta = document.getElementById('data');
-    ta.value = (ta.value.slice(0,-1));
-    $("#data").val(ta.value);
-  }
-  $("#senderscm-add").click(function(){
-    var myCompanyInput = $('#scmInfoNode').html();
-    myCompanyInput = myCompanyInput.replace(/\&amp;/g,'&');
-    $('input#sender').val("\"" + myCompanyInput + "\"");
-  });
-  $("#getterscm-add").click(function(){
-    var myGetterInput = $('#scmInfoNode').html();
-    myGetterInput = myGetterInput.replace(/\&amp;/g,'&');
-    $('input#getter').val("\"" + myGetterInput + "\"");
-  });
-  $("#myCompany-add").click(function(){
-    updateTextarea();
-    var txt = $.trim($("#myCompany").val());
-    $("#data").val($("#data").val() + txt + ";}");
-    draw();
-  });
-  $("#customer-add").click(function(){
-    updateTextarea();
-    var txt = $.trim($("#customer").val());
-    $("#data").val($("#data").val() + txt + ";}");
-    draw();
-  });
-  $("#relationship-add").click(function(){
-    updateTextarea();
-    var sender = $.trim($("#sender").val());
-    var getter = $.trim($("#getter").val());
-    var markVal = $("#mark option:selected").text();
-    if( !getter ){
-      alert ('Bitte Empfänger Firma eingeben');
-    }
-    else if( !sender ){
-      alert ('Bitte Zulieferer Firma eingeben');
-    }
-    else if( sender && getter ){
-      $("#data").val($("#data").val() + sender + "->" + getter + ";}");
-      draw();
-      $("html, body").animate({
-        scrollTop: 0
-      }, 600);    
-    }
-  });
-  // create a network
-  var container = document.getElementById('mynetwork');
-  var options = {
-    //Configure
-      configure: {
-        enabled: false,
-        filter: 'nodes,edges',
-        container: mynetwork,
-        showButton: true
-      },
-    //Configure
-    //Edges
-      edges:{
-        arrows: {
-          to:     {enabled: false, scaleFactor:1},
-          middle: {enabled: false, scaleFactor:1},
-          from:   {enabled: false, scaleFactor:1}
-        },
-        arrowStrikethrough: true,
-        color: {
-          color:'#0000ff',
-          highlight:'#008000',
-          hover: '#848484',
-          inherit: 'from',
-          opacity:1.0
-        },
-        dashes: false,
-        font: {
-          color: '#343434',
-          size: 14, // px
-          face: 'arial',
-          background: 'none',
-          strokeWidth: 2, // px
-          strokeColor: '#ffffff',
-          align:'horizontal'
-        },
-        hidden: false,
-        hoverWidth: 1.5,
-        label: undefined,
-        labelHighlightBold: true,
-        length: undefined,
-        physics: true,
-        scaling:{
-          min: 1,
-          max: 15,
-          label: {
-            enabled: true,
-            min: 14,
-            max: 30,
-            maxVisible: 30,
-            drawThreshold: 5
-          },
-          customScalingFunction: function (min,max,total,value) {
-            if (max === min) {
-              return 0.5;
-            }
-            else {
-              var scale = 1 / (max - min);
-              return Math.max(0,(value - min)*scale);
-            }
-          }
-        },
-        selectionWidth: 1,
-        selfReferenceSize:20,
-        shadow:{
-          enabled: false,
-          color: 'rgba(0,0,0,0.5)',
-          size:10,
-          x:5,
-          y:5
-        },
-        smooth: {
-          enabled: true,
-          type: "dynamic",
-          roundness: 0.5
-        },
-        title:undefined,
-        width: 1,
-        value: undefined
-      },
-    //Edges
-    //Groups
-      groups:{
-        useDefaultGroups: true,
-        myGroupId:{
-          /*node options*/
-        }
-      },
-    //Groups
-    //Interaction
-      interaction:{
-        dragNodes:true,
-        dragView: true,
-        hideEdgesOnDrag: false,
-        hideNodesOnDrag: false,
-        hover: false,
-        hoverConnectedEdges: true,
-        keyboard: {
-          enabled: false,
-          speed: {x: 10, y: 10, zoom: 0.02},
-          bindToWindow: true
-        },
-        multiselect: false,
-        navigationButtons: true,
-        selectable: true,
-        selectConnectedEdges: true,
-        tooltipDelay: 300,
-        zoomView: true
-      },
-    //Interaction
-    //Layout
-      layout: {
-        randomSeed: undefined,
-        improvedLayout:true,
-        hierarchical: {
-          enabled:true,
-          levelSeparation: 450,
-          nodeSpacing: 100,
-          treeSpacing: 200,
-          blockShifting: true,
-          edgeMinimization: true,
-          parentCentralization: true,
-          direction: 'LR',        // UD, DU, LR, RL
-          sortMethod: 'hubsize'   // hubsize, directed
-        }
-      },
-    //Layout
-    //Manipulation
-      
-    //Manipulation
-    //NOdes
-      nodes:{
-        borderWidth: 1,
-        borderWidthSelected: 2,
-        brokenImage:undefined,
-        color: {
-          border: '#fff000',
-          background: '#0000ff',
-          highlight: {
-            border: '#fff000',
-            background: '#008000'
-          },
-          hover: {
-            border: '#2B7CE9',
-            background: '#D2E5FF'
-          }
-        },
-        fixed: {
-          x:false,
-          y:false
-        },
-        font: {
-          color: '#343434',
-          size: 14, // px
-          face: 'arial',
-          background: 'none',
-          strokeWidth: 0, // px
-          strokeColor: '#ffffff',
-          align: 'center'
-        },
-        group: undefined,
-        hidden: false,
-        image: undefined,
-        label: undefined,
-        labelHighlightBold: true,
-        level: undefined,
-        mass: 1,
-        physics: true,
-        scaling: {
-          min: 1,
-          max: 30,
-          label: {
-            enabled: false,
-            min: 14,
-            max: 30,
-            maxVisible: 30,
-            drawThreshold: 5
-          },
-          customScalingFunction: function (min,max,total,value) {
-            if (max === min) {
-              return 0.5;
-            }
-            else {
-              //let scale = 1 / (max - min);
-              return Math.max(0,(value - min)*scale);
-            }
-          }
-        },
-        shadow:{
-          enabled: false,
-          color: 'rgba(0,0,0,0.5)',
-          size:10,
-          x:5,
-          y:5
-        },
-        shape: 'dot',
-        shapeProperties: {
-          borderDashes: false, // only for borders
-          borderRadius: 6,     // only for box shape
-          interpolation: false,  // only for image and circularImage shapes
-          useImageSize: false,  // only for image and circularImage shapes
-          useBorderWithImage: false  // only for image shape
-        },
-        size: 15,
-        title: undefined,
-        value: undefined
-      }
-    //Nodes
-    //Physics
-    
-    //Physics
-  
-  
-  };
-  var data = {};
-  var network = new vis.Network(container, data, options);
-
-  $('#draw').click(draw);
-  $('#myCompany-add').click(draw);
-  $('#customer-add').click(draw);
-  $('#relationship-add').click(draw);
-
-
-  $('a.example').click(function (event) {
-    var url = $(event.target).data('url');
-    $.get(url)
-        .done(function(dotData) {
-          $('#data').val(dotData);
-          draw();
-        })
-        .fail(function () {
-          $('#error').html('Error: Cannot fetch the example data because of security restrictions in JavaScript. Run the example from a server instead of as a local file to resolve this problem. Alternatively, you can copy/paste the data of DOT graphs manually in the textarea below.');
-          resize();
-        });
-  });
-
-  $(window).resize(resize);
-  $(window).load(draw);
-
-  $('#data').keydown(function (event) {
-    if (event.ctrlKey && event.keyCode === 13) { // Ctrl+Enter
-      draw();
-      event.stopPropagation();
-      event.preventDefault();
-    }
-  });
-
-  function resize() {
-    $('#contents').height($('body').height() - $('#header').height() - 30);
-  }
-
-  function draw () {
-    try {
-      resize();
-      $('#error').html('');
-
-      // Provide a string with data in DOT language
-      data = vis.network.convertDot($('#data').val());
-
-      network.setData(data);
-    }
-    catch (err) {
-      // set the cursor at the position where the error occurred
-      var match = /\(char (.*)\)/.exec(err);
-      if (match) {
-        var pos = Number(match[1]);
-        var textarea = $('#data')[0];
-        if(textarea.setSelectionRange) {
-          textarea.focus();
-          textarea.setSelectionRange(pos, pos);
-        }
-      }
-
-      // show an error message
-      $('#error').html(err.toString());
-    }
-  }
-    var network = new vis.Network(container, data, options);
-    
-    network.on("click", function (params) {
-      
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
-        var companyPre = JSON.stringify(params, null,0);
-        dataJson = JSON.parse(companyPre);
-        console.log(dataJson.edges);
-        //alert (dataJson.nodes);
-        $('#companyNamePre').html(dataJson.nodes);
-        $('#scmInfoNode').html(dataJson.nodes);
-        $('.scmaddrel').show();
-        $('.infocompany').show();
-        var json = {
-    "profiles": [
-        {
-  "id":"DEFH655EHJ22",
-  "name":"\"AUDI AG\"",
-  "street":"Auto-Union-Straße 1",
-  "zip":"85045",
-  "city":"Ingolstadt",
-  "score":"0.01",
-  "geo": {
-    "lat": 48.781126,
-    "lon": 11.424196
-  },
-  "active": true,
-  "phone":"+49 841 890",
-  "fax":"+49 841 8932524",
-  "email":"kundenbetreuung@audi.de",
-  "url":"http://www.uni-zum-anfassen.de/",
-  "socialMedia": {
-    "facebook":"https://www.facebook.com/Audi.AG",
-    "googleplus":"https://plus.google.com/+audide/posts",
-    "twitter":"https://twitter.com/audi_press"
-  },
-  "legalForm":"Aktiengesellschaft",
-  "externalIds": {
-    "hr": {
-      "court":"Ingolstadt",
-      "type":"HRB",
-      "number":"1"
-    },
-    "vat":"DE811115368",
-    "ebid":"2500965832053"
-  },
-  "foundingDate": -1562806800000,
-  "capital":"110080000.00 EUR",
-  "timestamp": 1470337101948,
-  "props":{"topics": [
+{
+  "id": "DEFH655EHJ22",
+  "topics": [
     {
       "name": "Anlagen",
       "score": 0.1498919576406479
@@ -2401,179 +2026,11 @@ function updateTextarea() {
       "name": "Zeppelin Universität gemeinnützige GmbH",
       "url": "https://www.zu.de/"
     }
-  ]},
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.10",
-        "title":"Herstellung von Kraftwagen und Kraftwagenmotoren"
-      },
-      {
-        "type":"nace",
-        "code":"G45.31",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.10",
-        "title":"Herstellung von Kraftwagen und Kraftwagenmotoren"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.31.0",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.10",
-      "G45.31.0"
-    ]
-  },
-  "revenue": {
-    "code":">100m",
-    "year":"2014"
-  },
-  "employees": {
-    "code":">1000",
-    "year":"2014"
-  },
-  "eventsWrapper": { "events": [
-    {
-      "type": "HRB",
-      "key": "HRB_OTHER",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Beim Amtsgericht Ingolstadt -Registergericht- wurde eine Liste der Mitglieder des Aufsichtsrats eingereicht, § 106 AktG.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=990625&land_abk=by",
-      "timestamp": 1468965600000
-    },
-    {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Prokura erloschen: Schulze, Fred, Bad Wimpfen, *24.02.1967. Gesamtprokura gemeinsam mit einem Vorstandsmitglied oder einem anderen Prokuristen: Mayer, Albert, Neuburg a. d. Donau, *08.01.1954.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=985378&land_abk=by",
-      "timestamp": 1467151200000
-    },
-    {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Bestellt: Vorstand: Dr. Knirsch, Stefan, Flein, *05.05.1966. Ausgeschieden: Vorstand: Dr. Ing. Hackenberg, Ulrich, Wettstetten, *12.05.1950.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=969957&land_abk=by",
-      "timestamp": 1461621600000
-    },
-    {
-      "type": "HRB",
-      "key": "HRB_OTHER",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Beim Amtsgericht Ingolstadt -Registergericht- wurde eine Liste der Mitglieder des Aufsichtsrats eingereicht, § 106 AktG.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=954631&land_abk=by",
-      "timestamp": 1456527600000
-    },
-    {
-      "type": "HRB",
-      "key": "HRB_OTHER",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Beim Amtsgericht Ingolstadt -Registergericht- wurde eine Liste der Mitglieder des Aufsichtsrats eingereicht, § 106 AktG.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=941672&land_abk=by",
-      "timestamp": 1452812400000
-    },
-    {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Gesamtprokura gemeinsam mit einem Vorstandsmitglied oder einem anderen Prokuristen: Biegner, Wolfgang, Stammham, *11.07.1968; Braßler, Dietrich, Ingolstadt, *24.11.1960; Stettner, Helmut, Kernen, *31.03.1960.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=931946&land_abk=by",
-      "timestamp": 1450134000000
-    },
-    {
-      "type": "HRB",
-      "key": "M_AND_A",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Die Audi Vertriebsbetreuungsgesellschaft mbH mit dem Sitz in Ingolstadt (Amtsgericht Ingolstadt HRB 1972) ist auf Grund des Verschmelzungsvertrages vom 18.3.2015 mit der Gesellschaft als übernehmendem Rechtsträger verschmolzen. Nicht eingetragen: Den Gläubigern der an der Verschmelzung beteiligten Rechtsträger ist, wenn sie binnen sechs Monaten nach dem Tag, an dem die Eintragung der Verschmelzung in das Register des Sitzes desjenigen Rechtsträgers, dessen Gläubiger sie sind, nach § 19 Abs. 3 UmwG bekannt gemacht worden ist, ihren Anspruch nach Grund und Höhe schriftlich anmelden, Sicherheit zu leisten, soweit sie nicht Befriedigung verlangen können. Dieses Recht steht ihnen jedoch nur zu, wenn sie glaubhaft machen, dass durch die Verschmelzung die Erfüllung ihrer Forderung gefährdet wird.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=928917&land_abk=by",
-      "timestamp": 1449097200000
-    },
-    {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Ausgeschieden: Vorstand: de Meo, Luca, Berlin, *13.06.1967. Bestellt: Vorstand: Dr. Voggenreiter, Dietmar, Ingolstadt, *04.01.1969.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=928683&land_abk=by",
-      "timestamp": 1449097200000
-    },
-    {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Prokura erloschen: Husterer, Rupert, Buxheim, *06.11.1955.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=925347&land_abk=by",
-      "timestamp": 1447887600000
-    },
-    {
-      "type": "HRB",
-      "key": "HRB_OTHER",
-      "value": "HRB 1: AUDI Aktiengesellschaft, Ingolstadt, Auto-Union-Str. 1, 85045 Ingolstadt. Beim Amtsgericht Ingolstadt -Registergericht- wurde eine Liste der Mitglieder des Aufsichtsrats eingereicht, § 106 AktG.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=923484&land_abk=by",
-      "timestamp": 1447369200000
-    }
-  ]}
+  ]
 },
 {
-  "id":"DE9WNYUSMP94",
-  "name":"\"Karosseriewerk Heinrich Meyer GmbH\"",
-  "street":"Große Breite 5",
-  "zip":"37077",
-  "city":"Göttingen",
-  "geo": {
-    "lat": 51.559917,
-    "lon": 9.931924
-  },
-  "active": true,
-  "phone":"+49 551 50330",
-  "fax":"+49 551 5033290",
-  "email":"info@karosseriewerk-meyer.de",
-  "url":"http://www.karosseriewerk-meyer.de/Karosseriewerk_Meyer_Goettingen/Home.html",
-  "socialMedia": {},
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Göttingen",
-      "type":"HRB",
-      "number":"815"
-    },
-    "vat":"DE811267320",
-    "ebid":"2500605850171"
-  },
-  "foundingDate": 187916400000,
-  "capital":"500000.00 EUR",
-  "timestamp": 1475345191999,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.20",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.20.0",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.20.0"
-    ]
-  },
-  "revenue": {
-    "code":"1m-5m",
-    "year":"2014"
-  },
-  "employees": {
-    "code":"51-100",
-    "year":"2014"
-  },
-  "props":{ "topics": [
+  "id": "DE9WNYUSMP94",
+  "topics": [
     {
       "name": "Hochwertigkeit",
       "score": 0.2809009850025177
@@ -3253,816 +2710,2255 @@ function updateTextarea() {
       "url": "http://www.transfrigoroute.de/"
     }
   ],
-  "outLinks": []}
+  "outLinks": []
 },
 {
-  "id":"DEHAJ0BMSH92",
-  "name":"\"AB Auto Büsgen GmbH & Co. KG\"",
-  "street":"Buchholzstraße 13",
-  "zip":"51061",
-  "city":"Köln",
-  "geo": {
-    "lat": 50.985259,
-    "lon": 7.000144
-  },
-  "eventsWrapper": { "events": [
+  "id": "DEHAJ0BMSH92",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DEJTTYJWPJ09",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DEA1ES9N0148",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DEKOJEEVVG32",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DES02NCLGB62",
+  "topics": [
     {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRA 26778:AB Auto Büsgen GmbH & Co. KG, Köln, Buchholzstraße 13, 51061 Köln.Einzelprokura: Haziri, Shkelzen, Köln, *17.12.1988.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=1066746&land_abk=nw",
-      "timestamp": 1408485600000
+      "name": "Tradition",
+      "score": 1
     },
     {
-      "type": "HRB",
-      "key": "MANAGEMENT_AND_TEAM",
-      "value": "HRA 26778:AB Auto Büsgen GmbH & Co. KG, Köln, Buchholzstraße 13, 51061 Köln.Prokura erloschen: Ramrath, Frank, Köln, *17.05.1966.",
-      "source": "http://www.handelsregisterbekanntmachungen.de/skripte/hrb.php?rb_id=1063195&land_abk=nw",
-      "timestamp": 1407448800000
+      "name": "Komplexität",
+      "score": 0.9691648483276367
+    },
+    {
+      "name": "Qualität",
+      "score": 0.9521459341049194
+    },
+    {
+      "name": "Optimierung",
+      "score": 0.8379578590393066
+    },
+    {
+      "name": "Design",
+      "score": 0.8137404322624207
+    },
+    {
+      "name": "Innovation",
+      "score": 0.5987220406532288
+    },
+    {
+      "name": "Fertigung",
+      "score": 0.5803033113479614
+    },
+    {
+      "name": "Kompetenz",
+      "score": 0.5586612224578857
+    },
+    {
+      "name": "Anspruch",
+      "score": 0.536267876625061
+    },
+    {
+      "name": "Flexibilität",
+      "score": 0.485914021730423
+    },
+    {
+      "name": "Expertise",
+      "score": 0.4110969603061676
+    },
+    {
+      "name": "Modern",
+      "score": 0.4038432836532593
+    },
+    {
+      "name": "Produktivität",
+      "score": 0.38803398609161377
+    },
+    {
+      "name": "Prozesse",
+      "score": 0.3790986239910126
+    },
+    {
+      "name": "Teams",
+      "score": 0.3779716491699219
+    },
+    {
+      "name": "Intelligenz",
+      "score": 0.3523065149784088
+    },
+    {
+      "name": "Professionalität",
+      "score": 0.34011876583099365
+    },
+    {
+      "name": "Internationalität",
+      "score": 0.33681294322013855
+    },
+    {
+      "name": "Offenheit",
+      "score": 0.30397987365722656
+    },
+    {
+      "name": "Nachhaltigkeit",
+      "score": 0.2897198498249054
+    },
+    {
+      "name": "Loyalität",
+      "score": 0.2822445034980774
+    },
+    {
+      "name": "Niederlassungen",
+      "score": 0.2783161997795105
+    },
+    {
+      "name": "Fabrik",
+      "score": 0.2734869420528412
+    },
+    {
+      "name": "Emotionalität",
+      "score": 0.2681557536125183
+    },
+    {
+      "name": "Effizienz",
+      "score": 0.2640382647514343
+    },
+    {
+      "name": "Business Intelligence",
+      "score": 0.25859150290489197
+    },
+    {
+      "name": "Anlagen",
+      "score": 0.2519972622394562
+    },
+    {
+      "name": "Dynamik",
+      "score": 0.25045284628868103
+    },
+    {
+      "name": "Methodik",
+      "score": 0.24636870622634888
+    },
+    {
+      "name": "Kosten",
+      "score": 0.24477621912956238
+    },
+    {
+      "name": "Hochwertigkeit",
+      "score": 0.24274452030658722
+    },
+    {
+      "name": "Perfektionismus",
+      "score": 0.23747457563877106
+    },
+    {
+      "name": "Erfahrungen",
+      "score": 0.2361430525779724
+    },
+    {
+      "name": "Zuverlässigkeit",
+      "score": 0.23568327724933624
+    },
+    {
+      "name": "Einfachheit",
+      "score": 0.20481765270233154
+    },
+    {
+      "name": "Asien",
+      "score": 0.2039380818605423
+    },
+    {
+      "name": "Wirtschaftlichkeit",
+      "score": 0.2037699818611145
+    },
+    {
+      "name": "Ethik",
+      "score": 0.191938579082489
+    },
+    {
+      "name": "Investitionen",
+      "score": 0.1890673190355301
+    },
+    {
+      "name": "Arbeitsklima",
+      "score": 0.18763166666030884
+    },
+    {
+      "name": "Ausbildung",
+      "score": 0.18359610438346863
+    },
+    {
+      "name": "Standorte",
+      "score": 0.1762082725763321
+    },
+    {
+      "name": "Klimaschutz",
+      "score": 0.17555101215839386
+    },
+    {
+      "name": "Kontinuität",
+      "score": 0.17504343390464783
+    },
+    {
+      "name": "Big Data Technologien",
+      "score": 0.16563290357589722
+    },
+    {
+      "name": "Kundenorientierung",
+      "score": 0.16098977625370026
+    },
+    {
+      "name": "Arbeitssicherheit",
+      "score": 0.1425457000732422
+    },
+    {
+      "name": "Sicherheit",
+      "score": 0.13815760612487793
+    },
+    {
+      "name": "CRM",
+      "score": 0.12299462407827377
+    },
+    {
+      "name": "ERP",
+      "score": 0.11937937885522842
+    },
+    {
+      "name": "Stellenangebote",
+      "score": 0.11642250418663025
+    },
+    {
+      "name": "Transparenz",
+      "score": 0.1148042306303978
+    },
+    {
+      "name": "Chat",
+      "score": 0.09965013712644577
+    },
+    {
+      "name": "Lernen",
+      "score": 0.09163004904985428
+    },
+    {
+      "name": "Cloud",
+      "score": 0.08598724007606506
+    },
+    {
+      "name": "Nordamerika",
+      "score": 0.08550914376974106
+    },
+    {
+      "name": "Community",
+      "score": 0.08522430807352066
+    },
+    {
+      "name": "Erlebnis",
+      "score": 0.08466731756925583
+    },
+    {
+      "name": "Wachstum",
+      "score": 0.07334265112876892
+    },
+    {
+      "name": "Umweltfreundlichkeit",
+      "score": 0.07238603383302689
+    },
+    {
+      "name": "Südamerika",
+      "score": 0.06147908419370651
+    },
+    {
+      "name": "Apps",
+      "score": 0.05782336741685867
+    },
+    {
+      "name": "Energieeffizienz",
+      "score": 0.0565963089466095
+    },
+    {
+      "name": "Videos",
+      "score": 0.04832334816455841
+    },
+    {
+      "name": "Luxus",
+      "score": 0.04291006922721863
+    },
+    {
+      "name": "Photovoltaik",
+      "score": 0.04219014570116997
+    },
+    {
+      "name": "Unabhängigkeit",
+      "score": 0.037367869168519974
+    },
+    {
+      "name": "Regionalität",
+      "score": 0.028781883418560028
+    },
+    {
+      "name": "Social Media",
+      "score": 0.028491459786891937
+    },
+    {
+      "name": "Wagniskapital",
+      "score": 0.024632606655359268
+    },
+    {
+      "name": "Familienfreundlichkeit",
+      "score": 0.022874772548675537
+    },
+    {
+      "name": "Erdgas",
+      "score": 0.02207178622484207
+    },
+    {
+      "name": "Solaranlagen",
+      "score": 0.02205834724009037
+    },
+    {
+      "name": "Europa",
+      "score": 0.01834273338317871
+    },
+    {
+      "name": "Spaß",
+      "score": 0.01121865026652813
+    },
+    {
+      "name": "E-Commerce",
+      "score": 0.010691694915294647
+    },
+    {
+      "name": "Schnelligkeit",
+      "score": 0.00855693407356739
+    },
+    {
+      "name": "Servicenummer",
+      "score": 0.008435802534222603
+    },
+    {
+      "name": "Kreativität",
+      "score": 0
+    },
+    {
+      "name": "Lager",
+      "score": 0
+    },
+    {
+      "name": "Langfristigkeit",
+      "score": 0
+    },
+    {
+      "name": "Naher Osten",
+      "score": 0
+    },
+    {
+      "name": "Vertraulichkeit",
+      "score": 0
     }
-  ]},
-  "active": true,
-  "legalForm":"Kommanditgesellschaft",
-  "externalIds": {
-    "hr": {
-      "court":"Köln",
-      "type":"HRA",
-      "number":"26778"
+  ],
+  "properties": [
+    {
+      "superType": "Tradition",
+      "score": 1
     },
-    "ebid":"2500525226582"
-  },
-  "foundingDate": 1241042400000,
-  "timestamp": 1475632585416,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.20",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      },
-      {
-        "type":"nace",
-        "code":"G45.1",
-        "title":"Handel mit Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.20",
-        "title":"Instandhaltung und Reparatur von Kraftwagen"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.20",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.1",
-        "title":"Handel mit Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.20.1",
-        "title":"Lackieren von Kraftwagen"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.20",
-      "G45.1",
-      "G45.20.1"
-    ]
-  }
-},
-{
-  "id":"DEJTTYJWPJ09",
-  "name":"\"Karosseriewerke Dresden GmbH\"",
-  "street":"Heinrich-Gläser-Straße 20",
-  "zip":"01454",
-  "city":"Radeberg",
-  "geo": {
-    "lat": 51.111144,
-    "lon": 13.904075
-  },
-  "active": true,
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Dresden",
-      "type":"HRB",
-      "number":"815"
+    {
+      "superType": "Komplexität",
+      "score": 0.9691648483276367
     },
-    "ebid":"2500056384768"
-  },
-  "foundingDate": 653522400000,
-  "capital":"5120000.00 EUR",
-  "timestamp": 1475936116809,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0"
-    ]
-  },
-  "revenue": {
-    "code":">100m",
-    "year":"2014"
-  },
-  "employees": {
-    "code":"101-500",
-    "year":"2014"
-  }
-},
-{
-  "id":"DEA1ES9N0148",
-  "name":"\"MC Syncro Supply GmbH\"",
-  "street":"Henry Ford Straße 1 Gebäude 65",
-  "zip":"50725",
-  "city":"Köln",
-  "geo": {
-    "lat": 50.938361,
-    "lon": 6.959974
-  },
-  "active": true,
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Hannover",
-      "type":"HRB",
-      "number":"56288"
+    {
+      "superType": "Qualität",
+      "score": 0.9521459341049194
     },
-    "ebid":"2500514687103"
-  },
-  "foundingDate": 867276000000,
-  "capital":"61354.80 EUR",
-  "timestamp": 1475401031670,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.31",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.31.0",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0",
-      "G45.31.0"
-    ]
-  },
-  "revenue": {
-    "code":"5m-20m",
-    "year":"2013"
-  },
-  "employees": {
-    "code":"101-500",
-    "year":"2014"
-  }
-},
-{
-  "id":"DEKOJEEVVG32",
-  "name":"\"Kunststofftechnik Mittelhäuser GmbH & Co. KG\"",
-  "street":"Am Krähenberg 7",
-  "zip":"30900",
-  "city":"Wedemark",
-  "geo": {
-    "lat": 52.53307,
-    "lon": 9.743336
-  },
-  "active": true,
-  "legalForm":"Kommanditgesellschaft",
-  "externalIds": {
-    "hr": {
-      "court":"Hannover",
-      "type":"HRA",
-      "number":"201318"
+    {
+      "superType": "Optimierung",
+      "score": 0.8379578590393066
     },
-    "ebid":"2500023179083"
-  },
-  "foundingDate": 1237244400000,
-  "timestamp": 1470332520329,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.31",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"nace",
-        "code":"G45.32",
-        "title":"Einzelhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.31.0",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.32.0",
-        "title":"Einzelhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0",
-      "G45.31.0",
-      "G45.32.0"
-    ]
-  }
-},
-{
-  "id":"DES02NCLGB62",
-  "name":"\"IndiKar Individual Karosseriebau GmbH\"",
-  "street":"Am Schmelzbach 85",
-  "zip":"08112",
-  "city":"Wilkau-Haßlau",
-  "geo": {
-    "lat": 50.68614,
-    "lon": 12.511186
-  },
-  "active": true,
-  "phone":"+49 375 60680",
-  "fax":"+49 375 6068200",
-  "email":"info@indikar.com",
-  "url":"http://www.indikar.com/de/",
-  "socialMedia": {},
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Chemnitz",
-      "type":"HRB",
-      "number":"21127"
+    {
+      "superType": "Design",
+      "score": 0.8137404322624207
     },
-    "vat":"DE813077484",
-    "ebid":"2500172067880"
-  },
-  "foundingDate": 1074207600000,
-  "capital":"250000.00 EUR",
-  "timestamp": 1475512389239,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.20",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      },
-      {
-        "type":"nace",
-        "code":"M71.12",
-        "title":"Ingenieurbüros"
-      },
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.20.0",
-        "title":"Herstellung von Karosserien, Aufbauten und Anhängern"
-      },
-      {
-        "type":"wz2008",
-        "code":"71.12.2",
-        "title":"Ingenieurbüros für technische Fachplanung und Ingenieurdesign"
-      },
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.20.0",
-      "M71.12.2",
-      "C29.32.0"
-    ]
-  },
-  "revenue": {
-    "code":"5m-20m",
-    "year":"2014"
-  },
-  "employees": {
-    "code":"101-500",
-    "year":"2014"
-  }
-},
-{
-  "id":"DEUEUHCEZX39",
-  "name":"\"TRIDUM Automotive GmbH & Co. Electronics KG\"",
-  "street":"Emil-Riedl-Weg 6",
-  "zip":"82049",
-  "city":"Pullach i. Isartal",
-  "geo": {
-    "lat": 48.060501,
-    "lon": 11.528864
-  },
-  "active": true,
-  "legalForm":"Kommanditgesellschaft",
-  "externalIds": {
-    "hr": {
-      "court":"München",
-      "type":"HRA",
-      "number":"95948"
+    {
+      "superType": "Innovation",
+      "score": 0.5987220406532288
     },
-    "ebid":"2500396660775"
-  },
-  "foundingDate": 1282082400000,
-  "timestamp": 1475859814487,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.10",
-        "title":"Herstellung von Kraftwagen und Kraftwagenmotoren"
-      },
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"M71.12",
-        "title":"Ingenieurbüros"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.10",
-        "title":"Herstellung von Kraftwagen und Kraftwagenmotoren"
-      },
-      {
-        "type":"wz2008",
-        "code":"29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"71.12.9",
-        "title":"Sonstige Ingenieurbüros"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.10",
-      "C29.32",
-      "M71.12.9"
-    ]
-  }
-},
-{
-  "id":"DE0ECV5NKG14",
-  "name":"\"Limbacher Bremsbelag GmbH\"",
-  "street":"Kreisel 4",
-  "zip":"09322",
-  "city":"Penig",
-  "geo": {
-    "lat": 50.916518,
-    "lon": 12.714276
-  },
-  "active": true,
-  "phone":"+49 37381 95520",
-  "fax":"+49 37381 95528",
-  "email":"info@limbacher-bremsbelag.de",
-  "url":"http://www.limbacher-bremsbelag.de/",
-  "socialMedia": {},
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Chemnitz",
-      "type":"HRB",
-      "number":"2519"
+    {
+      "superType": "Fertigung",
+      "score": 0.5803033113479614
     },
-    "vat":"DE140916080"
-  },
-  "foundingDate": 675468000000,
-  "capital":"204132.53 EUR",
-  "timestamp": 1475091811958,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.32",
-        "title":"Einzelhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"nace",
-        "code":"C25.62",
-        "title":"Mechanik a. n. g."
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.32.0",
-        "title":"Einzelhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"wz2008",
-        "code":"25.62.0",
-        "title":"Mechanik a. n. g."
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0",
-      "G45.32.0",
-      "C25.62.0"
-    ]
-  },
-  "revenue": {
-    "code":"5m-20m",
-    "year":"2014"
-  },
-  "employees": {
-    "code":"51-100",
-    "year":"2014"
-  }
-},
-{
-  "id":"DE181EDU2L53",
-  "name":"\"Schlegl Fahrzeugkomponenten e.K.\"",
-  "street":"Ohmstraße 5",
-  "zip":"92521",
-  "city":"Schwarzenfeld",
-  "geo": {
-    "lat": 49.387315,
-    "lon": 12.11729
-  },
-  "active": true,
-  "legalForm":"Einzelkaufmann / Einzelkauffrau",
-  "externalIds": {
-    "hr": {
-      "court":"Amberg",
-      "type":"HRA",
-      "number":"2971"
+    {
+      "superType": "Kompetenz",
+      "score": 0.5586612224578857
     },
-    "ebid":"2500941248694"
-  },
-  "foundingDate": 1260399600000,
-  "timestamp": 1475961553308,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.31",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"nace",
-        "code":"M71.12",
-        "title":"Ingenieurbüros"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.31.0",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      },
-      {
-        "type":"wz2008",
-        "code":"71.12.2",
-        "title":"Ingenieurbüros für technische Fachplanung und Ingenieurdesign"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32",
-      "G45.31.0",
-      "M71.12.2"
-    ]
-  }
-},
-{
-  "id":"DE3AXFM5V484",
-  "name":"\"DAT Dräxlmaier Automotivtechnik GmbH\"",
-  "street":"Landshuter Straße 100",
-  "zip":"84137",
-  "city":"Vilsbiburg",
-  "geo": {
-    "lat": 48.452966,
-    "lon": 12.343506
-  },
-  "active": true,
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Landshut",
-      "type":"HRB",
-      "number":"4796"
+    {
+      "superType": "Anspruch",
+      "score": 0.536267876625061
     },
-    "ebid":"2500898192736"
-  },
-  "foundingDate": 914194800000,
-  "capital":"5000000.00 EUR",
-  "timestamp": 1475564284050,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0"
-    ]
-  },
-  "revenue": {
-    "code":"20m-100m",
-    "year":"2011"
-  }
-},
-{
-  "id":"DEBBZ6V91H79",
-  "name":"\"Hyva Germany GmbH\"",
-  "street":"Marie-Bernays-Ring 25 A",
-  "zip":"41199",
-  "city":"Mönchengladbach",
-  "geo": {
-    "lat": 51.119152,
-    "lon": 6.435618
-  },
-  "active": true,
-  "phone":"+49 2166 95970",
-  "fax":"+49 2166 959749",
-  "email":"info@hyva.de",
-  "url":"http://www.hyva.de/",
-  "socialMedia": {},
-  "legalForm":"Gesellschaft mit beschränkter Haftung",
-  "externalIds": {
-    "hr": {
-      "court":"Mönchengladbach",
-      "type":"HRB",
-      "number":"1887"
+    {
+      "superType": "Flexibilität",
+      "score": 0.485914021730423
     },
-    "vat":"DE120827364",
-    "ebid":"2500707583847"
-  },
-  "foundingDate": 404089200000,
-  "capital":"51200.00 EUR",
-  "timestamp": 1476079231134,
-  "industries": {
-    "nace": [
-      {
-        "type":"nace",
-        "code":"C29.32",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"nace",
-        "code":"G45.31",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ],
-    "wz2008": [
-      {
-        "type":"wz2008",
-        "code":"29.32.0",
-        "title":"Herstellung von sonstigen Teilen und sonstigem Zubehör für Kraftwagen"
-      },
-      {
-        "type":"wz2008",
-        "code":"45.31.0",
-        "title":"Großhandel mit Kraftwagenteilen und -zubehör"
-      }
-    ]
-  },
-  "sectors": {
-    "wz2008": [
-      "C29.32.0",
-      "G45.31.0"
-    ]
-  },
-  "revenue": {
-    "code":"5m-20m",
-    "year":"2013"
-  },
-  "employees": {
-    "code":"11-50",
-    "year":"2014"
-  }
-}
-    ]
-}
-        var dataJsoncompany = "\"" + dataJson.nodes + "\"";
-        var domain = "https://pro.implisense.com/#/lists/new/companies/";
-        for (var i = 0; i < json.profiles.length; i++) {
-            var obj = json.profiles[i];
-            if (obj.name === dataJsoncompany ) {
-                $(".company-data").empty();
-                $(".company-data").append('<div><span class="bold">Firmenname:</span> ' + obj.name + '</div>');
-                $(".company-data").append('<div><span class="bold">Adresse:</span> ' + obj.street +  obj.zip + '</div>');
-                $(".company-data").append('<div><span class="bold">Telefon:</span> ' + obj.phone + '</div>');
-                $(".company-data").append('<div><span class="bold">Fax:</span> ' + obj.fax + '</div>');
-                $(".company-data").append('<div><span class="bold">Webseite:</span> ' + obj.url + '</div>');
-                $(".company-data").append('<div><span class="bold">Email:</span> ' + obj.email + '</div>');
-              /*  $(".company-data").append('<div><span class="bold">Soziale Medien:</span></div><ul>');
-                  $(".company-data").append('<li><span class="bold">Facebook:</span> ' + obj.socialMedia.facebook + '</li>');
-                  $(".company-data").append('<li><span class="bold">Googel+:</span> ' + obj.socialMedia.googleplus + '</li>');
-                  $(".company-data").append('<li><span class="bold">Twitter:</span> ' + obj.socialMedia.twitter + '</li></ul>');
-                */
-                $(".company-data").append('<div><span class="bold">Gesellschaftsform:</span> ' + obj.legalForm + '</div>');
-                $(".company-data").append('<div><span class="bold">Kapiital:</span> ' + obj.capital + '</div>');
-                
-                $(".company-data").append('<div><span class="bold">Score:</span> ' + obj.score + '</div>');
-                $(".company-data").append('<div><span class="bold">Umsatz:</span> ' + obj.revenue.code + '</div>');
-                $(".company-data").append('<div><span class="bold">Mitarbeiter:</span>Jahr: ' + obj.employees.year + ' Anzahl ' + obj.employees.code +'</div>');
-                $(".company-data").append('<div><span class="bold">Eigenschaften:</span>');
-                for (var i in obj.props.topics) {
-                  for (var j in obj.props.topics[i]) {
-                    $(".company-data").append('<div>' + obj.props.topics[i][j] +'</div></div>');
-                  }
-                }
-                 $(".company-data").append('<div><span class="bold">Smart Properties:</span>');
-                for (var i in obj.props.properties) {
-                  for (var j in obj.props.properties[i]) {
-                    $(".company-data").append('<div>' + obj.props.properties[i][j] +'</div></div>');
-                  }
-                }
-                  $(".company-data").append('<div><span class="bold">Ereignisse:</span>');
-                for (var i in obj.eventsWrapper.events) {
-                  for (var j in obj.eventsWrapper.events[i]) {
-                    $(".company-data").append('<div>' + obj.eventsWrapper.events[i][j] +'</div></div>');
-                  }
-                }
-
-                
-                
-                //domain = domain + obj.id
-                //$("#demo").append(domain);
-                //$('iframe').prop('src', domain);
-            }
-            //else if (obj.category == 2) {
-              //  $("#demo").append("<tr><td></td><td>" + obj.firstName + " " + obj.lastName + "</td></tr>");
-            //}
-        }
-    });
-    network.on("doubleClick", function (params) {
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("oncontext", function (params) {
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("dragStart", function (params) {
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>dragStart event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("dragging", function (params) {
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("dragEnd", function (params) {
-        params.event = "[original event]";
-        document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("zoom", function (params) {
-        document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("showPopup", function (params) {
-        document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
-    });
-    network.on("hidePopup", function () {
-        console.log('hidePopup Event');
-    });
-    network.on("select", function (params) {
-        console.log('select Event:', params);
-    });
-    network.on("selectNode", function (params) {
-        console.log('selectNode Event:', params);
-    });
-    network.on("selectEdge", function (params) {
-        console.log('selectEdge Event:', params);
-    });
-    network.on("deselectNode", function (params) {
-        console.log('deselectNode Event:', params);
-    });
-    network.on("deselectEdge", function (params) {
-        console.log('deselectEdge Event:', params);
-    });
-    network.on("hoverNode", function (params) {
-        console.log('hoverNode Event:', params);
-    });
-    network.on("hoverEdge", function (params) {
-        console.log('hoverEdge Event:', params);
-    });
-    network.on("blurNode", function (params) {
-        console.log('blurNode Event:', params);
-    });
-    network.on("blurEdge", function (params) {
-        console.log('blurEdge Event:', params);
-    });
-    //Upload
-    function readSingleFile(evt) {
-      var f = evt.target.files[0]; 
-      if (f) {
-        
-        var r = new FileReader();
-        r.onload = function(e) {
-          $("#data").html('');
-          var uploadContents = e.target.result;
-          //alert(contents);
-          var startContent = 'digraph {node [shape=dot fontsize=15] edge [length=100, color=blue, fontcolor=black] ';
-          //contents = startContent + uploadContents + "}";
-          contents = uploadContents;
-          $("#data").val(contents);
-          draw();
-        }
-        r.readAsText(f);
-      } else { 
-        alert("Failed to load file");
-      }
+    {
+      "superType": "Expertise",
+      "score": 0.4110969603061676
+    },
+    {
+      "superType": "Modern",
+      "score": 0.4038432836532593
+    },
+    {
+      "superType": "Produktivität",
+      "score": 0.38803398609161377
+    },
+    {
+      "superType": "Prozesse",
+      "score": 0.3790986239910126
+    },
+    {
+      "superType": "Teams",
+      "score": 0.3779716491699219
+    },
+    {
+      "superType": "Intelligenz",
+      "score": 0.3523065149784088
+    },
+    {
+      "superType": "Professionalität",
+      "score": 0.34011876583099365
+    },
+    {
+      "superType": "Internationalität",
+      "score": 0.33681294322013855
+    },
+    {
+      "superType": "Offenheit",
+      "score": 0.30397987365722656
+    },
+    {
+      "superType": "Nachhaltigkeit",
+      "score": 0.2897198498249054
+    },
+    {
+      "superType": "Loyalität",
+      "score": 0.2822445034980774
+    },
+    {
+      "superType": "Niederlassungen",
+      "score": 0.2783161997795105
+    },
+    {
+      "superType": "Fabrik",
+      "score": 0.2734869420528412
+    },
+    {
+      "superType": "Emotionalität",
+      "score": 0.2681557536125183
+    },
+    {
+      "superType": "Effizienz",
+      "score": 0.2640382647514343
+    },
+    {
+      "superType": "Business Intelligence",
+      "score": 0.25859150290489197
+    },
+    {
+      "superType": "Anlagen",
+      "score": 0.2519972622394562
+    },
+    {
+      "superType": "Dynamik",
+      "score": 0.25045284628868103
+    },
+    {
+      "superType": "Methodik",
+      "score": 0.24636870622634888
+    },
+    {
+      "superType": "Kosten",
+      "score": 0.24477621912956238
+    },
+    {
+      "superType": "Hochwertigkeit",
+      "score": 0.24274452030658722
+    },
+    {
+      "superType": "Perfektionismus",
+      "score": 0.23747457563877106
+    },
+    {
+      "superType": "Erfahrungen",
+      "score": 0.2361430525779724
+    },
+    {
+      "superType": "Zuverlässigkeit",
+      "score": 0.23568327724933624
+    },
+    {
+      "superType": "Einfachheit",
+      "score": 0.20481765270233154
+    },
+    {
+      "superType": "Asien",
+      "score": 0.2039380818605423
+    },
+    {
+      "superType": "Wirtschaftlichkeit",
+      "score": 0.2037699818611145
+    },
+    {
+      "superType": "Ethik",
+      "score": 0.191938579082489
+    },
+    {
+      "superType": "Investitionen",
+      "score": 0.1890673190355301
+    },
+    {
+      "superType": "Arbeitsklima",
+      "score": 0.18763166666030884
+    },
+    {
+      "superType": "Ausbildung",
+      "score": 0.18359610438346863
+    },
+    {
+      "superType": "Standorte",
+      "score": 0.1762082725763321
+    },
+    {
+      "superType": "Klimaschutz",
+      "score": 0.17555101215839386
+    },
+    {
+      "superType": "Kontinuität",
+      "score": 0.17504343390464783
+    },
+    {
+      "superType": "Big Data Technologien",
+      "score": 0.16563290357589722
+    },
+    {
+      "superType": "Kundenorientierung",
+      "score": 0.16098977625370026
+    },
+    {
+      "superType": "Arbeitssicherheit",
+      "score": 0.1425457000732422
+    },
+    {
+      "superType": "Sicherheit",
+      "score": 0.13815760612487793
+    },
+    {
+      "superType": "CRM",
+      "score": 0.12299462407827377
+    },
+    {
+      "superType": "ERP",
+      "score": 0.11937937885522842
+    },
+    {
+      "superType": "Stellenangebote",
+      "score": 0.11642250418663025
+    },
+    {
+      "superType": "Transparenz",
+      "score": 0.1148042306303978
+    },
+    {
+      "superType": "Chat",
+      "score": 0.09965013712644577
+    },
+    {
+      "superType": "Lernen",
+      "score": 0.09163004904985428
+    },
+    {
+      "superType": "Cloud",
+      "score": 0.08598724007606506
+    },
+    {
+      "superType": "Nordamerika",
+      "score": 0.08550914376974106
+    },
+    {
+      "superType": "Community",
+      "score": 0.08522430807352066
+    },
+    {
+      "superType": "Erlebnis",
+      "score": 0.08466731756925583
+    },
+    {
+      "superType": "Wachstum",
+      "score": 0.07334265112876892
+    },
+    {
+      "superType": "Umweltfreundlichkeit",
+      "score": 0.07238603383302689
+    },
+    {
+      "superType": "Südamerika",
+      "score": 0.06147908419370651
+    },
+    {
+      "superType": "Apps",
+      "score": 0.05782336741685867
+    },
+    {
+      "superType": "Energieeffizienz",
+      "score": 0.0565963089466095
+    },
+    {
+      "superType": "Videos",
+      "score": 0.04832334816455841
+    },
+    {
+      "superType": "Luxus",
+      "score": 0.04291006922721863
+    },
+    {
+      "superType": "Photovoltaik",
+      "score": 0.04219014570116997
+    },
+    {
+      "superType": "Unabhängigkeit",
+      "score": 0.037367869168519974
+    },
+    {
+      "superType": "Regionalität",
+      "score": 0.028781883418560028
+    },
+    {
+      "superType": "Social Media",
+      "score": 0.028491459786891937
+    },
+    {
+      "superType": "Wagniskapital",
+      "score": 0.024632606655359268
+    },
+    {
+      "superType": "Familienfreundlichkeit",
+      "score": 0.022874772548675537
+    },
+    {
+      "superType": "Erdgas",
+      "score": 0.02207178622484207
+    },
+    {
+      "superType": "Solaranlagen",
+      "score": 0.02205834724009037
+    },
+    {
+      "superType": "Europa",
+      "score": 0.01834273338317871
+    },
+    {
+      "superType": "Spaß",
+      "score": 0.01121865026652813
+    },
+    {
+      "superType": "E-Commerce",
+      "score": 0.010691694915294647
+    },
+    {
+      "superType": "Schnelligkeit",
+      "score": 0.00855693407356739
+    },
+    {
+      "superType": "Servicenummer",
+      "score": 0.008435802534222603
+    },
+    {
+      "superType": "Kreativität",
+      "score": 0
+    },
+    {
+      "superType": "Lager",
+      "score": 0
+    },
+    {
+      "superType": "Langfristigkeit",
+      "score": 0
+    },
+    {
+      "superType": "Naher Osten",
+      "score": 0
+    },
+    {
+      "superType": "Vertraulichkeit",
+      "score": 0
     }
-    document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
-  });
+  ],
+  "inLinks": [
+    {
+      "id": "DEC9Z22S6754",
+      "name": "alltrotec GmbH Softwaresystemhaus",
+      "url": "http://www.alltrotec.de/"
+    },
+    {
+      "id": "DE87T9752A79",
+      "name": "Eissmann Cotesa GmbH",
+      "url": "http://www.eissmann-cotesa.de/"
+    },
+    {
+      "id": "DEMOBLS4A050",
+      "name": "Farmingtons Automotive GmbH",
+      "url": "http://www.farmingtons-automotive.com/de/"
+    },
+    {
+      "id": "DEMOBLS4A050",
+      "name": "Farmingtons Automotive GmbH",
+      "url": "http://www.farmingtons-automotive.com/de/"
+    },
+    {
+      "id": "DES02NCLGB62",
+      "name": "IndiKar Individual Karosseriebau GmbH",
+      "url": "http://www.indikar.com/de/"
+    },
+    {
+      "id": "DELF20PEYV93",
+      "name": "Trabant nT GmbH",
+      "url": "http://www.trabant-nt.de/"
+    },
+    {
+      "id": "DEG6WHP5JW07",
+      "name": "Welp Holding GmbH",
+      "url": "http://www.welp-group.com/de/"
+    }
+  ],
+  "outLinks": [
+    {
+      "id": "DEMOBLS4A050",
+      "name": "Farmingtons Automotive GmbH",
+      "url": "http://www.farmingtons-automotive.com/de/"
+    },
+    {
+      "id": "DES02NCLGB62",
+      "name": "IndiKar Individual Karosseriebau GmbH",
+      "url": "http://www.indikar.com/de/"
+    },
+    {
+      "id": "DEVPPALXB583",
+      "name": "KIWI Werbeagentur GmbH",
+      "url": "http://www.kiwi.de/"
+    },
+    {
+      "id": "DEG6WHP5JW07",
+      "name": "Welp Holding GmbH",
+      "url": "http://www.welp-group.com/de/"
+    },
+    {
+      "id": "DEFHKNBQ1667",
+      "name": "Siemens AG",
+      "url": "http://www.siemens.de/"
+    }
+  ]
+},
+{
+  "id": "DEUEUHCEZX39",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DEUEUHCEZX39",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DE0ECV5NKG14",
+  "topics": [
+    {
+      "name": "Flexibilität",
+      "score": 0.3163042664527893
+    },
+    {
+      "name": "Qualität",
+      "score": 0.2500671446323395
+    },
+    {
+      "name": "Produktivität",
+      "score": 0.16384968161582947
+    },
+    {
+      "name": "Fertigung",
+      "score": 0.1403333842754364
+    },
+    {
+      "name": "Anlagen",
+      "score": 0.11854470521211624
+    },
+    {
+      "name": "Hochwertigkeit",
+      "score": 0.11464053392410278
+    },
+    {
+      "name": "Zuverlässigkeit",
+      "score": 0.11297609657049179
+    },
+    {
+      "name": "Anspruch",
+      "score": 0.1061517596244812
+    },
+    {
+      "name": "Vertraulichkeit",
+      "score": 0.09644492715597153
+    },
+    {
+      "name": "Arbeitssicherheit",
+      "score": 0.09247221797704697
+    },
+    {
+      "name": "Optimierung",
+      "score": 0.08709815889596939
+    },
+    {
+      "name": "Komplexität",
+      "score": 0.08680631965398788
+    },
+    {
+      "name": "Standorte",
+      "score": 0.08633220940828323
+    },
+    {
+      "name": "Dynamik",
+      "score": 0.08187825232744217
+    },
+    {
+      "name": "Niederlassungen",
+      "score": 0.07640260457992554
+    },
+    {
+      "name": "Ausbildung",
+      "score": 0.07041212916374207
+    },
+    {
+      "name": "Kosten",
+      "score": 0.0670342668890953
+    },
+    {
+      "name": "Wirtschaftlichkeit",
+      "score": 0.06424580514431
+    },
+    {
+      "name": "Sicherheit",
+      "score": 0.06237807124853134
+    },
+    {
+      "name": "Kontinuität",
+      "score": 0.062169287353754044
+    },
+    {
+      "name": "Prozesse",
+      "score": 0.05228513106703758
+    },
+    {
+      "name": "Investitionen",
+      "score": 0.05120093747973442
+    },
+    {
+      "name": "Offenheit",
+      "score": 0.050541527569293976
+    },
+    {
+      "name": "Innovation",
+      "score": 0.05012812465429306
+    },
+    {
+      "name": "Kundenorientierung",
+      "score": 0.0480690561234951
+    },
+    {
+      "name": "Fabrik",
+      "score": 0.04625609144568443
+    },
+    {
+      "name": "Effizienz",
+      "score": 0.040087588131427765
+    },
+    {
+      "name": "Einfachheit",
+      "score": 0.03220081329345703
+    },
+    {
+      "name": "Arbeitsklima",
+      "score": 0.032083962112665176
+    },
+    {
+      "name": "Lager",
+      "score": 0.029567662626504898
+    },
+    {
+      "name": "Kompetenz",
+      "score": 0.029247919097542763
+    },
+    {
+      "name": "Intelligenz",
+      "score": 0.028410911560058594
+    },
+    {
+      "name": "Loyalität",
+      "score": 0.027882453054189682
+    },
+    {
+      "name": "Tradition",
+      "score": 0.026045985519886017
+    },
+    {
+      "name": "Langfristigkeit",
+      "score": 0.023634545505046844
+    },
+    {
+      "name": "Modern",
+      "score": 0.02268415130674839
+    },
+    {
+      "name": "Umweltfreundlichkeit",
+      "score": 0.020946968346834183
+    },
+    {
+      "name": "Internationalität",
+      "score": 0.020789699628949165
+    },
+    {
+      "name": "Erfahrungen",
+      "score": 0.019329797476530075
+    },
+    {
+      "name": "Nachhaltigkeit",
+      "score": 0.018546825274825096
+    },
+    {
+      "name": "Asien",
+      "score": 0.018407506868243217
+    },
+    {
+      "name": "Wachstum",
+      "score": 0.018228020519018173
+    },
+    {
+      "name": "Perfektionismus",
+      "score": 0.015551617369055748
+    },
+    {
+      "name": "Professionalität",
+      "score": 0.014942921698093414
+    },
+    {
+      "name": "E-Commerce",
+      "score": 0.012624824419617653
+    },
+    {
+      "name": "Transparenz",
+      "score": 0.010669867508113384
+    },
+    {
+      "name": "Expertise",
+      "score": 0.010576007887721062
+    },
+    {
+      "name": "Cloud",
+      "score": 0.010345730930566788
+    },
+    {
+      "name": "Business Intelligence",
+      "score": 0.010038151405751705
+    },
+    {
+      "name": "Klimaschutz",
+      "score": 0.009838082827627659
+    },
+    {
+      "name": "CRM",
+      "score": 0.00983384158462286
+    },
+    {
+      "name": "Social Media",
+      "score": 0.00945188570767641
+    },
+    {
+      "name": "Regionalität",
+      "score": 0.009037182666361332
+    },
+    {
+      "name": "Unabhängigkeit",
+      "score": 0.007466492243111134
+    },
+    {
+      "name": "Stellenangebote",
+      "score": 0.00741044944152236
+    },
+    {
+      "name": "Ethik",
+      "score": 0.006826343014836311
+    },
+    {
+      "name": "Chat",
+      "score": 0.006227342411875725
+    },
+    {
+      "name": "Servicenummer",
+      "score": 0.006091790739446878
+    },
+    {
+      "name": "Energieeffizienz",
+      "score": 0.005817956756800413
+    },
+    {
+      "name": "Solaranlagen",
+      "score": 0.005786126013845205
+    },
+    {
+      "name": "Photovoltaik",
+      "score": 0.005433555226773024
+    },
+    {
+      "name": "Südamerika",
+      "score": 0.005198804195970297
+    },
+    {
+      "name": "Apps",
+      "score": 0.005065953359007835
+    },
+    {
+      "name": "ERP",
+      "score": 0.005005515180528164
+    },
+    {
+      "name": "Design",
+      "score": 0.00437132129445672
+    },
+    {
+      "name": "Big Data Technologien",
+      "score": 0.004025913309305906
+    },
+    {
+      "name": "Erdgas",
+      "score": 0.003465480636805296
+    },
+    {
+      "name": "Methodik",
+      "score": 0.0033443449065089226
+    },
+    {
+      "name": "Teams",
+      "score": 0.0028057019226253033
+    },
+    {
+      "name": "Videos",
+      "score": 0.0026326326187700033
+    },
+    {
+      "name": "Europa",
+      "score": 0.0022089870180934668
+    },
+    {
+      "name": "Nordamerika",
+      "score": 0.0018580063479021192
+    },
+    {
+      "name": "Wagniskapital",
+      "score": 0.0014053912600502372
+    },
+    {
+      "name": "Erlebnis",
+      "score": 0.001395374070852995
+    },
+    {
+      "name": "Community",
+      "score": 0
+    },
+    {
+      "name": "Emotionalität",
+      "score": 0
+    },
+    {
+      "name": "Familienfreundlichkeit",
+      "score": 0
+    },
+    {
+      "name": "Kreativität",
+      "score": 0
+    },
+    {
+      "name": "Lernen",
+      "score": 0
+    },
+    {
+      "name": "Luxus",
+      "score": 0
+    },
+    {
+      "name": "Naher Osten",
+      "score": 0
+    },
+    {
+      "name": "Schnelligkeit",
+      "score": 0
+    },
+    {
+      "name": "Spaß",
+      "score": 0
+    }
+  ],
+  "properties": [
+    {
+      "superType": "Flexibilität",
+      "score": 0.3163042664527893
+    },
+    {
+      "superType": "Qualität",
+      "score": 0.2500671446323395
+    },
+    {
+      "superType": "Produktivität",
+      "score": 0.16384968161582947
+    },
+    {
+      "superType": "Fertigung",
+      "score": 0.1403333842754364
+    },
+    {
+      "superType": "Anlagen",
+      "score": 0.11854470521211624
+    },
+    {
+      "superType": "Hochwertigkeit",
+      "score": 0.11464053392410278
+    },
+    {
+      "superType": "Zuverlässigkeit",
+      "score": 0.11297609657049179
+    },
+    {
+      "superType": "Anspruch",
+      "score": 0.1061517596244812
+    },
+    {
+      "superType": "Vertraulichkeit",
+      "score": 0.09644492715597153
+    },
+    {
+      "superType": "Arbeitssicherheit",
+      "score": 0.09247221797704697
+    },
+    {
+      "superType": "Optimierung",
+      "score": 0.08709815889596939
+    },
+    {
+      "superType": "Komplexität",
+      "score": 0.08680631965398788
+    },
+    {
+      "superType": "Standorte",
+      "score": 0.08633220940828323
+    },
+    {
+      "superType": "Dynamik",
+      "score": 0.08187825232744217
+    },
+    {
+      "superType": "Niederlassungen",
+      "score": 0.07640260457992554
+    },
+    {
+      "superType": "Ausbildung",
+      "score": 0.07041212916374207
+    },
+    {
+      "superType": "Kosten",
+      "score": 0.0670342668890953
+    },
+    {
+      "superType": "Wirtschaftlichkeit",
+      "score": 0.06424580514431
+    },
+    {
+      "superType": "Sicherheit",
+      "score": 0.06237807124853134
+    },
+    {
+      "superType": "Kontinuität",
+      "score": 0.062169287353754044
+    },
+    {
+      "superType": "Prozesse",
+      "score": 0.05228513106703758
+    },
+    {
+      "superType": "Investitionen",
+      "score": 0.05120093747973442
+    },
+    {
+      "superType": "Offenheit",
+      "score": 0.050541527569293976
+    },
+    {
+      "superType": "Innovation",
+      "score": 0.05012812465429306
+    },
+    {
+      "superType": "Kundenorientierung",
+      "score": 0.0480690561234951
+    },
+    {
+      "superType": "Fabrik",
+      "score": 0.04625609144568443
+    },
+    {
+      "superType": "Effizienz",
+      "score": 0.040087588131427765
+    },
+    {
+      "superType": "Einfachheit",
+      "score": 0.03220081329345703
+    },
+    {
+      "superType": "Arbeitsklima",
+      "score": 0.032083962112665176
+    },
+    {
+      "superType": "Lager",
+      "score": 0.029567662626504898
+    },
+    {
+      "superType": "Kompetenz",
+      "score": 0.029247919097542763
+    },
+    {
+      "superType": "Intelligenz",
+      "score": 0.028410911560058594
+    },
+    {
+      "superType": "Loyalität",
+      "score": 0.027882453054189682
+    },
+    {
+      "superType": "Tradition",
+      "score": 0.026045985519886017
+    },
+    {
+      "superType": "Langfristigkeit",
+      "score": 0.023634545505046844
+    },
+    {
+      "superType": "Modern",
+      "score": 0.02268415130674839
+    },
+    {
+      "superType": "Umweltfreundlichkeit",
+      "score": 0.020946968346834183
+    },
+    {
+      "superType": "Internationalität",
+      "score": 0.020789699628949165
+    },
+    {
+      "superType": "Erfahrungen",
+      "score": 0.019329797476530075
+    },
+    {
+      "superType": "Nachhaltigkeit",
+      "score": 0.018546825274825096
+    },
+    {
+      "superType": "Asien",
+      "score": 0.018407506868243217
+    },
+    {
+      "superType": "Wachstum",
+      "score": 0.018228020519018173
+    },
+    {
+      "superType": "Perfektionismus",
+      "score": 0.015551617369055748
+    },
+    {
+      "superType": "Professionalität",
+      "score": 0.014942921698093414
+    },
+    {
+      "superType": "E-Commerce",
+      "score": 0.012624824419617653
+    },
+    {
+      "superType": "Transparenz",
+      "score": 0.010669867508113384
+    },
+    {
+      "superType": "Expertise",
+      "score": 0.010576007887721062
+    },
+    {
+      "superType": "Cloud",
+      "score": 0.010345730930566788
+    },
+    {
+      "superType": "Business Intelligence",
+      "score": 0.010038151405751705
+    },
+    {
+      "superType": "Klimaschutz",
+      "score": 0.009838082827627659
+    },
+    {
+      "superType": "CRM",
+      "score": 0.00983384158462286
+    },
+    {
+      "superType": "Social Media",
+      "score": 0.00945188570767641
+    },
+    {
+      "superType": "Regionalität",
+      "score": 0.009037182666361332
+    },
+    {
+      "superType": "Unabhängigkeit",
+      "score": 0.007466492243111134
+    },
+    {
+      "superType": "Stellenangebote",
+      "score": 0.00741044944152236
+    },
+    {
+      "superType": "Ethik",
+      "score": 0.006826343014836311
+    },
+    {
+      "superType": "Chat",
+      "score": 0.006227342411875725
+    },
+    {
+      "superType": "Servicenummer",
+      "score": 0.006091790739446878
+    },
+    {
+      "superType": "Energieeffizienz",
+      "score": 0.005817956756800413
+    },
+    {
+      "superType": "Solaranlagen",
+      "score": 0.005786126013845205
+    },
+    {
+      "superType": "Photovoltaik",
+      "score": 0.005433555226773024
+    },
+    {
+      "superType": "Südamerika",
+      "score": 0.005198804195970297
+    },
+    {
+      "superType": "Apps",
+      "score": 0.005065953359007835
+    },
+    {
+      "superType": "ERP",
+      "score": 0.005005515180528164
+    },
+    {
+      "superType": "Design",
+      "score": 0.00437132129445672
+    },
+    {
+      "superType": "Big Data Technologien",
+      "score": 0.004025913309305906
+    },
+    {
+      "superType": "Erdgas",
+      "score": 0.003465480636805296
+    },
+    {
+      "superType": "Methodik",
+      "score": 0.0033443449065089226
+    },
+    {
+      "superType": "Teams",
+      "score": 0.0028057019226253033
+    },
+    {
+      "superType": "Videos",
+      "score": 0.0026326326187700033
+    },
+    {
+      "superType": "Europa",
+      "score": 0.0022089870180934668
+    },
+    {
+      "superType": "Nordamerika",
+      "score": 0.0018580063479021192
+    },
+    {
+      "superType": "Wagniskapital",
+      "score": 0.0014053912600502372
+    },
+    {
+      "superType": "Erlebnis",
+      "score": 0.001395374070852995
+    },
+    {
+      "superType": "Community",
+      "score": 0
+    },
+    {
+      "superType": "Emotionalität",
+      "score": 0
+    },
+    {
+      "superType": "Familienfreundlichkeit",
+      "score": 0
+    },
+    {
+      "superType": "Kreativität",
+      "score": 0
+    },
+    {
+      "superType": "Lernen",
+      "score": 0
+    },
+    {
+      "superType": "Luxus",
+      "score": 0
+    },
+    {
+      "superType": "Naher Osten",
+      "score": 0
+    },
+    {
+      "superType": "Schnelligkeit",
+      "score": 0
+    },
+    {
+      "superType": "Spaß",
+      "score": 0
+    }
+  ],
+  "inLinks": [],
+  "outLinks": [
+    {
+      "id": "DEL65DKJEO31",
+      "name": "webkommunikation24 UG (haftungsbeschränkt)",
+      "url": "http://www.webkommunikation24.de/"
+    }
+  ]
+},
+{
+  "id": "DE181EDU2L53",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DE3AXFM5V484",
+  "topics": [],
+  "properties": [],
+  "inLinks": [],
+  "outLinks": []
+},
+{
+  "id": "DEBBZ6V91H79",
+  "topics": [
+    {
+      "name": "Naher Osten",
+      "score": 0.5579584836959839
+    },
+    {
+      "name": "Internationalität",
+      "score": 0.3791041076183319
+    },
+    {
+      "name": "Investitionen",
+      "score": 0.3071102499961853
+    },
+    {
+      "name": "Flexibilität",
+      "score": 0.25555554032325745
+    },
+    {
+      "name": "Nordamerika",
+      "score": 0.24816209077835083
+    },
+    {
+      "name": "Zuverlässigkeit",
+      "score": 0.24717557430267334
+    },
+    {
+      "name": "Europa",
+      "score": 0.24699127674102783
+    },
+    {
+      "name": "Anlagen",
+      "score": 0.23712188005447388
+    },
+    {
+      "name": "Produktivität",
+      "score": 0.2368754744529724
+    },
+    {
+      "name": "Asien",
+      "score": 0.22599050402641296
+    },
+    {
+      "name": "Lager",
+      "score": 0.21190881729125977
+    },
+    {
+      "name": "Design",
+      "score": 0.20400801301002502
+    },
+    {
+      "name": "Qualität",
+      "score": 0.19832509756088257
+    },
+    {
+      "name": "Kosten",
+      "score": 0.17393939197063446
+    },
+    {
+      "name": "Community",
+      "score": 0.17355647683143616
+    },
+    {
+      "name": "Intelligenz",
+      "score": 0.16552656888961792
+    },
+    {
+      "name": "Innovation",
+      "score": 0.16412943601608276
+    },
+    {
+      "name": "Optimierung",
+      "score": 0.14593277871608734
+    },
+    {
+      "name": "Perfektionismus",
+      "score": 0.14419063925743103
+    },
+    {
+      "name": "Videos",
+      "score": 0.14222213625907898
+    },
+    {
+      "name": "Modern",
+      "score": 0.13697445392608643
+    },
+    {
+      "name": "Einfachheit",
+      "score": 0.1251872479915619
+    },
+    {
+      "name": "Niederlassungen",
+      "score": 0.12307379394769669
+    },
+    {
+      "name": "Fertigung",
+      "score": 0.11803215742111206
+    },
+    {
+      "name": "Effizienz",
+      "score": 0.1153048574924469
+    },
+    {
+      "name": "Big Data Technologien",
+      "score": 0.11017634719610214
+    },
+    {
+      "name": "Fabrik",
+      "score": 0.10699133574962616
+    },
+    {
+      "name": "Chat",
+      "score": 0.1069687232375145
+    },
+    {
+      "name": "Business Intelligence",
+      "score": 0.10372322797775269
+    },
+    {
+      "name": "Kundenorientierung",
+      "score": 0.10274656116962433
+    },
+    {
+      "name": "Emotionalität",
+      "score": 0.09631075710058212
+    },
+    {
+      "name": "E-Commerce",
+      "score": 0.09084390848875046
+    },
+    {
+      "name": "Arbeitsklima",
+      "score": 0.07659414410591125
+    },
+    {
+      "name": "Südamerika",
+      "score": 0.07547616213560104
+    },
+    {
+      "name": "Standorte",
+      "score": 0.07508265227079391
+    },
+    {
+      "name": "Stellenangebote",
+      "score": 0.07114892452955246
+    },
+    {
+      "name": "Komplexität",
+      "score": 0.06834003329277039
+    },
+    {
+      "name": "Apps",
+      "score": 0.06731190532445908
+    },
+    {
+      "name": "Wirtschaftlichkeit",
+      "score": 0.06585771590471268
+    },
+    {
+      "name": "Loyalität",
+      "score": 0.06509748101234436
+    },
+    {
+      "name": "Klimaschutz",
+      "score": 0.06358234584331512
+    },
+    {
+      "name": "Cloud",
+      "score": 0.06303910911083221
+    },
+    {
+      "name": "Sicherheit",
+      "score": 0.05933237820863724
+    },
+    {
+      "name": "Tradition",
+      "score": 0.0566730760037899
+    },
+    {
+      "name": "Ethik",
+      "score": 0.055799700319767
+    },
+    {
+      "name": "Prozesse",
+      "score": 0.05546993017196655
+    },
+    {
+      "name": "Teams",
+      "score": 0.054316483438014984
+    },
+    {
+      "name": "CRM",
+      "score": 0.053187716752290726
+    },
+    {
+      "name": "Nachhaltigkeit",
+      "score": 0.05142802372574806
+    },
+    {
+      "name": "Dynamik",
+      "score": 0.04820811003446579
+    },
+    {
+      "name": "Anspruch",
+      "score": 0.04580434784293175
+    },
+    {
+      "name": "Umweltfreundlichkeit",
+      "score": 0.04550497978925705
+    },
+    {
+      "name": "Kompetenz",
+      "score": 0.04416929930448532
+    },
+    {
+      "name": "Expertise",
+      "score": 0.04100397974252701
+    },
+    {
+      "name": "Photovoltaik",
+      "score": 0.040049754083156586
+    },
+    {
+      "name": "Erlebnis",
+      "score": 0.039425890892744064
+    },
+    {
+      "name": "Luxus",
+      "score": 0.03860647976398468
+    },
+    {
+      "name": "Ausbildung",
+      "score": 0.03398698568344116
+    },
+    {
+      "name": "Arbeitssicherheit",
+      "score": 0.03299684822559357
+    },
+    {
+      "name": "Spaß",
+      "score": 0.03153805062174797
+    },
+    {
+      "name": "ERP",
+      "score": 0.031321559101343155
+    },
+    {
+      "name": "Methodik",
+      "score": 0.03125597536563873
+    },
+    {
+      "name": "Energieeffizienz",
+      "score": 0.030920231714844704
+    },
+    {
+      "name": "Solaranlagen",
+      "score": 0.02644439972937107
+    },
+    {
+      "name": "Transparenz",
+      "score": 0.02467939630150795
+    },
+    {
+      "name": "Kontinuität",
+      "score": 0.02281109243631363
+    },
+    {
+      "name": "Lernen",
+      "score": 0.021265262737870216
+    },
+    {
+      "name": "Wachstum",
+      "score": 0.020732378587126732
+    },
+    {
+      "name": "Social Media",
+      "score": 0.018579887226223946
+    },
+    {
+      "name": "Wagniskapital",
+      "score": 0.015924371778964996
+    },
+    {
+      "name": "Offenheit",
+      "score": 0.014457234181463718
+    },
+    {
+      "name": "Servicenummer",
+      "score": 0.01304410956799984
+    },
+    {
+      "name": "Unabhängigkeit",
+      "score": 0.007678002119064331
+    },
+    {
+      "name": "Regionalität",
+      "score": 0.006561173591762781
+    },
+    {
+      "name": "Erdgas",
+      "score": 0.005910135805606842
+    },
+    {
+      "name": "Familienfreundlichkeit",
+      "score": 0.00425633555278182
+    },
+    {
+      "name": "Erfahrungen",
+      "score": 0
+    },
+    {
+      "name": "Hochwertigkeit",
+      "score": 0
+    },
+    {
+      "name": "Kreativität",
+      "score": 0
+    },
+    {
+      "name": "Langfristigkeit",
+      "score": 0
+    },
+    {
+      "name": "Professionalität",
+      "score": 0
+    },
+    {
+      "name": "Schnelligkeit",
+      "score": 0
+    },
+    {
+      "name": "Vertraulichkeit",
+      "score": 0
+    }
+  ],
+  "properties": [
+    {
+      "superType": "Naher Osten",
+      "score": 0.5579584836959839
+    },
+    {
+      "superType": "Internationalität",
+      "score": 0.3791041076183319
+    },
+    {
+      "superType": "Investitionen",
+      "score": 0.3071102499961853
+    },
+    {
+      "superType": "Flexibilität",
+      "score": 0.25555554032325745
+    },
+    {
+      "superType": "Nordamerika",
+      "score": 0.24816209077835083
+    },
+    {
+      "superType": "Zuverlässigkeit",
+      "score": 0.24717557430267334
+    },
+    {
+      "superType": "Europa",
+      "score": 0.24699127674102783
+    },
+    {
+      "superType": "Anlagen",
+      "score": 0.23712188005447388
+    },
+    {
+      "superType": "Produktivität",
+      "score": 0.2368754744529724
+    },
+    {
+      "superType": "Asien",
+      "score": 0.22599050402641296
+    },
+    {
+      "superType": "Lager",
+      "score": 0.21190881729125977
+    },
+    {
+      "superType": "Design",
+      "score": 0.20400801301002502
+    },
+    {
+      "superType": "Qualität",
+      "score": 0.19832509756088257
+    },
+    {
+      "superType": "Kosten",
+      "score": 0.17393939197063446
+    },
+    {
+      "superType": "Community",
+      "score": 0.17355647683143616
+    },
+    {
+      "superType": "Intelligenz",
+      "score": 0.16552656888961792
+    },
+    {
+      "superType": "Innovation",
+      "score": 0.16412943601608276
+    },
+    {
+      "superType": "Optimierung",
+      "score": 0.14593277871608734
+    },
+    {
+      "superType": "Perfektionismus",
+      "score": 0.14419063925743103
+    },
+    {
+      "superType": "Videos",
+      "score": 0.14222213625907898
+    },
+    {
+      "superType": "Modern",
+      "score": 0.13697445392608643
+    },
+    {
+      "superType": "Einfachheit",
+      "score": 0.1251872479915619
+    },
+    {
+      "superType": "Niederlassungen",
+      "score": 0.12307379394769669
+    },
+    {
+      "superType": "Fertigung",
+      "score": 0.11803215742111206
+    },
+    {
+      "superType": "Effizienz",
+      "score": 0.1153048574924469
+    },
+    {
+      "superType": "Big Data Technologien",
+      "score": 0.11017634719610214
+    },
+    {
+      "superType": "Fabrik",
+      "score": 0.10699133574962616
+    },
+    {
+      "superType": "Chat",
+      "score": 0.1069687232375145
+    },
+    {
+      "superType": "Business Intelligence",
+      "score": 0.10372322797775269
+    },
+    {
+      "superType": "Kundenorientierung",
+      "score": 0.10274656116962433
+    },
+    {
+      "superType": "Emotionalität",
+      "score": 0.09631075710058212
+    },
+    {
+      "superType": "E-Commerce",
+      "score": 0.09084390848875046
+    },
+    {
+      "superType": "Arbeitsklima",
+      "score": 0.07659414410591125
+    },
+    {
+      "superType": "Südamerika",
+      "score": 0.07547616213560104
+    },
+    {
+      "superType": "Standorte",
+      "score": 0.07508265227079391
+    },
+    {
+      "superType": "Stellenangebote",
+      "score": 0.07114892452955246
+    },
+    {
+      "superType": "Komplexität",
+      "score": 0.06834003329277039
+    },
+    {
+      "superType": "Apps",
+      "score": 0.06731190532445908
+    },
+    {
+      "superType": "Wirtschaftlichkeit",
+      "score": 0.06585771590471268
+    },
+    {
+      "superType": "Loyalität",
+      "score": 0.06509748101234436
+    },
+    {
+      "superType": "Klimaschutz",
+      "score": 0.06358234584331512
+    },
+    {
+      "superType": "Cloud",
+      "score": 0.06303910911083221
+    },
+    {
+      "superType": "Sicherheit",
+      "score": 0.05933237820863724
+    },
+    {
+      "superType": "Tradition",
+      "score": 0.0566730760037899
+    },
+    {
+      "superType": "Ethik",
+      "score": 0.055799700319767
+    },
+    {
+      "superType": "Prozesse",
+      "score": 0.05546993017196655
+    },
+    {
+      "superType": "Teams",
+      "score": 0.054316483438014984
+    },
+    {
+      "superType": "CRM",
+      "score": 0.053187716752290726
+    },
+    {
+      "superType": "Nachhaltigkeit",
+      "score": 0.05142802372574806
+    },
+    {
+      "superType": "Dynamik",
+      "score": 0.04820811003446579
+    },
+    {
+      "superType": "Anspruch",
+      "score": 0.04580434784293175
+    },
+    {
+      "superType": "Umweltfreundlichkeit",
+      "score": 0.04550497978925705
+    },
+    {
+      "superType": "Kompetenz",
+      "score": 0.04416929930448532
+    },
+    {
+      "superType": "Expertise",
+      "score": 0.04100397974252701
+    },
+    {
+      "superType": "Photovoltaik",
+      "score": 0.040049754083156586
+    },
+    {
+      "superType": "Erlebnis",
+      "score": 0.039425890892744064
+    },
+    {
+      "superType": "Luxus",
+      "score": 0.03860647976398468
+    },
+    {
+      "superType": "Ausbildung",
+      "score": 0.03398698568344116
+    },
+    {
+      "superType": "Arbeitssicherheit",
+      "score": 0.03299684822559357
+    },
+    {
+      "superType": "Spaß",
+      "score": 0.03153805062174797
+    },
+    {
+      "superType": "ERP",
+      "score": 0.031321559101343155
+    },
+    {
+      "superType": "Methodik",
+      "score": 0.03125597536563873
+    },
+    {
+      "superType": "Energieeffizienz",
+      "score": 0.030920231714844704
+    },
+    {
+      "superType": "Solaranlagen",
+      "score": 0.02644439972937107
+    },
+    {
+      "superType": "Transparenz",
+      "score": 0.02467939630150795
+    },
+    {
+      "superType": "Kontinuität",
+      "score": 0.02281109243631363
+    },
+    {
+      "superType": "Lernen",
+      "score": 0.021265262737870216
+    },
+    {
+      "superType": "Wachstum",
+      "score": 0.020732378587126732
+    },
+    {
+      "superType": "Social Media",
+      "score": 0.018579887226223946
+    },
+    {
+      "superType": "Wagniskapital",
+      "score": 0.015924371778964996
+    },
+    {
+      "superType": "Offenheit",
+      "score": 0.014457234181463718
+    },
+    {
+      "superType": "Servicenummer",
+      "score": 0.01304410956799984
+    },
+    {
+      "superType": "Unabhängigkeit",
+      "score": 0.007678002119064331
+    },
+    {
+      "superType": "Regionalität",
+      "score": 0.006561173591762781
+    },
+    {
+      "superType": "Erdgas",
+      "score": 0.005910135805606842
+    },
+    {
+      "superType": "Familienfreundlichkeit",
+      "score": 0.00425633555278182
+    },
+    {
+      "superType": "Erfahrungen",
+      "score": 0
+    },
+    {
+      "superType": "Hochwertigkeit",
+      "score": 0
+    },
+    {
+      "superType": "Kreativität",
+      "score": 0
+    },
+    {
+      "superType": "Langfristigkeit",
+      "score": 0
+    },
+    {
+      "superType": "Professionalität",
+      "score": 0
+    },
+    {
+      "superType": "Schnelligkeit",
+      "score": 0
+    },
+    {
+      "superType": "Vertraulichkeit",
+      "score": 0
+    }
+  ],
+  "inLinks": [
+    {
+      "id": "DEACE03MW863",
+      "name": "Becker & Schmidt GmbH",
+      "url": "http://www.sonderfahrzeugbau.saarland/"
+    },
+    {
+      "id": "DENEPXIT6Q18",
+      "name": "BNT GmbH",
+      "url": "http://www.bnt-bamberg.de/"
+    },
+    {
+      "id": "DEZ99TK26X15",
+      "name": "DAF Berlin Nutzfahrzeuge Vertriebs- und Service GmbH",
+      "url": "http://www.dafberlin.de/"
+    },
+    {
+      "id": "DEPNRGGDAO31",
+      "name": "Dietrich GmbH",
+      "url": "http://www.abschleppdienst-dietrich.de/"
+    },
+    {
+      "id": "DESQW3GIEE65",
+      "name": "Hans K. Schmitt GmbH & Co. KG",
+      "url": "http://www.schmitt-peterslahr.de/"
+    },
+    {
+      "id": "DE3MGAQ9S931",
+      "name": "Heinz Resch & Co. OHG",
+      "url": "http://www.autohaus-resch.de/"
+    },
+    {
+      "id": "DEGXFC48XG65",
+      "name": "Hohenkirchner Nutzfahrzeuge Service GmbH",
+      "url": "http://www.hohenkirchner-nutzfahrzeuge.de/"
+    },
+    {
+      "id": "DE51CS28A676",
+      "name": "Hurrle Spezial-Transporte GmbH",
+      "url": "http://www.hurrle-spezialtransporte.de/"
+    },
+    {
+      "id": "DE4JF2FLJO24",
+      "name": "Hüffermann Transportsysteme GmbH",
+      "url": "http://www.hueffermann.de/"
+    },
+    {
+      "id": "DE8JIYCAVC16",
+      "name": "KARI-Baumaschinen GmbH",
+      "url": "http://www.baumaschinen-kari.de/"
+    },
+    {
+      "id": "DENGKLRNLI67",
+      "name": "Kilb Beteiligungsgesellschaft m.b.H.",
+      "url": "http://www.taunus-fahrzeugbau.de/"
+    },
+    {
+      "id": "DE8EDZE5ZL29",
+      "name": "Launhardt-Hydraulik-Gesellschaft mbH",
+      "url": "http://www.launhardt-hydraulik.de/"
+    },
+    {
+      "id": "DEKH69BPWH05",
+      "name": "PIN Fahrzeugbau-Hydraulik GmbH",
+      "url": "http://www.pin-hydraulik.de/"
+    },
+    {
+      "id": "DE0BZU3M5U41",
+      "name": "Rudolf Sedlmeier GmbH",
+      "url": "http://www.sedlmeier-lkw-service.de/"
+    },
+    {
+      "id": "DE050GLRY934",
+      "name": "Schmitt Peterslahr GmbH",
+      "url": "http://www.schmitt-peterslahr.de/"
+    },
+    {
+      "id": "DE50R7966V13",
+      "name": "SCS-Ihr IT-Partner GmbH",
+      "url": "http://www.scs-mg.de/"
+    },
+    {
+      "id": "DE7D3NHT4J08",
+      "name": "Stehmann GmbH",
+      "url": "http://www.stehmann-fahrzeugbau.de/"
+    },
+    {
+      "id": "DECM26PJ5Q44",
+      "name": "Taunus-Fahrzeugbau GmbH & Co. KG",
+      "url": "http://www.taunus-fahrzeugbau.de/"
+    },
+    {
+      "id": "DEOKED40HB60",
+      "name": "VBG GROUP TRUCK EQUIPMENT GmbH",
+      "url": "http://www.ringfeder.de/"
+    },
+    {
+      "id": "DEOJIR7NJG03",
+      "name": "Werner Seemann GmbH & Co. KG",
+      "url": "http://www.seemann-online.de/"
+    }
+  ],
+  "outLinks": [
+    {
+      "id": "DE6TP9KB6F30",
+      "name": "mobile.international GmbH",
+      "url": "http://www.mobile.de/"
+    }
+  ]
+}

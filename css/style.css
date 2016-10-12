@@ -14,6 +14,9 @@
 .infoscm {
   padding: 3px;
 }
+.bold{
+  font-weight: bold;
+}
 #supplyChainNetwork {
   width: 100%f
   height: 400px;
@@ -23,7 +26,7 @@
   margin-left: 5px;
 }
 .debug{
-  visibility: hidden; 
+  //visibility: hidden; 
 }
 .custom-brand{
   background-image: url("../img/lucidlogo.png");
