@@ -8,9 +8,12 @@
 //var url_server = "https://lucid.implisense.com/dataplatform/"
 var url_server = "https://lucid-dataplatform.eccenca.com/";
 
-var user = "x";
-var pw = "x";
+//var user = "implisense";
+//var pw = "4nAQCULrpNJqeB9yGiVd";
 
+
+var user = "extern.npetersen";
+var pw = "HahthohmahK3";
 
 var access_token;
 
@@ -24,6 +27,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   var buttonAnalytics = $("#button-analytics");
   var buttonBuildGraph = $("#button-buildGraph");
   var buttonModify = $("#button-modify");
+  var buttonSuppliers = $("#button-suppliers");
 
 
   var container = document.getElementById('mynetwork');
@@ -66,6 +70,11 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       readFile("queries/getSupplyChain.rq", "supplyChain");
   }
 
+  var getSuppliers = function ()
+  {
+      readFile("queries/getCompanies.rq", "getSuppliers");
+  }
+
   function readFile(fileName, processType)
   {
       var rawFile = new XMLHttpRequest();
@@ -83,6 +92,9 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
                 {
                   case "query":
                       runSparqlQuery(response);
+                  break;
+                  case "getSuppliers":
+                      processSuppliers(response);
                   break;
                   case "supplyChain":
                       getProcesses(response);
@@ -125,6 +137,31 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       xhr.send(sparql_query);
   }
 
+var processSuppliers = function (query) 
+  {
+      console.log("test");
+     var sparql_query = "query=" + encodeURIComponent(query);
+  
+      var request = url_server + "proxy/default/sparql?access_token=" + access_token;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", request);
+      xhr.setRequestHeader("accept", "application/sparql-results+json");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+
+            var data = JSON.parse(this.responseText);
+            var results = data["results"];
+      
+            console.log(results);
+        
+        }
+      });
+
+      xhr.send(sparql_query);
+  }
 
   var getProcesses = function(query) 
   {
@@ -220,6 +257,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
     var input = 'RL';
 
+    var options = {};
     /*
     var options = {  layout: {
                         hierarchical: {
@@ -284,6 +322,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   buttonAnalytics.bind("click", executeMetric);
   buttonBuildGraph.bind("click", drawSupplyChain);
   buttonModify.bind("click", updateQuery);
+  buttonSuppliers.bind("click", getSuppliers);
   // onload
   $(document).ready(function() {
 

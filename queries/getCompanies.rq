@@ -1,5 +1,4 @@
 SELECT ?vatId ?legalName ?someScore
-
 WHERE { ?company a  <http://schema.org/Corporation> . 
   ?company <http://schema.org/legalName> ?legalName.
   ?company <http://schema.org/vatID> ?vatId . }
