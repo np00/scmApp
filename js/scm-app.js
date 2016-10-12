@@ -8,12 +8,11 @@
 //var url_server = "https://lucid.implisense.com/dataplatform/"
 var url_server = "https://lucid-dataplatform.eccenca.com/";
 
-//var user = "implisense";
-//var pw = "4nAQCULrpNJqeB9yGiVd";
 
 
-var user = "extern.npetersen";
-var pw = "HahthohmahK3";
+
+var user = "x";
+var pw = "x";
 
 var access_token;
 
