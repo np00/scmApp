@@ -6,12 +6,12 @@
 
 
 
-//var url_server = "https://lucid.eccenca.com/dataplatform/"
+var url_server = "https://lucid.eccenca.com/dataplatform/"
 //var user = "xx";
 //var pw = "xx";
 
 
-var url_server = "https://lucid.implisense.com/dataplatform/"
+//var url_server = "https://lucid.implisense.com/dataplatform/"
 var user = "xx";
 var pw = "xx";
 
