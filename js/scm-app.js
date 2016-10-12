@@ -5,15 +5,11 @@
 
 
 
-var url_server = "https://lucid.eccenca.com/dataplatform/"
-//var user = "xx";
-//var pw = "xx";
-
-
 //var url_server = "https://lucid.implisense.com/dataplatform/"
-var user = "xx";
-var pw = "xx";
+var url_server = "https://lucid-dataplatform.eccenca.com/";
 
+var user = "x";
+var pw = "x";
 
 
 var access_token;
@@ -30,10 +26,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   var buttonModify = $("#button-modify");
 
 
-  var container = document.getElementById('supplyChainNetwork');
-
-
-
+  var container = document.getElementById('mynetwork');
 
   // viz container
   var nodes, edges, network;
@@ -120,23 +113,16 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
             var data = JSON.parse(this.responseText);
             var results = data["results"];
-            console.log(this);
+ 
             var metricResult = results.bindings[0].metricResult.value
 
+           console.log(metricResult);
 
-
-            addEdge(11, "Albrecht Auto-Zubehör GmbH", "Karosseriewerk Heinrich Meyer GmbH", metricResult)
+            addEdge(11, "Limbacher Bremsbelag GmbH", "Albrecht Auto-Zubehör GmbH", metricResult)
         }
       });
 
       xhr.send(sparql_query);
-  }
-
-
-  var drawGraph = function (supplyChain)
-  {
-    console.log(supplyChain);
-
   }
 
 
@@ -199,16 +185,9 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
 //    DELETE DATA { GRAPH <test1> { <http://lucid.implisense.com/companies/DE2FFGESNX37> a <http://schema.org/Corporation> .}}; 
 
-    query = "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE222>  a <http://dbpedia.org/ontology/Company> . <http://lucid.implisense.com/companies/DE222>  <http://www.w3.org/2000/01/rdf-schema#comment> \"The company object DE08L9IH7I87\" .}}";
+    query = "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE555>  a <http://dbpedia.org/ontology/Company> . <http://lucid.implisense.com/companies/DE555>  <http://www.w3.org/2000/01/rdf-schema#comment> \"Some Special Company Nilkas\" .}}";
 
-
- //   query= "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE9WNYUSMP94> <http://www.w3.org/2000/01/rdf-schema#label> \"Niklas Petersen GmbH\". } }"
-
-
-
-//+ "&comment=niklasComment&graph=someGraph"
-
-   var sparql_query = "update=" + encodeURIComponent(query) + "&comment=some Comment";
+   var sparql_query = "update=" + encodeURIComponent(query) + "&comment=lalala&graph=http://purl.org/eis/vocab/scor#";
 
     var request = url_server + "proxy/default/update";
 
@@ -216,24 +195,20 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", request, true);
-    xhr.setRequestHeader("accept", "*/*");
-
-
+    xhr.setRequestHeader("accept", "application/sparql-update");
     xhr.setRequestHeader("authorization", ("Bearer " + access_token))
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-
-
     xhr.withCredentials = true;
+
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
 
-         console.log(this.responseText);
+         console.log(this);
        }
     });
 
       xhr.send(sparql_query);
   }
-
 
 
     var createGraph = function () {
@@ -244,6 +219,8 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
     };
 
     var input = 'RL';
+
+    /*
     var options = {  layout: {
                         hierarchical: {
                           direction: 'LR'}},
@@ -263,6 +240,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       }}
     
     };
+    */
     var network = new vis.Network(container, data, options);
 
      network.on("click", function (params) {

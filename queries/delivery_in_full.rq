@@ -5,7 +5,7 @@ PREFIX company: <http://lucid.implisense.com/companies/>
 SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
        + (<http://www.w3.org/2001/XMLSchema#double>(?value2))) 
        / 2 AS ?metricResult) 
-FROM <supplyChain>
+FROM <http://purl.org/eis/vocab/scor#>
 WHERE { 
           ?process scor:hasMetricRL_33 ?value1. 
           ?process scor:hasMetricRL_50 ?value2.
