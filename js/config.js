@@ -3,7 +3,7 @@ var require = {
   paths: {
     mode: '../mode',
     N3: 'lib/n3-browser-slk',
-    jquery: 'lib/jquery-2.1.3.min',
+    jquery: 'lib/jquery-3.1.1.min',
     github: 'lib/github',
     underscore: 'lib/underscore-min'
   }, 

@@ -413,13 +413,8 @@
     $("#getter").easyAutocomplete(options);
   </script>
   <script>
-    $.ajax({
-      type: 'POST',
-      url: 'http://localhost/api',
-      headers: {
-        "auth-key":"token"
-      }
-    });
+
+
   </script>
   
   <!-- SCM first Version START -->
@@ -430,16 +425,6 @@
             <div class="page-header">
             </div>
         </header>
-              </br>  From:                      
-              <select>
-                       <option value="date1">1 Sep 2015</option>
-                      <option value="date2">Dec 1</option>
-             </select> To
-             <select>
-                       <option value="date3">31 Dec 2015</option>
-                      <option value="date4">Feb 31</option>
-             </select> 
-             </br> </br>
         <div class="menu" style="display: none;">
         </div>
              <div id="supplyChainNetwork"></div>   
@@ -453,6 +438,7 @@
                     </select> 
                  <button type="button" id="button-buildGraph" class="btn btn-primary">Draw Supply Chain</button>
                  <button type="button" id="button-analytics" class="btn btn-primary">Run SC Analytics</button>
+                 <button type="button" id="button-modify" class="btn btn-primary">Modifiy Graph Test</button>
                 </div>
    
 

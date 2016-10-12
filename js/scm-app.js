@@ -4,17 +4,14 @@
 // and https://github.com/RubenVerborgh/N3.js (Turtle parser)
 
 
+var url_server = "https://lucid-dataplatform.eccenca.com/";
+var user = "extern.npetersen";
+var pw = "HahthohmahK3";
 
 
-//var url_server = "https://lucid.eccenca.com/dataplatform/"
-//var user = "xx";
-//var pw = "xx";
-
-
-var url_server = "https://lucid.implisense.com/dataplatform/"
-var user = "xx";
-var pw = "xx";
-
+//var url_server = "https://lucid.implisense.com/dataplatform/"
+//var user = "implisense";
+//var pw = "4nAQCULrpNJqeB9yGiVd";
 
 var access_token;
 
@@ -27,6 +24,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   // HTML elements ------------------------------------------------------------
   var buttonAnalytics = $("#button-analytics");
   var buttonBuildGraph = $("#button-buildGraph");
+  var buttonModify = $("#button-modify");
 
 
   var container = document.getElementById('supplyChainNetwork');
@@ -41,14 +39,15 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   //var request = "https://lucid.eccenca.com/dataplatform/proxy/default/sparql?access_token=" + access_token;
 
 
-
   var getAccessToken = function (url_server, user, pw) 
   {
-      var request = url_server + "oauth/token?username=" + user + "&password=" + pw + "&client_id=eldsClient&client_secret=secret&grant_type=password";
+      var request = url_server + "oauth/token?grant_type=password&username=" + user + "&password=" + pw + "&client_id=eldsClient&client_secret=secret";
 
       var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-      xhr.addEventListener("readystatechange", function () {
+
+      xhr.open("POST", request);
+
+         xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             this.responseText;
 
@@ -58,8 +57,6 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
             console.log("get access token succeeded: " + response.access_token);
         }
       });
-
-      xhr.open("POST", request);
       xhr.send();
   }
 
@@ -106,7 +103,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
   var runSparqlQuery = function (query) 
   {
       var sparql_query = "query=" + encodeURIComponent(query);
-      var sparql_query = "query=" + encodeURIComponent("SELECT ?s WHERE {?s ?p ?o} LIMIT 10");
+   //   var sparql_query = "query=" + encodeURIComponent("SELECT ?s WHERE {?s ?p ?o} LIMIT 10");
  
       var request = url_server + "proxy/default/sparql?access_token=" + access_token;
 
@@ -120,7 +117,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
             var data = JSON.parse(this.responseText);
             var results = data["results"];
-            console.log(this.responseText);
+            console.log(this);
             var metricResult = results.bindings[0].metricResult.value
 
 
@@ -142,8 +139,6 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
   var getProcesses = function(query) 
   {
-     // var getProcesses_query = "query=%20CONSTRUCT%20%7B%3Fs%20%3Fp%20%3Fo%7D%20WHERE%20%20%20%20%7B%20%3Fs%20a%20%3Chttp%3A%2F%2Fpurl.org%2Feis%2Fvocab%2Fscor%23Process%3E%20.%20%20%20%20%3Fs%20%3Fp%20%3Fo%7D";
-
       console.log(query);
 
       var request = url_server + "proxy/default/sparql?access_token=" + access_token;
@@ -165,12 +160,13 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
           console.log(data);
           var processes = data["results"]
 
+          console.log(processes);
+
           // for each process
           $.each(processes, function(i, v) 
           {
               var processArray = processes[i];
           
-
               // read process value, supplier and client
               $.each(processArray, function(j, v) 
               {
@@ -194,40 +190,46 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       });
   }
 
-/*
 
-  var runMetric = function() 
+  var updateQuery = function (query) 
   {
-      var bla = readTextFile("queries/delivery_in_full.rq")
+
+//    DELETE DATA { GRAPH <test1> { <http://lucid.implisense.com/companies/DE2FFGESNX37> a <http://schema.org/Corporation> .}}; 
+
+    query = "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE222>  a <http://dbpedia.org/ontology/Company> . <http://lucid.implisense.com/companies/DE222>  <http://www.w3.org/2000/01/rdf-schema#comment> \"The company object DE08L9IH7I87\" .}}";
 
 
-      console.log(bla);
+ //   query= "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE9WNYUSMP94> <http://www.w3.org/2000/01/rdf-schema#label> \"Niklas Petersen GmbH\". } }"
 
 
-        var delivery_in_full_query = "query=PREFIX%20%3A%20%3Chttp%3A%2F%2Fpurl.org%2Feis%2Fvocab%2Fscor%23%3E%0APREFIX%20xsd%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT%20(((%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23double%3E(%3Fvalue1))%20%2B%20(%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23double%3E(%3Fvalue2)))%20%2F%202%20AS%20%3FmetricResult)%20FROM%20%3CsupplyChain%3E%0AWHERE%20%7B%0A%20%20%3Forder%20%3Chttp%3A%2F%2Fpurl.org%2Feis%2Fvocab%2Fscor%23hasMetricRL_33%3E%20%3Fvalue1.%0A%20%20%3Forder%20%3Chttp%3A%2F%2Fpurl.org%2Feis%2Fvocab%2Fscor%23hasMetricRL_50%3E%20%3Fvalue2.%0A%7D%0ALIMIT%2010";
 
-        var test = "PREFIX : <http://purl.org/eis/vocab/scor#>PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1)) + (<http://www.w3.org/2001/XMLSchema#double>(?value2))) / 2 AS ?metricResult) FROM <supplyChain>WHERE {  ?order <http://purl.org/eis/vocab/scor#hasMetricRL_33> ?value1.  ?order <http://purl.org/eis/vocab/scor#hasMetricRL_50> ?value2.}LIMIT 10";
-        var someVariable = "query=" + encodeURIComponent(test);
+//+ "&comment=niklasComment&graph=someGraph"
+
+   var sparql_query = "update=" + encodeURIComponent(query) + "&comment=some Comment";
+
+    var request = url_server + "proxy/default/update";
+
+    console.log(access_token);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", request, true);
+    xhr.setRequestHeader("accept", "*/*");
 
 
-        console.log(someVariable);
+    xhr.setRequestHeader("authorization", ("Bearer " + access_token))
+    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
 
-        xhr.open("POST", requsect)
-        xhr.setRequestHeader("accept", "application/sparql-results+json");
-        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");   
-        xhr.send(someVariable);
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
 
-        xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4) {
-            console.log(this.responseText);
-          }
-        });
-    }
+         console.log(this.responseText);
+       }
+    });
 
-    */
+      xhr.send(sparql_query);
+  }
 
 
 
@@ -268,6 +270,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
 
   function addNode(id, label) {
+      console.log(label);
       try {
           nodes.add({
               id: id,
@@ -299,6 +302,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
     // button clicks
   buttonAnalytics.bind("click", executeMetric);
   buttonBuildGraph.bind("click", drawSupplyChain);
+  buttonModify.bind("click", updateQuery);
   // onload
   $(document).ready(function() {
 
@@ -309,3 +313,28 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
         //runMetric();
      });
   });
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+// xhr.setRequestHeader("Allow-Control-Allow-Origin", ".*");
+    
+      /*
+      xhr.withCredentials = true;
+      xhr.setRequestHeader("Allow-Control-Allow-Credentials", "true");
+      xhr.setRequestHeader("Allow-Control-Allow-Headers", "Authorization, X-Requested-With, Content-Type, Content-Length");
+      xhr.setRequestHeader("Allow-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
+      xhr.setRequestHeader("Allow-Control-Allow-Origin", "https://lucid-datamanager.eccenca.com");
+      xhr.setRequestHeader("Allow-Control-Allow-Headers", "WWW-Authenticate, Link, ETag");
+      xhr.setRequestHeader("Allow-Control-Max-Age", "3600");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+*/

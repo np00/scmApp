@@ -4,7 +4,7 @@ PREFIX schema: <http://schema.org/>
 
 
 SELECT ?process ?client ?supplier ?clientVatID ?supplierVatID
-FROM <supplyChain>
+FROM <http://purl.org/eis/vocab/scor#>
 WHERE { 
           ?process a scor:Process . 
 
@@ -15,4 +15,4 @@ WHERE {
           ?process scor:hasSupplier ?supplierCompany .
           ?supplierCompany schema:legalName ?supplier .
           ?supplierCompany schema:vatID  ?supplierVatID . 
-}LIMIT 10
+}
