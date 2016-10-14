@@ -9,13 +9,13 @@ $(function() {  // load when DOM ready
 		  },
 		  onSelectItemEvent: function() {
 			  var companyValue = $("#companyName").getSelectedItemData().id;
-        $("#companyID").val(companyValue).trigger("change");
+        $("#companyID").text(companyValue);
         
          var supplierValue = $("#supplierName").getSelectedItemData().id;
-        $("#supplierID").val(supplierValue).trigger("change");
+        $("#supplierID").text(supplierValue);
         
          var recipentValue = $("#recipentName").getSelectedItemData().id;
-        $("#recipentID").val(recipentValue).trigger("change");
+        $("#recipentID").text(recipentValue);;
 		  }
 	  },
     theme: "plate-dark"
@@ -34,8 +34,8 @@ $(function() {  // load when DOM ready
   function addNode() {
     try {
       nodes.add({
-        id: document.getElementById('companyID').value,
-        label: document.getElementById('companyName').value
+        id: $('#companyID').text(),
+        label: $('#companyName').text()
       });
     }
     catch (err) {
@@ -65,9 +65,9 @@ $(function() {  // load when DOM ready
   function addEdge() {
     try {
       edges.add({
-        id: document.getElementById('edgeID').value,
-        from: document.getElementById('supplierID').value,
-        to: document.getElementById('recipentID').value
+        id: $('#edgeID').text(),
+        from: $('#supplierID').text(),
+        to: $('#recipentID').text()
       });
     }
     catch (err) {

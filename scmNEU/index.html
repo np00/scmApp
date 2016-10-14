@@ -30,11 +30,11 @@
   <div class="ui main container">
     <div class="ui three column stackable grid container">
       <div class="column">
-        <div>Mein Firma</div>
+        <div>Meine Firma</div>
         <div>
           <div class="ui mini input">
             <input id="companyName" type="text" placeholder="Firmenname">
-            <input id="companyID" class="hidden" type="text" value="">
+            <div id="companyID" class="hiddenx"></div>
           </div>
           <div>
             <button class="ui mini primary button" id="addCompany" onclick="addNode();">Hinzufügen</button>
@@ -46,8 +46,8 @@
         <div>
           <div class="ui mini input">
             <input id="supplierName" type="text" placeholder="Zulieferer">
-            <input id="supplierID" class="hidden" type="text" value="">
-            <input id="edgeID" class="hidden" type="text" value="44">
+            <div id="supplierID" class="hidden"></div>
+            <div id="edgeID" class="hiddenx">44</div>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
         <div>
           <div class="ui mini input">
             <input id="recipentName" type="text" placeholder="Empfänger">
-            <input id="recipentID" class="hidden" type="text" value="">
+            <div id="recipentID" class="hidden"></div>
           </div>
           <div>
             <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
@@ -84,15 +84,16 @@
       </div>
     </div>
     <div class="ui stackable grid container">
-    <div class="column">
-      <div>
-        <div id="network"></div>
-        <pre id="nodes"></pre>
-        <pre id="edges"></pre>
+      <div class="column">
+        <div>
+          <div id="network"></div>
+          <div id="debug">DEBUG
+            <div id="nodes"></div>
+            <div id="edges"></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
   </div>
   
   <div class="ui inverted vertical footer segment">
@@ -102,21 +103,21 @@
         <div class="three wide column">
           <h4 class="ui inverted header">LUCID</h4>
           <div class="ui inverted link list">
-            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+            <a href="#" class="item">Link One</a>
           
           </div>
         </div>
         <div class="three wide column">
           <h4 class="ui inverted header">Implisense</h4>
           <div class="ui inverted link list">
-            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+            <a href="#" class="item">Link One</a>
            
           </div>
         </div>
         <div class="three wide column">
           <h4 class="ui inverted header">Info</h4>
           <div class="ui inverted link list">
-            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+            <a href="#" class="item">Link One</a>
            
           </div>
         </div>
@@ -127,16 +128,14 @@
       </div>
       <div class="ui inverted section divider"></div>
       <div class="ui horizontal inverted small divided link list">
-        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Site Map</a>
-        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Contact Us</a>
-        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Terms and Conditions</a>
-        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Privacy Policy</a>
+        <a class="item" href="#">Site Map</a>
+        <a class="item" href="#">Contact Us</a>
+        <a class="item" href="#">Terms and Conditions</a>
+        <a class="item" href="#">Privacy Policy</a>
       </div>
       -->
     </div>
   </div>
-
-
 
 </body>
 </html>
