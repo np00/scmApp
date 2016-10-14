@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html data-ember-extension="1">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>LUCID SCM-App</title>
+
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="css/vis.min.css">
+  <link rel="stylesheet" type="text/css" href="css/easy-autocomplete.min.css">
+  <link rel="stylesheet" type="text/css" href="css/easy-autocomplete.themes.min.css">
+    
+  <script src="js/jquery.min.js"></script>
+  <script src="js/vis.min.js"></script>
+  <script src="js/semantic.min.js"></script>
+  <script src="js/jquery.easy-autocomplete.min.js"></script>
+  <script src="js/custom.js"></script>
+
+</head>
+<body onload="draw();">
+  <div class="ui fixed inverted menu">
+    <div class="ui container">
+      <a href="index.html" class="header item">
+        <img class="logo" src="img/logo.png">LUCID SCM-App
+      </a>
+    </div>
+  </div>
+
+  <div class="ui main container">
+    <div class="ui three column stackable grid container">
+      <div class="column">
+        <div>Mein Firma</div>
+        <div>
+          <div class="ui mini input">
+            <input id="companyName" type="text" placeholder="Firmenname">
+            <input id="companyID" class="hidden" type="text" value="">
+          </div>
+          <div>
+            <button class="ui mini primary button" id="addCompany" onclick="addNode();">Hinzufügen</button>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div>Zulieferer</div>
+        <div>
+          <div class="ui mini input">
+            <input id="supplierName" type="text" placeholder="Zulieferer">
+            <input id="supplierID" class="hidden" type="text" value="">
+            <input id="edgeID" class="hidden" type="text" value="44">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div>Empfänger</div>
+        <div>
+          <div class="ui mini input">
+            <input id="recipentName" type="text" placeholder="Empfänger">
+            <input id="recipentID" class="hidden" type="text" value="">
+          </div>
+          <div>
+            <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui stackable grid container">
+      <div class="column">
+        <div>Metriken</div>
+        <div>
+          <select class="ui inline dropdown">
+            <option value="">Auswahl</option>
+            <option value="volvo">Orders Delivered in Full (RL 2.1)</option>
+            <option value="saab">Order Fullfillment Cycle Time (RS 1.1)</option>
+            <option value="mercedes">Upside Supply Chain Flexibility (AG 1.1)</option>
+            <option value="audi">Total Cost to Serve (CO 1.1)</option>
+            <option value="audi">Return on Supply Chain Fixed Assets (CO 1.2)</option>
+          </select>
+          <button class="ui mini primary button" id="button-buildGraph">Draw Supply Chain</button>
+          <button class="ui mini primary button" id="button-analytics">Run SC Analytics</button>
+          <button class="ui mini primary button" id="button-modify">Modifiy Graph Test</button>
+          <button class="ui mini primary button" id="button-suppliers">Load Suppliers</button>
+        </div>
+      </div>
+    </div>
+    <div class="ui stackable grid container">
+    <div class="column">
+      <div>
+        <div id="network"></div>
+        <pre id="nodes"></pre>
+        <pre id="edges"></pre>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  
+  <div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+      <!--
+      <div class="ui stackable inverted divided grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">LUCID</h4>
+          <div class="ui inverted link list">
+            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+          
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Implisense</h4>
+          <div class="ui inverted link list">
+            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+           
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Info</h4>
+          <div class="ui inverted link list">
+            <a href="http://semantic-ui.com/examples/fixed.html#" class="item">Link One</a>
+           
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Footer Header</h4>
+          <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+        </div>
+      </div>
+      <div class="ui inverted section divider"></div>
+      <div class="ui horizontal inverted small divided link list">
+        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Site Map</a>
+        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Contact Us</a>
+        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Terms and Conditions</a>
+        <a class="item" href="http://semantic-ui.com/examples/fixed.html#">Privacy Policy</a>
+      </div>
+      -->
+    </div>
+  </div>
+
+
+
+</body>
+</html>

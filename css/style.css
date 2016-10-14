@@ -173,14 +173,10 @@
   }
   table.legend_table {
     font-size: 11px;
-    border-width:1px;
-    border-color:#d3d3d3;
-    border-style:solid;
+    width: 100%;
   }
   table.legend_table,td {
-    border-width:1px;
-    border-color:#d3d3d3;
-    border-style:solid;
+
     padding: 2px;
   }
   div.table_content {
@@ -270,4 +266,7 @@ iframe {
 }
 #mark-add{
   margin-left: 5px;
+}
+.indicator{
+  background-color: #8b4b68;
 }
