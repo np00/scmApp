@@ -3,19 +3,31 @@ $(function() {  // load when DOM ready
   var options = {
 	  url: "js/data.json",
     getValue: "label",
-    list: {
+     list: {
+      maxNumberOfElements: 10,
 		  match: {
 			  enabled: true
 		  },
 		  onSelectItemEvent: function() {
 			  var companyValue = $("#companyName").getSelectedItemData().id;
         $("#companyID").text(companyValue);
-        
-         var supplierValue = $("#supplierName").getSelectedItemData().id;
+        var supplierValue = $("#supplierName").getSelectedItemData().id;
         $("#supplierID").text(supplierValue);
-        
-         var recipentValue = $("#recipentName").getSelectedItemData().id;
-        $("#recipentID").text(recipentValue);;
+        var recipentValue = $("#recipentName").getSelectedItemData().id;
+        $("#recipentID").text(recipentValue);
+		  },
+		  showAnimation: {
+			  type: "fade", //normal|slide|fade
+        time: 300,
+        callback: function() {}
+		  },
+      hideAnimation: {
+			  type: "fade", //normal|slide|fade
+        time: 300,
+        callback: function() {}
+		  },
+		  sort: {
+			  enabled: true
 		  }
 	  },
     theme: "plate-dark"
