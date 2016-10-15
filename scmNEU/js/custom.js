@@ -36,6 +36,42 @@ $(function() {  // load when DOM ready
   $("#supplierName").easyAutocomplete(options);
   $("#recipentName").easyAutocomplete(options);
   //--- autocomplete ---
+  //--- file upload ---
+  function readSingleFile(evt) {
+    var f = evt.target.files[0]; 
+    if (f) {
+      var r = new FileReader();
+      r.onload = function(e) {
+        $("#data").html('');
+        var uploadContents = e.target.result;
+        //alert(contents);
+        var startContent = 'digraph {node [shape=dot fontsize=15] edge [length=100, color=blue, fontcolor=black] ';
+        //contents = startContent + uploadContents + "}";
+        contents = uploadContents;
+        $("#data").val(contents);
+        draw();
+      }
+      r.readAsText(f);
+    } else { 
+      alert("Failed to load file");
+    }
+  }
+  document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+  //--- file upload ---
+  //--- supplier add textfiled ---
+  $("#supplierAdd").click(function(){
+    var myCompanyInput = $('#selectedCompanyName').html();
+    myCompanyInput = myCompanyInput.replace(/\&amp;/g,'&');
+    $('#supplierName').val("\"" + myCompanyInput + "\"");
+  });
+  //--- supplier add textfiled ---
+  //--- recipent add textfield ---
+  $("#recipentAdd").click(function(){
+    var myGetterInput = $('#selectedCompanyName').html();
+    myGetterInput = myGetterInput.replace(/\&amp;/g,'&');
+    $('#recipentName').val("\"" + myGetterInput + "\"");
+  });
+  //--- recipent add textfield ---
 }); // load when DOM ready
 
   //--- vis graph ---
@@ -152,12 +188,10 @@ $(function() {  // load when DOM ready
           from:   {enabled: false, scaleFactor:1}
         },
         arrowStrikethrough: true,
-        color: {
-          color:'#0000ff',
-          highlight:'#008000',
-          hover: '#848484',
-          inherit: 'from',
-          opacity:1.0
+       "color": {
+          "color": "#0000ff",
+          "highlight": "#006400",
+          "inherit": false
         },
         dashes: false,
         font: {
@@ -269,15 +303,15 @@ $(function() {  // load when DOM ready
         borderWidthSelected: 2,
         brokenImage:undefined,
         color: {
-          border: '#fff000',
-          background: '#adadff',
+          border: '#000000',
+          background: '#0083ff',
           highlight: {
-            border: '#fff000',
-            background: '#008000'
+            border: '#000000',
+            background: '#006400'
           },
           hover: {
-            border: '#2B7CE9',
-            background: '#D2E5FF'
+            border: '#000000',
+            background: '#006400'
           }
         },
         fixed: {

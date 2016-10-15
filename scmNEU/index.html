@@ -16,6 +16,7 @@
   <script src="js/semantic.min.js"></script>
   <script src="js/jquery.easy-autocomplete.min.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/fileDownload.js"></script>  
 
 </head>
 <body onload="draw();">
@@ -30,7 +31,9 @@
   <div class="ui main container">
     <div class="ui three column stackable grid container">
       <div class="column">
-        <div>Meine Firma</div>
+        <div>
+          <h5 class="ui header">Meine Firma</h5>
+        </div>
         <div>
           <div class="ui mini input">
             <input id="companyName" type="text" placeholder="Firmenname">
@@ -42,7 +45,9 @@
         </div>
       </div>
       <div class="column">
-        <div>Zulieferer</div>
+        <div>
+          <h5 class="ui header">Zulieferer</h5>
+        </div>
         <div>
           <div class="ui mini input">
             <input id="supplierName" type="text" placeholder="Zulieferer">
@@ -52,7 +57,9 @@
         </div>
       </div>
       <div class="column">
-        <div>Empfänger</div>
+        <div>
+          <h5 class="ui header">Empfänger</h5>
+        </div>
         <div>
           <div class="ui mini input">
             <input id="recipentName" type="text" placeholder="Empfänger">
@@ -66,7 +73,9 @@
     </div>
     <div class="ui stackable grid container">
       <div class="column">
-        <div>Metriken</div>
+        <div>
+          <h5 class="ui header">Metriken</h5>
+        </div>
         <div>
           <select class="ui inline dropdown">
             <option value="">Auswahl</option>
@@ -86,10 +95,37 @@
     <div class="ui stackable grid container">
       <div class="column">
         <div>
-          <div id="network"></div>
+          <div class="ui grid">
+            <div class="fourteen wide column">
+              <div id="network"></div>
+            </div>
+            <div class="two wide column userAction">
+              <div class="fileUpload ui mini primary button">
+                <span>Upload</span>
+                <input type="file" id="fileinput" class="upload" />
+              </div>
+              <div>
+                <span>SCM Graph speichern</span>
+                <input id="fileName" placeholder="Dateiname"/>
+                <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
+              </div>
+              <div>
+                <div>Firma <span id="selectedCompanyName">abcde</span> markieren als:</div>
+                <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
+                <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
+              </div>
+            </div>
+          </div>       
           <div id="debug">DEBUG
             <div id="nodes"></div>
             <div id="edges"></div>
+            <textarea id="data">
+              digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }
+            </textarea>
+            <div>Firmendetail</div>
+              <div id="debugCompanyName">Firma</div>
+              <div id="debugCompanyID">ID</div>
+            </div>
           </div>
         </div>
       </div>
