@@ -97,17 +97,19 @@
         <div id="network"></div>
       </div>
       <div class="three wide column userAction">
-        SCM Graph laden
-        <div class="fileUpload ui mini primary button">
-          <span>Datei Auswahl</span>
-          <input type="file" id="fileinput" class="upload" />
+        <div class="ui segment rightPane">
+          <div class="userAction">SCM Graph laden</div>
+          <div class="fileUpload ui mini primary button">
+            <span>Datei Auswahl</span>
+            <input type="file" id="fileinput" class="upload" />
+          </div>
         </div>
-        <div>
-          <span>SCM Graph speichern</span>
+        <div class="ui segment rightPane">
+          <div class="userAction">SCM Graph speichern</div>
           <input id="fileName" placeholder="Dateiname"/>
           <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
         </div>
-        <div>
+        <div class="ui segment rightPane">
           <div>Firma <span id="selectedCompanyName"></span> markieren als:</div>
           <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
           <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
