@@ -378,11 +378,20 @@ $(function() {  // load when DOM ready
     //Physics
     
     //Physics
-  
-  
   };
-    network = new vis.Network(container, data, options);
+  network = new vis.Network(container, data, options);
+  console.debug(network.view.body.nodes);
+  console.debug(network.view.body.edges);
 
-  }
+  network.on("click", function (params) {  
+    params.event = "[original event]";
+    document.getElementById('eventSpan').innerHTML = '<h5>Click event:</h5>' + JSON.stringify(params, null, 4);
+    var companyVal = JSON.stringify(params, null,0);
+    dataJson = JSON.parse(companyVal);
+    //console.log(dataJson.edges);
+    $('#debugCompanyID').html(dataJson.nodes);
+    $('#selectedCompanyName').html(dataJson.nodes);
+    
+  });
+}
   //--- vis graph ---
-  

@@ -92,46 +92,43 @@
         </div>
       </div>
     </div>
-    <div class="ui stackable grid container">
-      <div class="column">
+    <div class="ui stackable grid container"> 
+      <div class="thirteen wide column">
+        <div id="network"></div>
+      </div>
+      <div class="three wide column userAction">
+        SCM Graph laden
+        <div class="fileUpload ui mini primary button">
+          <span>Datei Auswahl</span>
+          <input type="file" id="fileinput" class="upload" />
+        </div>
         <div>
-          <div class="ui stackable grid">
-            <div class="fourteen wide column">
-              <div id="network"></div>
-            </div>
-            <div class="two wide column userAction">
-              <div class="fileUpload ui mini primary button">
-                <span>Upload</span>
-                <input type="file" id="fileinput" class="upload" />
-              </div>
-              <div>
-                <span>SCM Graph speichern</span>
-                <input id="fileName" placeholder="Dateiname"/>
-                <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
-              </div>
-              <div>
-                <div>Firma <span id="selectedCompanyName">abcde</span> markieren als:</div>
-                <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
-                <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
-              </div>
-            </div>
-          </div>       
-          <div id="debug">DEBUG
-            <div id="nodes"></div>
-            <div id="edges"></div>
-            <textarea id="data">
-              digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }
-            </textarea>
-            <div>Firmendetail</div>
-              <div id="debugCompanyName">Firma</div>
-              <div id="debugCompanyID">ID</div>
-            </div>
+          <span>SCM Graph speichern</span>
+          <input id="fileName" placeholder="Dateiname"/>
+          <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
+        </div>
+        <div>
+          <div>Firma <span id="selectedCompanyName"></span> markieren als:</div>
+          <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
+          <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
+        </div>
+      </div>
+      <div class="sixteen wide column">
+        <div id="debug">DEBUG
+          <div id="nodes"></div>
+          <div id="edges"></div>
+          <textarea id="data">
+            digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }
+          </textarea>
+          <div>Firmendetail</div>
+            <div id="debugCompanyName">Firma</div>
+            <div id="debugCompanyID">ID</div>
+            <div id="eventSpan">adf</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
   <div class="ui inverted vertical footer segment">
     <div class="ui center aligned container">
       <!--
