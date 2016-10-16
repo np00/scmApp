@@ -36,6 +36,14 @@ $(function() {  // load when DOM ready
   $("#supplierName").easyAutocomplete(options);
   $("#recipentName").easyAutocomplete(options);
   //--- autocomplete ---
+  //--- put random int into edges div ---
+  function randomInt() {
+    var randomNumber = parseInt((Math.random() * (100000 - 50 + 1)), 10) + 50;
+    $('#edgeID').text(randomNumber);
+  }
+  randomInt();
+  //--- put random int into edges div ---
+
   //--- file upload ---
   function readSingleFile(evt) {
     var f = evt.target.files[0]; 
@@ -60,19 +68,22 @@ $(function() {  // load when DOM ready
   //--- file upload ---
   //--- supplier add textfiled ---
   $("#supplierAdd").click(function(){
-    var myCompanyInput = $('#selectedCompanyName').html();
-    myCompanyInput = myCompanyInput.replace(/\&amp;/g,'&');
-    $('#supplierName').val("\"" + myCompanyInput + "\"");
+    var selectedSupplier = $('#debugCompanyName').html();
+    selectedSupplier = selectedSupplier.replace(/\&amp;/g,'&');
+    $('#supplierName').val(selectedSupplier);
+    $('#supplierID').text($('#debugCompanyID').text());
+    
   });
   //--- supplier add textfiled ---
   //--- recipent add textfield ---
   $("#recipentAdd").click(function(){
-    var myGetterInput = $('#selectedCompanyName').html();
-    myGetterInput = myGetterInput.replace(/\&amp;/g,'&');
-    $('#recipentName').val("\"" + myGetterInput + "\"");
+    var selectedRecipent = $('#debugCompanyName').html();
+    selectedRecipent = selectedRecipent.replace(/\&amp;/g,'&');
+    $('#recipentName').val(selectedRecipent);
+    $('#recipentID').text($('#debugCompanyID').text());
   });
   //--- recipent add textfield ---
-}); // load when DOM ready
+ }); // load when DOM ready
 
   //--- vis graph ---
   var nodes, edges, network;
@@ -382,7 +393,7 @@ $(function() {  // load when DOM ready
   network = new vis.Network(container, data, options);
   console.debug(network.view.body.nodes);
   console.debug(network.view.body.edges);
-
+ 
   network.on("click", function (params) {  
     params.event = "[original event]";
     document.getElementById('eventSpan').innerHTML = '<h5>Click event:</h5>' + JSON.stringify(params, null, 4);
@@ -391,7 +402,33 @@ $(function() {  // load when DOM ready
     //console.log(dataJson.edges);
     $('#debugCompanyID').html(dataJson.nodes);
     $('#selectedCompanyName').html(dataJson.nodes);
-    
+    var edgesArray = network.view.body.edges; // --- get edges of graph ---
+    var edgesArrayInt = []; // --- calculate biggest int in edges array --
+    $.each( edgesArray, function( key, value ) {
+      //console.debug( key + ": " + value );
+      edgesArrayInt.push(key);
+      return edgesArrayInt;
+    });
+    var maxValueInArray = Math.max.apply(Math, edgesArrayInt);
+    console.debug('Largest int in Array: ' + maxValueInArray);  // --- calculate biggest int in edges array --
+    var nextEdge = maxValueInArray + 1;
+    $('#edgeID').text(nextEdge);
+
+    //--- parse json file to get company info ---
+    $.getJSON( "js/data.json", function( data ) {
+      var items = [];
+      $.each( data, function( key, val ) {
+        if (val.id == dataJson.nodes ){
+          $('#debugCompanyName').text(val.label);
+        }
+      });
+      
+      $( "<ul/>", { //--- list all comapanies ---
+        "class": "companyList",
+        html: items.join( "" )
+      }).appendTo( "body" );  //--- list all comapanies ---
+    });
+    //--- parse json file to get company info ---
   });
 }
   //--- vis graph ---
