@@ -16,17 +16,12 @@
   <script src="js/semantic.min.js"></script>
   <script src="js/jquery.easy-autocomplete.min.js"></script>
   <script src="js/custom.js"></script>
-<<<<<<< HEAD:index.html
-  <script src="js/fileDownload.js"></script>  
-  <script src="js/scm-app.js"></script> 
-=======
   <script src="js/fileDownload.js"></script>
   <script src="js/d3.v4.min.js"></script>
   <script src="js/viz.v1.1.0.min.js"></script>
->>>>>>> 8c1468118326135e6f6caf10ee3c2b7811962f9a:scmNEU/index.html
 
 </head>
-<body >
+<body onload="draw();">
   <div class="ui fixed inverted menu">
     <div class="ui container">
       <a href="index.html" class="header item">
@@ -59,7 +54,7 @@
           <div class="ui mini input">
             <input id="supplierName" type="text" placeholder="Zulieferer">
             <div id="supplierID" class="hidden"></div>
-           <!-- <div id="edgeID" class="hidden"></div> -->
+            <div id="edgeID" class="hidden"></div>
           </div>
         </div>
       </div>
@@ -69,8 +64,8 @@
         </div>
         <div>
           <div class="ui mini input">
-            <input id="clientName" type="text" placeholder="Empfänger">
-            <div id="clientID" class="hidden"></div>
+            <input id="recipentName" type="text" placeholder="Empfänger">
+            <div id="recipentID" class="hidden"></div>
           </div>
           <div>
             <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
@@ -100,10 +95,10 @@
       </div>
     </div>
     <div class="ui stackable grid container"> 
-      <div class="thirteen wide column">
+      <div class="sixteen wide column">
         <div id="network"></div>
       </div>
-      <div class="three wide column userAction">
+      <div class="sixteen wide column userAction">
         <div class="ui segment rightPane">
           <div class="userAction">SCM Graph laden</div>
           <div class="fileUpload ui mini primary button">
@@ -119,7 +114,7 @@
         <div class="ui segment rightPane">
           <div>Firma <span id="selectedCompanyName"></span> markieren als:</div>
           <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
-          <button class="ui mini primary button" id="clientAdd">Empfänger</button>
+          <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
         </div>
       </div>
       <div class="sixteen wide column selectedCompanyDetails">
@@ -137,65 +132,85 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="two wide"><h5>Firmenname</h5></td>
+                      <td class="two wide" id="title11"><h5>Firmenname</h5></td>
                       <td class="six wide" id="td11"></td>
-                      <td class="two wide"><h5>Webseite</h5></td>
+                      <td class="two wide" id="title12"><h5>Webseite</h5></td>
                       <td class="six wide" id="td12"></td>
                     </tr>
                     <tr>
-                      <td class="two wide"><h5>Adresse</h5></td>
+                      <td class="two wide" id="title21"><h5>Adresse</h5></td>
                       <td class="six wide" id="td21"></td>
-                      <td class="two wide"><h5>Email</h5></td>
+                      <td class="two wide" id="title22"><h5>Email</h5></td>
                       <td class="six wide" id="td22"></td>
                     </tr>
                     <tr>
-                      <td class="two wide"><h5>Postleitzahl / Ort</h5></td>
+                      <td class="two wide id="title31""><h5>Postleitzahl / Ort</h5></td>
                       <td class="six wide" id="td31"></td>
-                      <td class="two wide"><h5>Social Media</h5></td>
+                      <td class="two wide" id="title32"><h5>Social Media</h5></td>
                       <td class="six wide" id="td32"><ul></ul></td>
                     </tr>
                     <tr>
-                      <td class="two wide"><h5>Telefon</h5></td>
+                      <td class="two wide id="title41""><h5>Telefon</h5></td>
                       <td class="six wide" id="td41"></td>
-                      <td class="two wide"><h5></h5></td>
+                      <td class="two wide id="title42""><h5></h5></td>
                       <td class="six wide" id="td42"></td>
                     </tr>
                     <tr>
-                      <td class="two wide"><h5>Fax</h5></td>
+                      <td class="two wide id="title51""><h5>Fax</h5></td>
                       <td class="six wide" id="td51"></td>
-                      <td class="two wide"><h5></h5></td>
+                      <td class="two wide id="title52""><h5></h5></td>
                       <td class="six wide" id="td52"></td>
                     </tr>
                     <tr>
-                      <td class="two wide"><h5>Geschäftsform</h5></td>
+                      <td class="two wide id="title61""><h5>Geschäftsform</h5></td>
                       <td class="six wide" id="td61"></td>
-                      <td class="two wide"><h5>Handelsregister</h5></td>
+                      <td class="two wide id="title62""><h5>Handelsregister</h5></td>
                       <td class="six wide" id="td62"></td>
                     </tr>
                      <tr>
-                      <td class="two wide"><h5>Kapital</h5></td>
+                      <td class="two wide id="title71""><h5>Kapital</h5></td>
                       <td class="six wide" id="td71"></td>
-                      <td class="two wide"><h5>Branchen</h5></td>
+                      <td class="two wide id="title72""><h5>Branchen</h5></td>
                       <td class="six wide" id="td72"><ul></ul></td>
                     </tr>
                      <tr>
-                      <td class="two wide"><h5>Umsatz</h5></td>
+                      <td class="two wide id="title81""><h5>Umsatz</h5></td>
                       <td class="six wide" id="td81"></td>
-                      <td class="two wide"><h5>Mitarbeiter</h5></td>
+                      <td class="two wide id="title82""><h5>Mitarbeiter</h5></td>
                       <td class="six wide" id="td82"></td>
                     </tr>
+                       <tr>
+                      <td class="two wide id="title711""><h5>Score</h5></td>
+                      <td class="six wide" id="td711"></td>
+                      <td class="two wide id="title722""><h5></h5></td>
+                      <td class="six wide" id="td722"><ul></ul></td>
+                    </tr>
                      <tr>
-                      <td class="two wide"><h5></h5></td>
+                      <td class="two wide id="title91""><h5>Ereignisse</h5></td>
                       <td class="six wide" id="td91"></td>
-                      <td class="two wide"><h5></h5></td>
+                      <td class="two wide id="title92""><h5></h5></td>
                       <td class="six wide" id="td92"></td>
                     </tr>
-                     <tr>
-                      <td class="two wide"><h5></h5></td>
+                      <tr>
+                      <td class="two wide id="title101""><h5>Ereignis Typ</h5></td>
                       <td class="six wide" id="td101"></td>
-                      <td class="two wide"><h5></h5></td>
-                      <td class="six wide" id="td102"></td>
+                      <td class="two wide id="title102""><h5>Ereignis</h5></td>
+                      <td class="six wide" id="td102"><ul></ul></td>
                     </tr>
+                      <tr>
+                      <td class="two wide id="title111""><h5></h5></td>
+                      <td class="six wide" id="td111"></td>
+                      <td class="two wide id="title112""><h5></h5></td>
+                      <td class="six wide" id="td112"></td>
+                    </tr>
+                      <tr>
+                      <td class="two wide id="title121""><h5></h5></td>
+                      <td class="six wide" id="td121"></td>
+                      <td class="two wide id="title122""><h5></h5></td>
+                      <td class="six wide" id="td122"></td>
+                    </tr>
+
+               
                   </tbody>
                 </table>                
               </div>
@@ -219,9 +234,10 @@
       <div class="sixteen wide column circleGraph"></div>
     </div>
   </div>
+  <!--
   <div class="ui inverted vertical footer segment">
     <div class="ui center aligned container">
-      <!--
+     
       <div class="ui stackable inverted divided grid">
         <div class="three wide column">
           <h4 class="ui inverted header">LUCID</h4>
@@ -256,9 +272,10 @@
         <a class="item" href="#">Terms and Conditions</a>
         <a class="item" href="#">Privacy Policy</a>
       </div>
-      -->
+     
     </div>
   </div>
+   -->
 
 </body>
 </html>

@@ -1,5 +1,8 @@
-body {
+body, canvas {
   background-color: #FFFFFF;
+}
+.main{
+  background-color: #f2f2f2;
 }
 .ui.menu .item img.logo {
   margin-right: 1.5em;
@@ -27,6 +30,7 @@ body {
   padding: 10px;
   border: 1px solid;
   margin: 5px 0px 5px 0px;
+  display: none;
 }
 .fileUpload {
   position: relative;
@@ -87,4 +91,11 @@ body {
 .companyDetailsTitle{
   font-size: 1.3em !important;
   font-weight: bold;
+}
+.ui.primary.button{
+  padding: 0.5em;
+}
+li {
+  display: inline-block;
+  padding-bottom: 10px;
 }
