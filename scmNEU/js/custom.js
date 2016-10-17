@@ -1,4 +1,5 @@
 $(function() {  // load when DOM ready
+  $('.ui.accordion').accordion(); //--- load company details accordion
   //--- autocomplete ---
   var options = {
 	  url: "js/data.json",
@@ -399,7 +400,7 @@ $(function() {  // load when DOM ready
     document.getElementById('eventSpan').innerHTML = '<h5>Click event:</h5>' + JSON.stringify(params, null, 4);
     var companyVal = JSON.stringify(params, null,0);
     dataJson = JSON.parse(companyVal);
-    //console.log(dataJson.edges);
+    //console.debug(dataJson.edges);
     $('#debugCompanyID').html(dataJson.nodes);
     $('#selectedCompanyName').html(dataJson.nodes);
     var edgesArray = network.view.body.edges; // --- get edges of graph ---
@@ -415,19 +416,59 @@ $(function() {  // load when DOM ready
     $('#edgeID').text(nextEdge);
 
     //--- parse json file to get company info ---
-    $.getJSON( "js/data.json", function( data ) {
+    $.getJSON( "js/data.json").then(function(data) {
       var items = [];
       $.each( data, function( key, val ) {
         if (val.id == dataJson.nodes ){
           $('#debugCompanyName').text(val.label);
         }
       });
-      
-      $( "<ul/>", { //--- list all comapanies ---
-        "class": "companyList",
-        html: items.join( "" )
-      }).appendTo( "body" );  //--- list all comapanies ---
+    })
+    .fail(function() {
+      console.debug('Fehler beim Laden von js/data.json');
     });
+    $.getJSON( "js/dataplus.json").then(function(data) {
+      var items = [];
+      console.debug('Super, js/dataplus.json geladen');
+      $.each( data, function( key, val ) {
+        //console.debug(dataJson.nodes);
+        if (val.id == dataJson.nodes ){
+          $("#td72 ul").empty();
+          $("#td11").empty().append(val.name);
+          $("#td12").empty().append(val.url);
+          $("#td21").empty().append(val.street);
+          $("#td22").empty().append(val.email);
+          $("#td31").empty().append(val.zip + ' ' + val.city);
+          $.each( val.socialMedia, function( key, val ) {
+            $("#td32 ul").append('<li><span class="capizalize">' + key + '</span>: ' + val + '</li>');
+          });
+          
+          $("#td41").empty().append(val.phone);
+          $("#td42").empty().append('');
+          $("#td51").empty().append(val.fax);
+          $("#td52").empty().append('');
+          $("#td61").empty().append(val.legalForm);
+          $("#td62").empty().append(val.externalIds.hr.court + ' ' + val.externalIds.hr.type + ' ' + val.externalIds.hr.number);
+          $("#td71").empty().append(val.capital);
+          $.each( val.industries.nace, function( key, val ) {
+            $("#td72 ul").append('<li>' + val.title + '</li>');
+          });
+          
+          $("#td81").empty().append('Jahr: ' + val.revenue.year + ' Gesamt: ' + val.revenue.code);
+          $("#td82").empty().append('Jahr: ' + val.employees.year + ' Gesamt: ' + val.employees.code);
+          $("#td91").empty().append('');
+          $("#td92").empty().append('');
+          $("#td101").empty().append('');
+          $("#td102").empty().append('');
+          //$('#selectedCompanyDetailsContent').text(val.street);
+          
+        }
+      });
+    })
+    .fail(function() {
+      console.debug('Fehler beim Laden von js/dataplus.json');
+    });
+
     //--- parse json file to get company info ---
     //--- draw circleGraph below companyDetails ---
     $('svg').remove();

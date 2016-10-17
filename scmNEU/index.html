@@ -117,17 +117,97 @@
           <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
         </div>
       </div>
+      <div class="sixteen wide column selectedCompanyDetails">
+        <div class="ui fluid accordion"> 
+          <div class="item">
+            <a class="active title companyDetailsTitle">
+              <i class="dropdown icon"></i>
+              Firmendetails
+            </a>
+            <div class="active content">
+              <div id="selectedCompanyDetailsContent">
+                <table class="ui selectable celled table">
+                  <thead>
+                  
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="two wide"><h5>Firmenname</h5></td>
+                      <td class="six wide" id="td11"></td>
+                      <td class="two wide"><h5>Webseite</h5></td>
+                      <td class="six wide" id="td12"></td>
+                    </tr>
+                    <tr>
+                      <td class="two wide"><h5>Adresse</h5></td>
+                      <td class="six wide" id="td21"></td>
+                      <td class="two wide"><h5>Email</h5></td>
+                      <td class="six wide" id="td22"></td>
+                    </tr>
+                    <tr>
+                      <td class="two wide"><h5>Postleitzahl / Ort</h5></td>
+                      <td class="six wide" id="td31"></td>
+                      <td class="two wide"><h5>Social Media</h5></td>
+                      <td class="six wide" id="td32"><ul></ul></td>
+                    </tr>
+                    <tr>
+                      <td class="two wide"><h5>Telefon</h5></td>
+                      <td class="six wide" id="td41"></td>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td42"></td>
+                    </tr>
+                    <tr>
+                      <td class="two wide"><h5>Fax</h5></td>
+                      <td class="six wide" id="td51"></td>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td52"></td>
+                    </tr>
+                    <tr>
+                      <td class="two wide"><h5>Geschäftsform</h5></td>
+                      <td class="six wide" id="td61"></td>
+                      <td class="two wide"><h5>Handelsregister</h5></td>
+                      <td class="six wide" id="td62"></td>
+                    </tr>
+                     <tr>
+                      <td class="two wide"><h5>Kapital</h5></td>
+                      <td class="six wide" id="td71"></td>
+                      <td class="two wide"><h5>Branchen</h5></td>
+                      <td class="six wide" id="td72"><ul></ul></td>
+                    </tr>
+                     <tr>
+                      <td class="two wide"><h5>Umsatz</h5></td>
+                      <td class="six wide" id="td81"></td>
+                      <td class="two wide"><h5>Mitarbeiter</h5></td>
+                      <td class="six wide" id="td82"></td>
+                    </tr>
+                     <tr>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td91"></td>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td92"></td>
+                    </tr>
+                     <tr>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td101"></td>
+                      <td class="two wide"><h5></h5></td>
+                      <td class="six wide" id="td102"></td>
+                    </tr>
+                  </tbody>
+                </table>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="sixteen wide column">
         <div id="debug">DEBUG
           <div id="nodes"></div>
           <div id="edges"></div>
           <textarea id="data">
             digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }
-          </textarea>
-          <div>Firmendetails</div>
-            <div id="debugCompanyName">Firma</div>
-            <div id="debugCompanyID">ID</div>
-            <div id="eventSpan"></div>
+          </textarea>  
+          <div id="debugCompanyName">Firma</div>
+          <div id="debugCompanyID">ID</div>
+          <div id="eventSpan"></div>
           </div>
         </div>
       </div>
