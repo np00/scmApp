@@ -75,3 +75,16 @@ body {
   border: 1px solid #000000 !important;
   border-radius: 0px !important;
 }
+#selectedCompanyDetailsContent table td{
+  font-size: 0.9em;
+}
+.description{
+  font-weight: bold !important;
+}
+.capizalize{
+  text-transform: capitalize;
+}
+.companyDetailsTitle{
+  font-size: 1.3em !important;
+  font-weight: bold;
+}
