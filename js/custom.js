@@ -556,7 +556,7 @@ $(function() {  // load when DOM ready
           console.log( textStatus );
         })
         .fail(function( jqxhr, settings, exception ) {
-          $( "div.log" ).text( "Triggered ajaxError handler." );
+          $( "div.log" ).text( "Triggered ajax Error handler." );
       });
     } else if (dataJson.nodes == 'DEBBZ6V91H79'){
       $.getScript( "js/DEBBZ6V91H79.js" )
@@ -599,8 +599,8 @@ $(function() {  // load when DOM ready
 //--- scm-app.js ---
 
 var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "extern.npetersen";
-var pw = "HahthohmahK3";
+var user = "x";
+var pw = "x";
 var access_token = "";
 
 function getAccessToken(url_server, user, pw) {
