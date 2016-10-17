@@ -429,6 +429,66 @@ $(function() {  // load when DOM ready
       }).appendTo( "body" );  //--- list all comapanies ---
     });
     //--- parse json file to get company info ---
+    //--- draw circleGraph below companyDetails ---
+    $('svg').remove();
+    if (dataJson.nodes == 'DE3AXFM5V484'){
+      $.getScript( "js/DE3AXFM5V484.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DE9WNYUSMP94'){
+      $.getScript( "js/DE9WNYUSMP94.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DEA1ES9N0148'){
+      $.getScript( "js/DEA1ES9N0148.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DEBBZ6V91H79'){
+      $.getScript( "js/DEBBZ6V91H79.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DEFH655EHJ22'){
+      $.getScript( "js/DEFH655EHJ22.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DEJTTYJWPJ09'){
+      $.getScript( "js/DEJTTYJWPJ09.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    } else if (dataJson.nodes == 'DES02NCLGB62'){
+      $.getScript( "js/DES02NCLGB62.js" )
+        .done(function( script, textStatus ) {
+          console.log( textStatus );
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          $( "div.log" ).text( "Triggered ajaxError handler." );
+      });
+    }
+    //--- draw circleGraph below companyDetails ---
   });
 }
   //--- vis graph ---
