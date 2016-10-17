@@ -6,39 +6,40 @@
 
 
 //var url_server = "https://lucid.implisense.com/dataplatform/"
+//var user = "implisense";
+//var pw = "4nAQCULrpNJqeB9yGiVd";
+
+
 var url_server = "https://lucid-dataplatform.eccenca.com/";
+var user = "extern.npetersen";
+var pw = "HahthohmahK3";
+
+
+var access_token = "";
 
 
 
+//define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
-var user = "x";
-var pw = "x";
-
-var access_token;
-
-
-
-define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
-
-  function($, rdfstore, logger, vis) {
+ // function($, rdfstore, logger, vis) {
 
   // HTML elements ------------------------------------------------------------
-  var buttonAnalytics = $("#button-analytics");
-  var buttonBuildGraph = $("#button-buildGraph");
-  var buttonModify = $("#button-modify");
-  var buttonSuppliers = $("#button-suppliers");
+//  var buttonAnalytics = $("#button-analytics");
+
+//  var buttonModify = $("#button-modify");
+//  var buttonSuppliers = $("#button-suppliers");
 
 
-  var container = document.getElementById('mynetwork');
+  //var container = document.getElementById('mynetwork');
 
   // viz container
-  var nodes, edges, network;
-  nodes = new vis.DataSet();
-  edges = new vis.DataSet();
+  //var nodes, edges, network;
+  //nodes = new vis.DataSet();
+  //edges = new vis.DataSet();
   //var request = "https://lucid.eccenca.com/dataplatform/proxy/default/sparql?access_token=" + access_token;
 
 
-  var getAccessToken = function (url_server, user, pw) 
+  function getAccessToken(url_server, user, pw) 
   {
       var request = url_server + "oauth/token?grant_type=password&username=" + user + "&password=" + pw + "&client_id=eldsClient&client_secret=secret";
 
@@ -66,10 +67,11 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
   var drawSupplyChain = function ()
   {
+    console.log("draw supply chain");
       readFile("queries/getSupplyChain.rq", "supplyChain");
   }
 
-  var getSuppliers = function ()
+  var getSuppliers_2 = function ()
   {
       readFile("queries/getCompanies.rq", "getSuppliers");
   }
@@ -107,7 +109,7 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       rawFile.send();
   }
 
-  var runSparqlQuery = function (query) 
+  var runSparqlQuery = function(query) 
   {
       var sparql_query = "query=" + encodeURIComponent(query);
    //   var sparql_query = "query=" + encodeURIComponent("SELECT ?s WHERE {?s ?p ?o} LIMIT 10");
@@ -122,6 +124,8 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
 
+           console.log(this.responseText);
+
             var data = JSON.parse(this.responseText);
             var results = data["results"];
  
@@ -129,16 +133,21 @@ define(['jquery', 'lib/rdfstore', 'logger', 'lib/vis.min'],
 
            console.log(metricResult);
 
-            addEdge(11, "Limbacher Bremsbelag GmbH", "Albrecht Auto-Zubehör GmbH", metricResult)
+           var edgeId = "DEFH655EHJ22_DEA1ES9N0148";
+
+          updateEdge(edgeId, "DEFH655EHJ22", "DEA1ES9N0148", metricResult);
+
+
+         //   addEdge(11, "Limbacher Bremsbelag GmbH", "Albrecht Auto-Zubehör GmbH", metricResult)
         }
       });
 
       xhr.send(sparql_query);
   }
 
-var processSuppliers = function (query) 
+  function processSuppliers(query) 
   {
-      console.log("test");
+      console.log("start process");
      var sparql_query = "query=" + encodeURIComponent(query);
   
       var request = url_server + "proxy/default/sparql?access_token=" + access_token;
@@ -154,6 +163,7 @@ var processSuppliers = function (query)
             var data = JSON.parse(this.responseText);
             var results = data["results"];
       
+
             console.log(results);
         
         }
@@ -164,11 +174,9 @@ var processSuppliers = function (query)
 
   var getProcesses = function(query) 
   {
-      console.log(query);
-
+    console.log("get processes");
       var request = url_server + "proxy/default/sparql?access_token=" + access_token;
       var sparql_query = "query=" + encodeURIComponent(query);
-
 
       var xhr;
       xhr = new XMLHttpRequest();
@@ -182,7 +190,7 @@ var processSuppliers = function (query)
 
           var data = JSON.parse(this.responseText);
 
-          console.log(data);
+          console.log(this.responseText);
           var processes = data["results"]
 
           console.log(processes);
@@ -197,17 +205,23 @@ var processSuppliers = function (query)
               {
                 console.log(processArray[j]);
                 
-                var s_longName = processArray[j].supplier.value
-                var s_shortName = s_longName.substring(s_longName.length-11, s_longName.length);
+                var supplierVatID = processArray[j].supplierVatID.value;
+                var supplierName = processArray[j].supplier.value;
 
-                var c_longName = processArray[j].supplier.value
-                var c_shortName = c_longName.substring(c_longName.length-11, c_longName.length);
+                var clientVatID = processArray[j].clientVatID.value
+                var clientName = processArray[j].client.value
+
+                addNodeWithLabel(supplierVatID, supplierName);
+                addNodeWithLabel(clientVatID, clientName);
+
+                var edgeId = supplierVatID + "_" + clientVatID ;
+                addEdgeLong(edgeId, supplierVatID, clientVatID);
 
 
-                addNode(processArray[j].supplier.value, s_longName);
-                addNode(processArray[j].client.value, c_longName);
+               // addNode(processArray[j].supplier.value, s_longName);
+               // addNode(processArray[j].client.value, c_longName);
 
-                addEdge(j, processArray[j].supplier.value, processArray[j].client.value, "");
+               // addEdge(j, processArray[j].supplier.value, processArray[j].client.value, "");
 
               } );
           });
@@ -216,7 +230,7 @@ var processSuppliers = function (query)
   }
 
 
-  var updateQuery = function (query) 
+  var updateQuery = function(query) 
   {
 
 //    DELETE DATA { GRAPH <test1> { <http://lucid.implisense.com/companies/DE2FFGESNX37> a <http://schema.org/Corporation> .}}; 
@@ -247,91 +261,30 @@ var processSuppliers = function (query)
   }
 
 
-    var createGraph = function () {
-
-    var data = {
-      nodes: nodes,
-      edges: edges
-    };
-
-    var input = 'RL';
-
-    var options = {};
-    /*
-    var options = {  layout: {
-                        hierarchical: {
-                          direction: 'LR'}},
-                     nodes:{  
-                          color: {
-                              background: 'pink',
-                              border: 'purple'}},
-                    edges:{
-                    font: {
-        color: 'green',
-        size: 18, // px
-        face: 'arial',
-        background: 'white',
-        strokeWidth: 2, // px
-        strokeColor: '#ffffff',
-        align:'horizontal'
-      }}
-    
-    };
-    */
-    var network = new vis.Network(container, data, options);
-
-     network.on("click", function (params) {
-          params.event = "[original event]";
-      })
-
-  };
-
-
-  function addNode(id, label) {
-      console.log(label);
-      try {
-          nodes.add({
-              id: id,
-              label: label
-          });
-      }
-      catch (err) {
-        // console.log(err);
-      }
-
-     createGraph();
-  }
-
-
-  function addEdge(id, from, to, label) {
-      try {
-          edges.add({
-              id: id,
-              from: from, 
-              to: to,
-              label: label
-          });
-      }
-      catch (err) {
-          //  console.log(err);
-      }
-  }
 
     // button clicks
-  buttonAnalytics.bind("click", executeMetric);
-  buttonBuildGraph.bind("click", drawSupplyChain);
-  buttonModify.bind("click", updateQuery);
-  buttonSuppliers.bind("click", getSuppliers);
+  //buttonAnalytics.bind("click", executeMetric);
+  
+  //buttonModify.bind("click", updateQuery);
+  //buttonSuppliers.bind("click", getSuppliers);
   // onload
   $(document).ready(function() {
 
         getAccessToken(url_server, user, pw);
 
+
+        var buttonBuildGraph = $("#button-buildGraph");
+        buttonBuildGraph.bind("click", drawSupplyChain);
+
+
+        var buttonBuildGraph = $("#button-analytics");
+        buttonBuildGraph.bind("click", executeMetric);
+
       //  executeMetric();
         //getProcesses();
         //runMetric();
      });
-  });
+  //});
 
 
 
