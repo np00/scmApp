@@ -91,7 +91,11 @@ $(function() {  // load when DOM ready
   function toJSON(obj) {
       return JSON.stringify(obj, null, 4);
   }
+
+  
   function addNode() {
+
+    console.log("test add");
     try {
       nodes.add({
         id: $('#companyID').text(),
@@ -103,6 +107,8 @@ $(function() {  // load when DOM ready
     }
     $("#companyID").val("");
   }
+
+
   function updateNode() {
     try {
       nodes.update({

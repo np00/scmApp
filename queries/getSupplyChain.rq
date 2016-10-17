@@ -4,7 +4,7 @@ PREFIX schema: <http://schema.org/>
 
 
 SELECT ?process ?client ?supplier ?clientVatID ?supplierVatID
-FROM <http://purl.org/eis/vocab/scor#>
+FROM <https://lucid-dataplatform.eccenca.com/data/supplyChain/>
 WHERE { 
           ?process a scor:Process . 
 
