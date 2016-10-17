@@ -17,9 +17,10 @@
   <script src="js/jquery.easy-autocomplete.min.js"></script>
   <script src="js/custom.js"></script>
   <script src="js/fileDownload.js"></script>  
+  <script src="js/scm-app.js"></script> 
 
 </head>
-<body onload="draw();">
+<body >
   <div class="ui fixed inverted menu">
     <div class="ui container">
       <a href="index.html" class="header item">
@@ -37,7 +38,7 @@
         <div>
           <div class="ui mini input">
             <input id="companyName" type="text" placeholder="Firmenname">
-            <div id="companyID" class="hiddenx"></div>
+            <div id="companyID" class="hidden"></div>
           </div>
           <div>
             <button class="ui mini primary button" id="addCompany" onclick="addNode();">Hinzufügen</button>
@@ -52,7 +53,7 @@
           <div class="ui mini input">
             <input id="supplierName" type="text" placeholder="Zulieferer">
             <div id="supplierID" class="hidden"></div>
-            <div id="edgeID" class="hidden"></div>
+           <!-- <div id="edgeID" class="hidden"></div> -->
           </div>
         </div>
       </div>
@@ -62,8 +63,8 @@
         </div>
         <div>
           <div class="ui mini input">
-            <input id="recipentName" type="text" placeholder="Empfänger">
-            <div id="recipentID" class="hidden"></div>
+            <input id="clientName" type="text" placeholder="Empfänger">
+            <div id="clientID" class="hidden"></div>
           </div>
           <div>
             <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
@@ -112,7 +113,7 @@
         <div class="ui segment rightPane">
           <div>Firma <span id="selectedCompanyName"></span> markieren als:</div>
           <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
-          <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
+          <button class="ui mini primary button" id="clientAdd">Empfänger</button>
         </div>
       </div>
       <div class="sixteen wide column">
