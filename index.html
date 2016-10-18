@@ -98,24 +98,34 @@
       <div class="sixteen wide column">
         <div id="network"></div>
       </div>
-      <div class="sixteen wide column userAction">
-        <div class="ui segment rightPane">
-          <div class="userAction">SCM Graph laden</div>
-          <div class="fileUpload ui mini primary button">
-            <span>Datei Auswahl</span>
-            <input type="file" id="fileinput" class="upload" />
-          </div>
+      <div class="sixteen wide column">
+      <div class="userAction">
+        <div class="ui three column stackable grid">
+            <div class="column">
+              <div class="ui segment rightPane">
+                <div class="userAction">Firma <span id="selectedCompanyName"></span> markieren als:</div>
+                <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
+                <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
+              </div>
+            </div>
+            <div class="column">
+              <div class="ui segment rightPane">
+                <div class="userAction">SCM Graph laden</div>
+                <div class="fileUpload ui mini primary button">
+                  <span>Datei Auswahl</span>
+                  <input type="file" id="fileinput" class="upload" />
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="ui segment rightPane">
+                <div class="userAction">SCM Graph speichern</div>
+                <input id="fileName" placeholder="Dateiname"/>
+                <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
+              </div>
+            </div>
         </div>
-        <div class="ui segment rightPane">
-          <div class="userAction">SCM Graph speichern</div>
-          <input id="fileName" placeholder="Dateiname"/>
-          <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
-        </div>
-        <div class="ui segment rightPane">
-          <div>Firma <span id="selectedCompanyName"></span> markieren als:</div>
-          <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
-          <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
-        </div>
+      </div>
       </div>
       <div class="sixteen wide column selectedCompanyDetails">
         <div class="ui fluid accordion"> 

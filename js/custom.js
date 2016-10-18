@@ -238,6 +238,7 @@ $(function() {  // load when DOM ready
         edges: edges
     };
     var options = {
+    clickToUse: true,
     //Edges
       edges:{
         arrows: {

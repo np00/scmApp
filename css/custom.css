@@ -72,7 +72,7 @@ body, canvas {
   overflow: hidden;
 }
 #fileName,#fileinput {
-  width: 100%;
+  width: 50%;
 }
 .rightPane{
   overflow: hidden;
