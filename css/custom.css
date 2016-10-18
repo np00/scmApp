@@ -4,6 +4,9 @@ body, canvas {
 .main{
   background-color: #f2f2f2;
 }
+.menu{
+  z-index: 999;
+}
 .ui.menu .item img.logo {
   margin-right: 1.5em;
 }
@@ -98,4 +101,11 @@ body, canvas {
 li {
   display: inline-block;
   padding-bottom: 10px;
+}
+#map {
+  z-index: 1;
+  height: 180px; 
+}
+.ui.table, .ui.table tr td{
+  border: none !important;
 }

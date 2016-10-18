@@ -238,7 +238,7 @@ $(function() {  // load when DOM ready
         edges: edges
     };
     var options = {
-    clickToUse: true,
+    //clickToUse: true,
     //Edges
       edges:{
         arrows: {
@@ -479,7 +479,21 @@ $(function() {  // load when DOM ready
       $.each( data, function( key, val ) {
         //console.debug(dataJson.nodes);
         if (val.id == dataJson.nodes ){
-          
+          $('#map').remove();
+          $('#title12').append('<div id="map"></div>');
+            var map = L.map('map', {
+            center : [val.geo.lat,val.geo.lon],
+            zoom : 16
+          });
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
+          }).addTo(map);
+          L.control.scale({
+            'imperial': false
+          }).addTo(map);
+          L.marker([val.geo.lat,val.geo.lon]).addTo(map)
+          .bindPopup('<b>'+val.name+'</b><br><b>'+val.street+'</b><br><b>'+val.zip+'</b><b>'+val.city+'</b>').openPopup();
+
           $("#td72 ul").empty();
           $("#td32 ul").empty();
           $("#td11").empty().append(val.name);

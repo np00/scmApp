@@ -249,7 +249,7 @@ var ch = viz.ch().data(data)
 
 var width=1200, height=1100;
 
-var svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+var svg = d3.select("#roundGraph").append("svg").attr("height",height).attr("width",width);
 
 svg.append("g").attr("transform", "translate(600,550)").call(ch);
 
