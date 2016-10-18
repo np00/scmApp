@@ -520,8 +520,7 @@ $(function() {  // load when DOM ready
           $("#td82").empty().append('Jahr: ' + val.employees.year + ' Gesamt: ' + val.employees.code);
           $("#td91").empty().append('');
           $("#td92").empty().append('');
-          $("#td101").empty().append('');
-          $("#td102").empty().append('');
+      
           //$('#selectedCompanyDetailsContent').text(val.street);
           
         }
@@ -535,8 +534,8 @@ $(function() {  // load when DOM ready
         //console.debug(dataJson.nodes);
         if (val.id == dataJson.nodes ){
           $.each( val.events, function( key, val ) {
-            $("#td101").append('<li>' + val.key + '</li>');
-            $("#td102").append('<li>' + val.value + '</li>');
+            $("#td101").append('<section class="profile event hrb_other" id=""><header><svg class="icon-news" style="width:20px !important;height:20px !important;"><use xlink:href="#icon-news"></use></svg><time></time>'+val.value+'</header><main></main><footer></footer></section> ');
+      
           });
          
         }
@@ -614,8 +613,8 @@ $(function() {  // load when DOM ready
 //--- scm-app.js ---
 
 var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "x";
-var pw = "x";
+var user = "extern.abergholz";
+var pw = "pM16AZy3fOTA";
 var access_token = "";
 
 function getAccessToken(url_server, user, pw) {
