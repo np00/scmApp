@@ -630,8 +630,8 @@ $(function() {  // load when DOM ready
 //--- scm-app.js ---
 
 var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "extern.abergholz";
-var pw = "pM16AZy3fOTA";
+var user = "x";
+var pw = "x";
 var access_token = "";
 
 function getAccessToken(url_server, user, pw) {
