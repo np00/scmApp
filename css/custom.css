@@ -11,6 +11,14 @@ body, canvas {
 .ui.menu .item img.logo {
   margin-right: 1.5em;
 }
+#td11{
+  font-size: 1.5em !important;
+  font-weight: bold;
+  line-height: 1.5em;
+}
+.ui.table td, .ui.table th{
+
+}
 .main.container {
   margin-top: 7em;
 }
@@ -152,6 +160,13 @@ li {
   background-repeat: no-repeat;
   width: 22px;
   height: 22px;
+}
+#td32 ul, #td31 ul{
+  padding-left: 0.9em !important;
+}
+#td32 ul li, #td31 ul li{
+  display: list-item !important;
+  padding-left: 0.9em !important;
 }
 .event{border-left:2px solid #d4d7d9;margin-left:15px;padding-bottom:10px;padding-left:30px;}
 .event:last-of-type{padding-bottom:0;}

@@ -507,13 +507,13 @@ $(function() {  // load when DOM ready
           
           $("#td21").empty().append(val.phone);
           $("#td42").empty().append('');
-          $("#td31").empty().append(val.fax);
+          $("#td21").append('<br />'+val.fax);
           $("#td52").empty().append('');
           $("#td61").empty().append(val.legalForm);
           $("#td62").empty().append(val.externalIds.hr.court + ' ' + val.externalIds.hr.type + ' ' + val.externalIds.hr.number);
           $("#td71").empty().append(val.capital);
           $.each( val.industries.nace, function( key, val ) {
-            $("#td72 ul").append('<li>' + val.title + '</li>');
+            $("#td31 ul").append('<li>' + val.title + '</li>');
           });
           
           $("#td81").empty().append('Jahr: ' + val.revenue.year + ' Gesamt: ' + val.revenue.code);

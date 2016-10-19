@@ -4,131 +4,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>LUCID SCM-App</title>
-  <link rel="icon" type="image/png" href="img/favicon.png" sizes="32x32">
-  <link rel="stylesheet" type="text/css" href="css/custom.css">
-  <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="css/vis.min.css">
-  <link rel="stylesheet" type="text/css" href="css/easy-autocomplete.min.css">
-  <link rel="stylesheet" type="text/css" href="css/easy-autocomplete.themes.min.css">
+  <link rel="icon" type="image/png" href="../img/favicon.png" sizes="32x32">
+  <link rel="stylesheet" type="text/css" href="../css/custom.css">
+  <link rel="stylesheet" type="text/css" href="../css/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/vis.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/easy-autocomplete.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/easy-autocomplete.themes.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     
-  <script src="js/jquery.min.js"></script>
-  <script src="js/vis.min.js"></script>
-  <script src="js/semantic.min.js"></script>
-  <script src="js/jquery.easy-autocomplete.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/vis.min.js"></script>
+  <script src="../js/semantic.min.js"></script>
+  <script src="../js/jquery.easy-autocomplete.min.js"></script>
   <script src="js/custom.js"></script>
-  <script src="js/fileDownload.js"></script>
-  <script src="js/d3.v4.min.js"></script>
-  <script src="js/viz.v1.1.0.min.js"></script>
+  <script src="../js/fileDownload.js"></script>
+  <script src="../js/d3.v4.min.js"></script>
+  <script src="../js/viz.v1.1.0.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
 </head>
-<body onload="draw();">
+<body>
   <div class="ui fixed inverted menu">
     <div class="ui container">
       <a href="index.html" class="header item">
-        <img class="logo" src="img/logo.png">LUCID SCM-App
+        <img class="logo" src="../img/logo.png">LUCID SCM-App
       </a>
     </div>
   </div>
 
   <div class="ui main container">
-    <div class="ui three column stackable grid container">
-      <div class="column">
-        <div>
-          <h5 class="ui header">Meine Firma</h5>
-        </div>
-        <div>
-          <div class="ui mini input">
-            <input id="companyName" type="text" placeholder="Firmenname">
-            <div id="companyID" class="hidden"></div>
-          </div>
-          <div>
-            <button class="ui mini primary button" id="addCompany" onclick="addNode();">Hinzufügen</button>
-          </div>
-        </div>
-      </div>
-      <div class="column">
-        <div>
-          <h5 class="ui header">Zulieferer</h5>
-        </div>
-        <div>
-          <div class="ui mini input">
-            <input id="supplierName" type="text" placeholder="Zulieferer">
-            <div id="supplierID" class="hidden"></div>
-            <div id="edgeID" class="hidden"></div>
-          </div>
-        </div>
-      </div>
-      <div class="column">
-        <div>
-          <h5 class="ui header">Empfänger</h5>
-        </div>
-        <div>
-          <div class="ui mini input">
-            <input id="recipentName" type="text" placeholder="Empfänger">
-            <div id="recipentID" class="hidden"></div>
-          </div>
-          <div>
-            <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="ui stackable grid container">
-      <div class="column">
-        <div>
-          <h5 class="ui header">Metriken</h5>
-        </div>
-        <div>
-          <select class="ui inline dropdown">
-            <option value=">Auswahl</option>
-            <option value="volvo">Orders Delivered in Full (RL 2.1)</option>
-            <option value="saab">Order Fullfillment Cycle Time (RS 1.1)</option>
-            <option value="mercedes">Upside Supply Chain Flexibility (AG 1.1)</option>
-            <option value="audi">Total Cost to Serve (CO 1.1)</option>
-            <option value="audi">Return on Supply Chain Fixed Assets (CO 1.2)</option>
-          </select>
-          <button class="ui mini primary button" id="button-buildGraph">Draw Supply Chain</button>
-          <button class="ui mini primary button" id="button-analytics">Run SC Analytics</button>
-          <button class="ui mini primary button" id="button-modify">Modifiy Graph Test</button>
-          <button class="ui mini primary button" id="button-suppliers">Load Suppliers</button>
-        </div>
-      </div>
-    </div>
-    <div class="ui stackable grid container"> 
-      <div class="sixteen wide column">
-        <div id="network"></div>
-      </div>
-      <div class="sixteen wide column">
-      <div class="userAction">
-        <div class="ui three column stackable grid">
-            <div class="column">
-              <div class="ui segment rightPane">
-                <div class="userAction">Firma <span id="selectedCompanyName"></span> markieren als:</div>
-                <button class="ui mini primary button" id="supplierAdd">Zulieferer</button>
-                <button class="ui mini primary button" id="recipentAdd">Empfänger</button>
-              </div>
-            </div>
-            <div class="column">
-              <div class="ui segment rightPane">
-                <div class="userAction">SCM Graph laden</div>
-                <div class="fileUpload ui mini primary button">
-                  <span>Datei Auswahl</span>
-                  <input type="file" id="fileinput" class="upload" />
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="ui segment rightPane">
-                <div class="userAction">SCM Graph speichern</div>
-                <input id="fileName" placeholder="Dateiname"/>
-                <button class="fileDownload ui mini primary button" onclick="saveTextAsFile()">Datei speichern</button>
-              </div>
-            </div>
-        </div>
-      </div>
-      </div>
+    
       <div class="sixteen wide column selectedCompanyDetails">
         <div class="ui fluid accordion"> 
           <div class="item">
@@ -259,21 +164,21 @@
         <div class="three wide column">
           <h4 class="ui inverted header">LUCID</h4>
           <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
+            <a href="../#" class="item">Link One</a>
           
           </div>
         </div>
         <div class="three wide column">
           <h4 class="ui inverted header">Implisense</h4>
           <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
+            <a href="../#" class="item">Link One</a>
            
           </div>
         </div>
         <div class="three wide column">
           <h4 class="ui inverted header">Info</h4>
           <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
+            <a href="../#" class="item">Link One</a>
            
           </div>
         </div>
@@ -284,10 +189,10 @@
       </div>
       <div class="ui inverted section divider"></div>
       <div class="ui horizontal inverted small divided link list">
-        <a class="item" href="#">Site Map</a>
-        <a class="item" href="#">Contact Us</a>
-        <a class="item" href="#">Terms and Conditions</a>
-        <a class="item" href="#">Privacy Policy</a>
+        <a class="item" href="../#">Site Map</a>
+        <a class="item" href="../#">Contact Us</a>
+        <a class="item" href="../#">Terms and Conditions</a>
+        <a class="item" href="../#">Privacy Policy</a>
       </div>
      
     </div>
