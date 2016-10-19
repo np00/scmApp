@@ -34,7 +34,7 @@ body, canvas {
   padding: 10px;
   border: 1px solid;
   margin: 5px 0px 5px 0px;
-  //display: none;
+  display: none;
 }
 .fileUpload {
   position: relative;
@@ -116,6 +116,42 @@ li {
   width: 20px;
   height: 20px;
   fill:#666768;height:20px!important;left:-41px;position:absolute;top:1.5px;width:20px!important;
+}
+.icon-phone{
+  background-image: url("../img/phone.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.icon-fex{
+  background-image: url("../img/fax.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.icon-mail{
+  background-image: url("../img/mail.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.icon-socialmedia{
+  background-image: url("../img/socialmedia.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.icon-employee{
+  background-image: url("../img/employee.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.icon-euro{
+  background-image: url("../img/euro.png");
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
 }
 .event{border-left:2px solid #d4d7d9;margin-left:15px;padding-bottom:10px;padding-left:30px;}
 .event:last-of-type{padding-bottom:0;}
