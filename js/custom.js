@@ -537,14 +537,27 @@ $(function() {  // load when DOM ready
             $("#td101").append('<section class="profile event hrb_other" id=""><header><svg class="icon-news" style="width:20px !important;height:20px !important;"><use xlink:href="#icon-news"></use></svg><time></time>'+val.value+'</header><main></main><footer></footer></section> ');
       
           });
-         
         }
       });
     })
     .fail(function() {
       console.debug('Error loading js/events.json');
     });
-
+         $.getJSON( "js/profile.json").then(function(data) {
+      $.each( data, function( key, val ) {
+        //console.debug(dataJson.nodes);
+        if (val.id == dataJson.nodes ){
+          $.each( val.topics, function( key, val ) {
+            val.score = val.score *100;
+            $("#td121").append('<div class="bar-indicator"><span class="label">'+val.name+'</span><div class="bar"><div class="indicator" style="width:'+val.score+'%"></div></div></div><br />');
+      
+          });
+        }
+      });
+    })
+    .fail(function() {
+      console.debug('Error loading js/events.json');
+    });
     //--- parse json file to get company info ---
     //--- draw circleGraph below companyDetails ---
     $('svg').remove();

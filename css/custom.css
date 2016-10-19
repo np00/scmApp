@@ -109,7 +109,6 @@ li {
 .ui.table, .ui.table tr td{
   border: none !important;
 }
-
 .event{border-left:2px solid #d4d7d9;margin-left:15px;padding-bottom:10px;padding-left:30px;}
 .event:last-of-type{padding-bottom:0;}
 .event header{color:#000000;font-size:14px;position:relative;}
@@ -119,3 +118,9 @@ li {
 .event main{margin:10px 0;}
 .event footer{color:#9ba1a6;font-size:14px;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;width:500px;}
 .event footer a{color:#9ba1a6;font-size:14px;}
+.bar-indicator .label{display:inline-block;width:220px;}
+.bar-indicator .bar{display:inline-block;white-space:nowrap;width:55%;}
+.bar-indicator .indicator{background-color:#8b4b68;display:inline-block;height:3px;margin-right:.9em;position:relative;top:-.2em;}
+.bar-indicator .indicator:after{color:#8b4b68;content:'\00b0';font-size:35px;font-weight:700;position:absolute;right:-10px;top:-2px;}
+.bar-indicator .percentage{bottom:-.1em;font-size:.7em;position:relative;}
+.bar-indicator .percentage em{font-size:2.1em;font-weight:400;}
