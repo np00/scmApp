@@ -533,8 +533,9 @@ $(function() {  // load when DOM ready
       $.each( data, function( key, val ) {
         //console.debug(dataJson.nodes);
         if (val.id == dataJson.nodes ){
+          $("#td101").empty();
           $.each( val.events, function( key, val ) {
-            $("#td101").append('<section class="profile event hrb_other" id=""><header><svg class="icon-news" style="width:20px !important;height:20px !important;"><use xlink:href="#icon-news"></use></svg><time></time>'+val.value+'</header><main></main><footer></footer></section> ');
+            $("#td101").append('<section class="profile event hrb_other" id=""><header><div class="icon-news"></div><time></time>'+val.value+'</header><main></main><footer></footer></section> ');
       
           });
         }
@@ -543,13 +544,16 @@ $(function() {  // load when DOM ready
     .fail(function() {
       console.debug('Error loading js/events.json');
     });
-         $.getJSON( "js/profile.json").then(function(data) {
+    $.getJSON( "js/profile.json").then(function(data) {
       $.each( data, function( key, val ) {
         //console.debug(dataJson.nodes);
         if (val.id == dataJson.nodes ){
+          $("#td121").empty();
+          var scoreTimesHundred;
           $.each( val.topics, function( key, val ) {
-            val.score = val.score *100;
-            $("#td121").append('<div class="bar-indicator"><span class="label">'+val.name+'</span><div class="bar"><div class="indicator" style="width:'+val.score+'%"></div></div></div><br />');
+            scoreTimesHundred = val.score *100;
+            val.score = val.score.toFixed(2);
+            $("#td121").append('<div class="bar-indicator"><span class="label">'+val.name+'</span><div class="bar"><div class="indicator" style="width:'+scoreTimesHundred+'%">'+val.score+' %</div></div></div><br />');
       
           });
         }
@@ -626,8 +630,8 @@ $(function() {  // load when DOM ready
 //--- scm-app.js ---
 
 var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "x";
-var pw = "x";
+var user = "extern.abergholz";
+var pw = "pM16AZy3fOTA";
 var access_token = "";
 
 function getAccessToken(url_server, user, pw) {
