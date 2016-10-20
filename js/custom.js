@@ -100,18 +100,18 @@ $(function() {  // load when DOM ready
   //--- file upload ---
   //--- supplier add textfiled ---
   $("#supplierAdd").click(function(){
-    var selectedSupplier = $('#debugCompanyName').html();
+    var selectedSupplier = $('#debugCompanyID').html();
     selectedSupplier = selectedSupplier.replace(/\&amp;/g,'&');
-    $('#supplierName').val(selectedSupplier);
+    $('#supplierName').val('"'+selectedSupplier+'"');
     $('#supplierID').text($('#debugCompanyID').text());
     
   });
   //--- supplier add textfiled ---
   //--- recipent add textfield ---
   $("#recipentAdd").click(function(){
-    var selectedRecipent = $('#debugCompanyName').html();
+    var selectedRecipent = $('#debugCompanyID').html();
     selectedRecipent = selectedRecipent.replace(/\&amp;/g,'&');
-    $('#recipentName').val(selectedRecipent);
+    $('#recipentName').val('"'+selectedRecipent+'"');
     $('#recipentID').text($('#debugCompanyID').text());
   });
   //--- recipent add textfield ---
@@ -272,10 +272,13 @@ $(function() {  // load when DOM ready
       alert(err);
     }
   }
+   function resize() {
+    $('#contents').height($('body').height() - $('#header').height() - 30);
+  }
    function draw2 () {
     try {
       $('#error').html('');
-
+      resize();
       // Provide a string with data in DOT language
       data = vis.network.convertDot($('#data').val());
 
@@ -299,6 +302,7 @@ $(function() {  // load when DOM ready
   }
 
   function draw() {
+    resize();
     nodes = new vis.DataSet();  // nodes array
     nodes.on('*', function () {
       document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(), null, 4);
@@ -597,7 +601,13 @@ $(function() {  // load when DOM ready
           $("#td11").empty().append(val.name+'<br />'+val.street+'<br />'+val.zip+' '+val.city+'');
           $("#td12").empty().append(val.url);
           //$("#td21").empty().append(val.street);
-          $("#td22").empty().append(val.email);
+          if($.isEmptyObject(val.email)){
+            $('#title22').hide();
+            
+          }else{
+            $("#td22").empty().append(val.email);
+          }
+          
           //$("#td31").empty().append(val.zip + ' ' + val.city);
           $.each( val.socialMedia, function( key, val ) {
             $("#td32 ul").append('<li><span class="capizalize">' + key + '</span>: ' + val + '</li>');
