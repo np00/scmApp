@@ -272,13 +272,10 @@ $(function() {  // load when DOM ready
       alert(err);
     }
   }
-   function resize() {
-    $('#contents').height($('body').height() - $('#header').height() - 30);
-  }
+  
    function draw2 () {
     try {
       $('#error').html('');
-      resize();
       // Provide a string with data in DOT language
       data = vis.network.convertDot($('#data').val());
 
@@ -302,7 +299,6 @@ $(function() {  // load when DOM ready
   }
 
   function draw() {
-    resize();
     nodes = new vis.DataSet();  // nodes array
     nodes.on('*', function () {
       document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(), null, 4);
@@ -595,7 +591,7 @@ $(function() {  // load when DOM ready
           }).addTo(map);
           L.marker([val.geo.lat,val.geo.lon]).addTo(map)
           .bindPopup('<b>'+val.name+'</b><br><b>'+val.street+'</b><br><b>'+val.zip+'</b><b>'+val.city+'</b>').openPopup();
-
+          $("#td22").empty();
           $("#td72 ul").empty();
           $("#td32 ul").empty();
           $("#td31 ul").empty();
@@ -609,6 +605,7 @@ $(function() {  // load when DOM ready
           }else{
             $('#title22').show();
                $('.icon-mail').show();
+               $("#td22").show();
             $("#td22").append(val.email);
           }
           if($.isEmptyObject(val.socialMedia)){
