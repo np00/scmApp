@@ -420,18 +420,18 @@ function sort(a,b){ return d3.ascending(sortOrder.indexOf(a),sortOrder.indexOf(b
 var ch = viz.ch().data(data)
       .padding(.01)
       .sort(sort)
-	  .innerRadius(230)
-	  .outerRadius(250)
+	  .innerRadius(330)
+	  .outerRadius(350)
 	  .duration(1000)
 	  .chordOpacity(0.3)
 	  .labelPadding(.03)
       .fill(function(d){ return colors[d];});
 
-var width=100%, height=100%;
+var width=1200, height=1100;
 
-var svg = d3.select("#roundGraph").append("svg").attr("height",height).attr("width",width);
+var svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
 svg.append("g").attr("transform", "translate(600,550)").call(ch);
 
 // adjust height of frame in bl.ocks.org
-d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");  
+d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");     

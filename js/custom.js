@@ -598,24 +598,44 @@ $(function() {  // load when DOM ready
 
           $("#td72 ul").empty();
           $("#td32 ul").empty();
+          $("#td31 ul").empty();
           $("#td11").empty().append(val.name+'<br />'+val.street+'<br />'+val.zip+' '+val.city+'');
           $("#td12").empty().append(val.url);
           //$("#td21").empty().append(val.street);
           if($.isEmptyObject(val.email)){
             $('#title22').hide();
-            
+             $("#td22").hide();
+             $('.icon-mail').hide();
           }else{
-            $("#td22").empty().append(val.email);
+            $('#title22').show();
+               $('.icon-mail').show();
+            $("#td22").append(val.email);
           }
-          
-          //$("#td31").empty().append(val.zip + ' ' + val.city);
-          $.each( val.socialMedia, function( key, val ) {
+          if($.isEmptyObject(val.socialMedia)){
+            $('#title32').hide();
+          } else {
+            $('#title32').show();
+             $.each( val.socialMedia, function( key, val ) {
             $("#td32 ul").append('<li><span class="capizalize">' + key + '</span>: ' + val + '</li>');
           });
+          }
+          //$("#td31").empty().append(val.zip + ' ' + val.city);
+         
+          if($.isEmptyObject(val.phone)){
+            $('.icon-phone').hide();
+          } else {
+            $('.icon-phone').show();
+            $("#td21").empty().append(val.phone);
+          }
+          if($.isEmptyObject(val.fax)){
+            $('.icon-fax').hide();
+          } else {
+            $('.icon-fax').show();
+            $("#td21").append('<br />'+val.fax);
+          }
           
-          $("#td21").empty().append(val.phone);
           $("#td42").empty().append('');
-          $("#td21").append('<br />'+val.fax);
+          
           $("#td52").empty().append('');
           $("#td61").empty().append(val.legalForm);
           $("#td62").empty().append(val.externalIds.hr.court + ' ' + val.externalIds.hr.type + ' ' + val.externalIds.hr.number);
