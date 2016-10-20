@@ -41,6 +41,11 @@ body, canvas {
 .hidden{
   visibility: hidden;
 }
+#td121{
+  height: 300px !important;
+  overflow: scroll;
+  padding: 5px;
+}
 #debug{
   font-size: 10px;
   padding: 10px;
