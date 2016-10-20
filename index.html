@@ -44,7 +44,7 @@
             <div id="companyID" class="hidden"></div>
           </div>
           <div>
-            <button class="ui mini primary button" id="addCompany" onclick="addNode();">Hinzufügen</button>
+            <button class="ui mini primary button" id="addCompany">Hinzufügen</button>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
             <div id="recipentID" class="hidden"></div>
           </div>
           <div>
-            <button class="ui mini primary button" class="addRelation" onclick="addEdge();">Hinzufügen</button>
+            <button class="ui mini primary button" id="addRelation">Hinzufügen</button>
           </div>
         </div>
       </div>
@@ -235,11 +235,11 @@
       </div>
       <div class="sixteen wide column">
         <div id="debug">DEBUG
+          <div id="error"></div>
           <div id="nodes"></div>
           <div id="edges"></div>
           <textarea id="data">
-            digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }
-          </textarea>  
+            digraph {node [shape=dot fontsize=15]edge [length=100, color=blue, fontcolor=black] }</textarea>  
           <div id="debugCompanyName">Firma</div>
           <div id="debugCompanyID">ID</div>
           <div id="eventSpan"></div>

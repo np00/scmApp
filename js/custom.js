@@ -1,4 +1,34 @@
 $(function() {  // load when DOM ready
+  function updateTextarea() {
+    var ta = document.getElementById('data');
+    ta.value = (ta.value.slice(0,-1));
+    $("#data").val(ta.value);
+  }
+  $("#addCompany").click(function(){
+    updateTextarea();
+    var txt = $.trim($("#companyName").val());
+    $("#data").val($("#data").val() + txt + ";}");
+    draw2();
+  });
+   $("#addRelation").click(function(){
+    updateTextarea();
+    var sender = $.trim($("#supplierName").val());
+    var getter = $.trim($("#recipentName").val());
+    var markVal = $("#mark option:selected").text();
+    if( !getter ){
+      alert ('Bitte Empfänger Firma eingeben');
+    }
+    else if( !sender ){
+      alert ('Bitte Zulieferer Firma eingeben');
+    }
+    else if( sender && getter ){
+      $("#data").val($("#data").val() + sender + "->" + getter + ";}");
+      draw2();
+      $("html, body").animate({
+        scrollTop: 0
+      }, 600);    
+    }
+  });
   $('.selectedCompanyDetails').hide();
   $('.ui.accordion').accordion(); //--- load company details accordion
   //--- autocomplete ---
@@ -242,6 +272,32 @@ $(function() {  // load when DOM ready
       alert(err);
     }
   }
+   function draw2 () {
+    try {
+      $('#error').html('');
+
+      // Provide a string with data in DOT language
+      data = vis.network.convertDot($('#data').val());
+
+      network.setData(data);
+    }
+    catch (err) {
+      // set the cursor at the position where the error occurred
+      var match = /\(char (.*)\)/.exec(err);
+      if (match) {
+        var pos = Number(match[1]);
+        var textarea = $('#data')[0];
+        if(textarea.setSelectionRange) {
+          textarea.focus();
+          textarea.setSelectionRange(pos, pos);
+        }
+      }
+
+      // show an error message
+      $('#error').html(err.toString());
+    }
+  }
+
   function draw() {
     nodes = new vis.DataSet();  // nodes array
     nodes.on('*', function () {
