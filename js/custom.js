@@ -132,6 +132,48 @@ $(function() {  // load when DOM ready
       alert(err);
     }
   }
+
+
+   function updateNodeById(id, value) {
+
+    value = value.replace(/,/g, '.')
+    
+    var floatValue = parseFloat(value);
+    var color = "green";
+
+    console.log(id);
+    console.log("float: " + floatValue);
+
+    var redMin = parseFloat("0.08");
+    var yellowMin = parseFloat("0.05");
+
+    console.log("updateNodeById:" + id + value);
+
+
+    if (floatValue > redMin)
+    {
+      console.log(id + " " + value + " red!" )
+       color = "red"; 
+    }else if (floatValue >= yellowMin && floatValue < redMin) 
+    {
+      console.log(id + " " + value + "yellow!" )
+      color = "yellow";
+    }
+
+    try {
+      nodes.update({
+        id: id,
+        color: {
+          border: 'black',
+          background: color
+        }
+      });
+    }
+    catch (err) {
+      alert(err);
+    }
+  }
+
   function removeNode() {
     try {
       nodes.remove({id: document.getElementById('node-id').value});
@@ -627,172 +669,462 @@ $(function() {  // load when DOM ready
 }
 //--- vis graph ---
   
-//--- scm-app.js ---
+//var url_server = "https://lucid.implisense.com/dataplatform/"
+//var user = "implisense";
+//var pw = "4nAQCULrpNJqeB9yGiVd";
+
 
 var url_server = "https://lucid-dataplatform.eccenca.com/";
-var user = "x";
-var pw = "x";
+var user = "extern.npetersen";
+var pw = "HahthohmahK3";
+
 var access_token = "";
 
-function getAccessToken(url_server, user, pw) {
-  var request = url_server + "oauth/token?grant_type=password&username=" + user + "&password=" + pw + "&client_id=eldsClient&client_secret=secret";
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", request);
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4) {
-      this.responseText;
-      var response = JSON.parse(this.responseText);
-      access_token = response.access_token;
-      console.log("get access token succeeded: " + response.access_token);
-    }
-  });
-  xhr.send();
-}
 
-var executeMetric = function (metric) {
-  readFile("queries/delivery_in_full.rq", "query");
-}
-var drawSupplyChain = function () {
-  console.log("draw supply chain");
-  readFile("queries/getSupplyChain.rq", "supplyChain");
-}
-var getSuppliers_2 = function () {
-  readFile("queries/getCompanies.rq", "getSuppliers");
-}
-function readFile(fileName, processType) {
-  var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", fileName, true);
-  rawFile.overrideMimeType('text/plain');
-  rawFile.onreadystatechange = function () {
-    if(rawFile.readyState === 4) {
-      if(rawFile.status === 200 || rawFile.status == 0) {
-        var response = rawFile.responseText;
-        switch(processType) {
-          case "query": runSparqlQuery(response);
-          break;
-          case "getSuppliers": processSuppliers(response);
-          break;
-          case "supplyChain": getProcesses(response);
-          break;  
-          default: console.log("readFile failed: " + rawFile.responseText)
+// onload
+$(document).ready(function() {
+
+      getAccessToken(url_server, user, pw);
+
+      var buttonModify = $("#button-modify");
+      buttonModify.bind("click", updateQuery);
+
+      var buttonEdges = $("#button-suppliers");
+      buttonEdges.bind("click", getInsolvency);
+
+      var buttonBuildGraph = $("#button-analytics");
+      buttonBuildGraph.bind("click", runMetric);
+
+      var buttonBuildGraph = $("#button-buildGraph");
+      buttonBuildGraph.bind("click", drawSupplyChain);
+});
+
+  function getAccessToken(url_server, user, pw) 
+  {
+      var request = url_server + "oauth/token?grant_type=password&username=" + user + "&password=" + pw + "&client_id=eldsClient&client_secret=secret";
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("POST", request);
+
+         xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            this.responseText;
+
+            var response = JSON.parse(this.responseText);
+
+            access_token = response.access_token;
+            console.log("get access token succeeded: " + response.access_token);
         }
-      }
-    }
+      });
+      xhr.send();
   }
-  rawFile.send();
-}
-var runSparqlQuery = function(query) {
-  var sparql_query = "query=" + encodeURIComponent(query);
-  // var sparql_query = "query=" + encodeURIComponent("SELECT ?s WHERE {?s ?p ?o} LIMIT 10");
-  var request = url_server + "proxy/default/sparql?access_token=" + access_token;
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", request);
-  xhr.setRequestHeader("accept", "application/sparql-results+json");
-  xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-  xhr.withCredentials = true;
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4) {
-      console.log(this.responseText);
-      var data = JSON.parse(this.responseText);
-      var results = data["results"];
-      var metricResult = results.bindings[0].metricResult.value
-      console.log(metricResult);
-      var edgeId = "DEFH655EHJ22_DEA1ES9N0148";
-      updateEdge(edgeId, "DEFH655EHJ22", "DEA1ES9N0148", metricResult);
-      // addEdge(11, "Limbacher Bremsbelag GmbH", "Albrecht Auto-Zubehör GmbH", metricResult)
-    }
-  });
-  xhr.send(sparql_query);
-}
-function processSuppliers(query) {
-  console.log("start process");
-  var sparql_query = "query=" + encodeURIComponent(query);
-  var request = url_server + "proxy/default/sparql?access_token=" + access_token;
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", request);
-  xhr.setRequestHeader("accept", "application/sparql-results+json");
-  xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-  xhr.withCredentials = true;
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4) {
-      var data = JSON.parse(this.responseText);
-      var results = data["results"];
-      console.log(results);
-    }
-  });
-  xhr.send(sparql_query);
-}
 
-var getProcesses = function(query) {
-  console.log("get processes");
-    var request = url_server + "proxy/default/sparql?access_token=" + access_token;
-    var sparql_query = "query=" + encodeURIComponent(query);
-    var xhr;
-    xhr = new XMLHttpRequest();
-    xhr.open("POST", request);
-    xhr.setRequestHeader("accept", "application/sparql-results+json");
-    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-    xhr.send(sparql_query);
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        var data = JSON.parse(this.responseText);
-        console.log(this.responseText);
-        var processes = data["results"]
-        console.log(processes);
-        $.each(processes, function(i, v) {   // for each process
-          var processArray = processes[i];
-          // read process value, supplier and client
-          $.each(processArray, function(j, v) {
-            console.log(processArray[j]);
-            var supplierVatID = processArray[j].supplierVatID.value;
-            var supplierName = processArray[j].supplier.value;
-            var clientVatID = processArray[j].clientVatID.value;
-            var clientName = processArray[j].client.value;
-            addNodeWithLabel(supplierVatID, supplierName);
-            addNodeWithLabel(clientVatID, clientName);
-            var edgeId = supplierVatID + "_" + clientVatID ;
-            addEdgeLong(edgeId, supplierVatID, clientVatID);
-            // addNode(processArray[j].supplier.value, s_longName);
-            // addNode(processArray[j].client.value, c_longName); 
-            // addEdge(j, processArray[j].supplier.value, processArray[j].client.value, "");
-          });
-        });
-      }
-    });
+  var drawSupplyChain = function ()
+  {
+      readFile("queries/getSupplyChain.rq", "supplyChain");
   }
-  var updateQuery = function(query) {
-  // DELETE DATA { GRAPH <test1> { <http://lucid.implisense.com/companies/DE2FFGESNX37> a <http://schema.org/Corporation> .}}; 
+
+  var getSuppliers_2 = function ()
+  {
+      readFile("queries/getCompanies.rq", "getSuppliers");
+  }
+
+  function readFile(fileName, processType)
+  {
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", fileName, true);
+      rawFile.overrideMimeType('text/plain');
+      rawFile.onreadystatechange = function ()
+      {
+          if(rawFile.readyState === 4)
+          {
+              if(rawFile.status === 200 || rawFile.status == 0)
+              {
+                var response = rawFile.responseText;
+               
+                switch(processType)
+                {
+                  case "query":
+                      runSparqlQuery(response);
+                  break;
+                  case "getSuppliers":
+                      processSuppliers(response);
+                  break;
+                  case "supplyChain":
+                      getProcesses(response);
+                  break;  
+                  default: 
+                      console.log("readFile failed: " + rawFile.responseText)
+                }
+              }
+          }
+      }
+      rawFile.send();
+  }
+
+  var runSparqlQuery = function(from, to, query) 
+  {
+      var sparql_query = "query=" + encodeURIComponent(query);
+      var request = url_server + "proxy/default/sparql?access_token=" + access_token;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", request);
+      xhr.setRequestHeader("accept", "application/sparql-results+json");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) 
+        {
+            var data = JSON.parse(this.responseText);
+            var results = data["results"];
+
+            console.log(results)
+            var metricResult = results.bindings[0].metricResult.value
+            var edgeId = from + "_" + to;
+
+          updateEdge(edgeId, from, to, metricResult);
+        }
+      });
+
+      xhr.send(sparql_query);
+  }
+
+  function processSuppliers(query) 
+  {
+      console.log("start process");
+     var sparql_query = "query=" + encodeURIComponent(query);
+  
+      var request = url_server + "proxy/default/sparql?access_token=" + access_token;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", request);
+      xhr.setRequestHeader("accept", "application/sparql-results+json");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+
+            var data = JSON.parse(this.responseText);
+            var results = data["results"];
+      
+
+            console.log(results);
+        
+        }
+      });
+
+      xhr.send(sparql_query);
+  }
+
+  var getProcesses = function(query) 
+  {
+    console.log("get processes");
+      var request = url_server + "proxy/default/sparql?access_token=" + access_token;
+      var sparql_query = "query=" + encodeURIComponent(query);
+
+      var xhr;
+      xhr = new XMLHttpRequest();
+      xhr.open("POST", request);
+      xhr.setRequestHeader("accept", "application/sparql-results+json");
+      xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+      xhr.send(sparql_query);
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+
+          var data = JSON.parse(this.responseText);
+          var processes = data["results"]
+
+          // for each process
+          $.each(processes, function(i, v) 
+          {
+              var processArray = processes[i];
+          
+              // parse client, supplier and add to graph
+              $.each(processArray, function(j, v) 
+              { 
+                var supplierVatID = processArray[j].supplierVatID.value;
+                var supplierName = processArray[j].supplier.value;
+
+                var clientVatID = processArray[j].clientVatID.value
+                var clientName = processArray[j].client.value
+
+                // add nodes
+                addNodeWithLabel(supplierVatID, supplierName);
+                addNodeWithLabel(clientVatID, clientName);
+
+                // add edge
+                var edgeId = supplierVatID + "_" + clientVatID ;
+                addEdgeLong(edgeId, supplierVatID, clientVatID);
+
+              } );
+          });
+        }
+      });
+  }
+
+  var updateQuery = function(query) 
+  {
+
+//    DELETE DATA { GRAPH <test1> { <http://lucid.implisense.com/companies/DE2FFGESNX37> a <http://schema.org/Corporation> .}}; 
 
     query = "INSERT DATA { GRAPH <http://purl.org/eis/vocab/scor#> { <http://lucid.implisense.com/companies/DE555>  a <http://dbpedia.org/ontology/Company> . <http://lucid.implisense.com/companies/DE555>  <http://www.w3.org/2000/01/rdf-schema#comment> \"Some Special Company Nilkas\" .}}";
-    var sparql_query = "update=" + encodeURIComponent(query) + "&comment=lalala&graph=http://purl.org/eis/vocab/scor#";
+
+   var sparql_query = "update=" + encodeURIComponent(query) + "&comment=lalala&graph=http://purl.org/eis/vocab/scor#";
+
     var request = url_server + "proxy/default/update";
+
     console.log(access_token);
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", request, true);
     xhr.setRequestHeader("accept", "application/sparql-update");
     xhr.setRequestHeader("authorization", ("Bearer " + access_token))
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.withCredentials = true;
+
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        console.log(this);
-      }
+
+         console.log(this);
+       }
     });
-    xhr.send(sparql_query);
+
+      xhr.send(sparql_query);
   }
-  
-  // button clicks
-  //buttonAnalytics.bind("click", executeMetric);
-  //buttonModify.bind("click", updateQuery);
-  //buttonSuppliers.bind("click", getSuppliers);
-  // onload
-  $(document).ready(function() {
-    getAccessToken(url_server, user, pw);
-    var buttonBuildGraph = $("#button-buildGraph");
-    buttonBuildGraph.bind("click", drawSupplyChain);
-    var buttonBuildGraph = $("#button-analytics");
-    buttonBuildGraph.bind("click", executeMetric);
-    // executeMetric();
-    // getProcesses();
-    // runMetric();
-  });
+
+  var constructQuery = function(type, from, to)
+  {
+    var query = ""; 
+    switch(type) {
+    case 'deliver':
+        query = `
+        PREFIX scor: <http://purl.org/eis/vocab/scor#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX company: <https://lucid.implisense.com/companies/> 
+
+        SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+               + (<http://www.w3.org/2001/XMLSchema#double>(?value2))) 
+               / 2 AS ?metricResult) 
+        FROM <https://lucid-dataplatform.eccenca.com/data/supplyChain/>
+        WHERE { 
+                  ?process scor:hasMetricRL_33 ?value1. 
+                  ?process scor:hasMetricRL_50 ?value2.
+
+                  ?process scor:hasSupplier company:` + from + ` .
+                  ?process scor:hasClient company:` + to + `.
+        }LIMIT 10 `;
+        return query;
+        break;
+    case 'flex':
+      query = 
+        `
+        PREFIX scor: <http://purl.org/eis/vocab/scor#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX company: <https://lucid.implisense.com/companies/> 
+
+         SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value2))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value3))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value4))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value5))) 
+                              / 2 AS ?metricResult) 
+        WHERE 
+        {
+          ?order scor:hasMetricAG_1  ?value1 .
+          ?order scor:hasMetricAG_2  ?value2 .
+          ?order scor:hasMetricAG_3  ?value3 .
+          ?order scor:hasMetricAG_4  ?value4 .
+          ?order scor:hasMetricAG_5  ?value5 .
+          ?order scor:hasSupplier company:` + from + ` .
+         ?order scor:hasClient company:`+ to +  `.
+        }`;
+        return query;
+        break;
+    case 'cost':
+        query = 
+        `
+        PREFIX    :   <http://purl.org/eis/vocab/scor#> 
+        PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#> 
+        PREFIX company: <https://lucid.implisense.com/companies/> 
+
+        SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+                 + (<http://www.w3.org/2001/XMLSchema#double>(?value2))
+                 + (<http://www.w3.org/2001/XMLSchema#double>(?value3))
+                 + (<http://www.w3.org/2001/XMLSchema#double>(?value4))) 
+                / 2 AS ?metricResult)
+        WHERE 
+        {
+          ?order :hasMetricCO_14  ?value1 .
+          ?order :hasMetricCO_15  ?value2 .
+          ?order :hasMetricCO_16  ?value3 .
+          ?order :hasMetricCO_17  ?value4 .
+          ?order :hasSupplier company:` + from + `.
+          ?order :hasClient company:` + to +  `.
+        }`
+        return query;
+        break;
+    case 'return':
+        query =  `
+          PREFIX    :   <http://purl.org/eis/vocab/scor#> 
+          PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#> 
+          PREFIX company: <https://lucid.implisense.com/companies/> 
+
+          SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value2))
+         + (<http://www.w3.org/2001/XMLSchema#double>(?value1))
+         - (<http://www.w3.org/2001/XMLSchema#double>(?value3))) 
+          AS ?metricResult) 
+          WHERE 
+          {
+            ?order :hasMetricAM_1  ?value1 .
+            ?order :hasMetricAM_2  ?value2 .
+            ?order :hasMetricAM_3  ?value3 .
+            ?order :hasSupplier company:` + from + ` .
+            ?order :hasClient company:` + to +  ` .
+          }`
+
+          return query;       
+          break;
+    case 'cycle':
+        query = `
+            PREFIX    :   <http://purl.org/eis/vocab/scor#> 
+            PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#> 
+            PREFIX company: <https://lucid.implisense.com/companies/> 
+
+         SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value2))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value3))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value4))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value5))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value6))
+                  + (<http://www.w3.org/2001/XMLSchema#double>(?value7))) 
+                              / 2 AS ?metricResult) 
+            WHERE 
+            {
+              ?order :hasMetricRS_33  ?value1 .
+              ?order :hasMetricRS_49  ?value2 .
+              ?order :hasMetricRS_101 ?value3 .
+              ?order :hasMetricRS_114 ?value4 .
+              ?order :hasMetricRS_123 ?value5 .
+              ?order :hasMetricRS_128 ?value6 .
+              ?order :hasMetricRS_142 ?value7 .
+              ?order :hasSupplier company:` + from + ` .
+              ?order :hasClient company:` + to +  ` .
+            } `
+            return query;
+        break;
+    default:
+        console.log("Default");
+
+    console.log("lala");
+} 
+
+
+
+  }
+
+  var runMetric = function() 
+  {
+
+      var s = document.getElementById("dropDown-metric");
+      var selectedMetric = s.options[s.selectedIndex].value;
+
+      constructQuery(selectedMetric, "from", "to");
+
+      var edgesArray = network.view.body.edges; // --- get edges of graph ---
+      $.each( edgesArray, function( key, value ) {
+
+        var currentEdgeId = edgesArray[key].id;
+        var currentQuery = constructQuery(selectedMetric, edgesArray[key].fromId, edgesArray[key].toId)
+
+        runSparqlQuery(edgesArray[key].fromId, edgesArray[key].toId, currentQuery);
+
+        //console.log(currentQuery);
+      });
+
+  }
+
+
+
+  var getInsolvency = function() 
+  {
+//    vatId = "DEHAJ0BMSH92" // büsgen
+
+    var nodesArray = network.view.body.nodes; // --- get edges of graph ---
+    $.each( nodesArray, function( key, value ) 
+    {  
+        var currentNodeId = nodesArray[key].id;
+
+
+         var currentQuery = `
+      PREFIX scor: <http://purl.org/eis/vocab/scor#>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      PREFIX company: <https://lucid.implisense.com/companies/> 
+      
+      SELECT ?vatId ?legalName ?score
+      WHERE { company:` + currentNodeId + ` a  <http://schema.org/Corporation> . 
+              company:` + currentNodeId + ` <http://schema.org/legalName> ?legalName.
+              company:` + currentNodeId + ` <http://schema.org/vatID> ?vatId . 
+              ?insolvencyInfo <http://schema.org/about> company:` + currentNodeId + ` .
+              ?insolvencyInfo <http://schema.implisense.com/insolvencyScore> ?score .} `;
+
+
+
+        var sparql_query = "query=" + encodeURIComponent(currentQuery);
+        var request = url_server + "proxy/default/sparql?access_token=" + access_token;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", request);
+        xhr.setRequestHeader("accept", "application/sparql-results+json");
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+          if (this.readyState === 4) 
+          {
+              var data = JSON.parse(this.responseText);
+              var results = data["results"];
+              var score = results.bindings[0].score.value
+              console.log(score);
+
+              updateNodeById(currentNodeId, score);
+          }
+        });
+
+          xhr.send(sparql_query);
+    }); 
+
+   
+
+
+       // runSparqlQuery(edgesArray[key].fromId, edgesArray[key].toId, currentQuery);
+
+        //console.log(currentQuery);
+
+
+  }
+
+
+
+
+
+/*
+    `
+        PREFIX scor: <http://purl.org/eis/vocab/scor#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX company: <https://lucid.implisense.com/companies/> 
+
+        SELECT (((<http://www.w3.org/2001/XMLSchema#double>(?value1))
+               + (<http://www.w3.org/2001/XMLSchema#double>(?value2))) 
+               / 2 AS ?metricResult) 
+        FROM <https://lucid-dataplatform.eccenca.com/data/supplyChain/>
+        WHERE { 
+                  ?process scor:hasMetricRL_33 ?value1. 
+                  ?process scor:hasMetricRL_50 ?value2.
+
+                  ?process scor:hasSupplier company:` + edgesArray[key].fromId + ` .
+                  ?process scor:hasClient company:` + edgesArray[key].toId + `.
+        }LIMIT 10 `;
+
+*/
+

@@ -81,18 +81,16 @@
           <h5 class="ui header">Metriken</h5>
         </div>
         <div>
-          <select class="ui inline dropdown">
-            <option value=">Auswahl</option>
-            <option value="volvo">Orders Delivered in Full (RL 2.1)</option>
-            <option value="saab">Order Fullfillment Cycle Time (RS 1.1)</option>
-            <option value="mercedes">Upside Supply Chain Flexibility (AG 1.1)</option>
-            <option value="audi">Total Cost to Serve (CO 1.1)</option>
-            <option value="audi">Return on Supply Chain Fixed Assets (CO 1.2)</option>
+        <select class="ui inline dropdown" id="dropDown-metric">
+            <option value="deliver">Orders Delivered in Full (RL 2.1)</option>
+            <option value="cycle">Make Cycle Time (RS 1.1)</option>
+            <option value="flex">Upside Supply Chain Flexibility (AG 1.1)</option>
+            <option value="cost">Total Cost to Serve (CO 1.1)</option>
+            <option value="return">Cash-to-Cash Cycle Time (AM 1.2)</option>
           </select>
           <button class="ui mini primary button" id="button-buildGraph">Draw Supply Chain</button>
           <button class="ui mini primary button" id="button-analytics">Run SC Analytics</button>
-          <button class="ui mini primary button" id="button-modify">Modifiy Graph Test</button>
-          <button class="ui mini primary button" id="button-suppliers">Load Suppliers</button>
+          <button class="ui mini primary button" id="button-suppliers">Check Insolvency</button>
         </div>
       </div>
     </div>
